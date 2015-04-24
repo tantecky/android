@@ -4,14 +4,33 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.List;
 
 
 public class MainActivity extends Activity {
+
+    private ListView mLinesListView;
+
+    public ListView getLinesListView() {
+        if(mLinesListView == null)
+            mLinesListView  = (ListView) findViewById(R.id.linesListView);
+
+        return mLinesListView;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String[] items = new String[]{"prvni", "druhy"};
+        ArrayAdapter<String> itemsAdapter =
+                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
+        getLinesListView().setAdapter(itemsAdapter);
     }
 
 
