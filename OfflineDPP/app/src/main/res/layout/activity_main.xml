@@ -8,18 +8,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-    <!--<fragment-->
-        <!--android:id="@+id/lines_fragment"-->
-        <!--android:name="com.tantecky.offlinedpp.LinesFragment"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="fill_parent"-->
-        <!--tools:layout="@layout/fragment_lines" />-->
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView"
-        android:layout_gravity="center" />
+    <fragment
+        android:id="@+id/lines_fragment"
+        android:name="com.tantecky.offlinedpp.LinesFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        tools:layout="@layout/fragment_lines" />
 </FrameLayout>
