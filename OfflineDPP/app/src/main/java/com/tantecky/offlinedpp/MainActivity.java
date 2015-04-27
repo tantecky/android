@@ -14,6 +14,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         // hide label
+        // styles.xml now handle this
         //getActionBar().setDisplayShowTitleEnabled(false);
     }
 
