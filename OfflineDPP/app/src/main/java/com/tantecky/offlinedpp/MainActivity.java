@@ -1,26 +1,20 @@
 package com.tantecky.offlinedpp;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ActionBar bar = getSupportActionBar();
-        bar.setDisplayShowHomeEnabled(true);
         // hide label
-        bar.setDisplayShowTitleEnabled(false);
-        // enable app icon
-        bar.setLogo(R.mipmap.ic_launcher);
-        bar.setDisplayUseLogoEnabled(true);
+        //getActionBar().setDisplayShowTitleEnabled(false);
     }
 
 
