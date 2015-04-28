@@ -14,6 +14,7 @@ public class LineRosterTest extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
+        super.setUp();
         mRoster = new LinesRoster();
     }
 
@@ -43,9 +44,9 @@ public class LineRosterTest extends TestCase {
         int i = 0;
         for (Line line : mRoster) {
             if (i == 0)
-                assertEquals(mLine1, mRoster.get(i));
+                assertEquals(mLine1, line);
             else if (i == 1)
-                assertEquals(mLine2, mRoster.get(i));
+                assertEquals(mLine2, line);
 
             i++;
         }

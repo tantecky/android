@@ -9,8 +9,12 @@ public class LinesRoster implements Iterable<Line> {
     private static LinesRoster sRoster = null;
 
     public static LinesRoster getInstance() {
-        if (sRoster == null)
+        if (sRoster == null) {
             sRoster = new LinesRoster();
+            sRoster.add(new Line(11, "Muzeum", "Letnany"));
+            sRoster.add(new Line(12, "Muzeum", "Letnany"));
+            sRoster.add(new Line(13, "Muzeum", "Letnany"));
+        }
 
         return sRoster;
     }
@@ -39,7 +43,9 @@ public class LinesRoster implements Iterable<Line> {
 
     private ArrayList<Line> mLines = new ArrayList<>();
 
-    // just for testing!!!
+    /**
+     * just for JUint!!!
+      */
     public LinesRoster() {
     }
 
