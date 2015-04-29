@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.tantecky.offlinedpp.model.LinesRoster;
+
 public class LinesFragment extends ListFragment {
     public LinesFragment()
     {
@@ -15,6 +17,7 @@ public class LinesFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LinesRoster.getInstance().load();
         setListAdapter(new LinesRosterAdapter(getActivity()));
     }
 

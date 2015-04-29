@@ -11,9 +11,6 @@ public final class LinesRoster implements Iterable<Line> {
     public static LinesRoster getInstance() {
         if (sRoster == null) {
             sRoster = new LinesRoster();
-            sRoster.add(new Line(11, "Muzeum", "Letnany"));
-            sRoster.add(new Line(12, "Muzeum", "Letnany"));
-            sRoster.add(new Line(13, "Muzeum", "Letnany"));
         }
 
         return sRoster;
@@ -45,8 +42,14 @@ public final class LinesRoster implements Iterable<Line> {
 
     /**
      * just for JUint!!!
-      */
+     */
     public LinesRoster() {
+    }
+
+    public void load() {
+        sRoster.add(new Line(1, "Muzeum", "Letnany"));
+        sRoster.add(new Line(500, "Muzeum", "Letnany"));
+        sRoster.add(new Line(42, "Muzeum", "Letnany"));
     }
 
     public boolean contains(Line newLine) {

@@ -15,6 +15,12 @@ public class LinesRosterAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private LinesRoster mRoster;
 
+    public LinesRosterAdapter(Context context) {
+        mInflater = (LayoutInflater) context
+                .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        mRoster = LinesRoster.getInstance();
+    }
+
     @Override
     public int getCount() {
         return mRoster.size();
@@ -39,12 +45,5 @@ public class LinesRosterAdapter extends BaseAdapter {
         lineNumber.setText(Integer.toString(line.getNumber()));
 
         return view;
-    }
-
-    public LinesRosterAdapter(Context context) {
-        mInflater = (LayoutInflater) context
-                .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        mRoster = LinesRoster.getInstance();
-
     }
 }
