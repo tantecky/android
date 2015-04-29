@@ -18,7 +18,7 @@ public class LinesFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LinesRoster.getInstance().load();
-        setListAdapter(new LinesRosterAdapter(getActivity()));
+        setListAdapter(new LinesRosterAdapter(getActivity(), getResources()));
     }
 
     @Override

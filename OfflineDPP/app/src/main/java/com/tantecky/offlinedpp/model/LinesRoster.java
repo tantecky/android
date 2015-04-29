@@ -47,9 +47,14 @@ public final class LinesRoster implements Iterable<Line> {
     }
 
     public void load() {
-        sRoster.add(new Line(1, "Muzeum", "Letnany"));
-        sRoster.add(new Line(500, "Muzeum", "Letnany"));
-        sRoster.add(new Line(42, "Muzeum", "Letnany"));
+        sRoster.add(new Metro(1, "Muzeum", "Letnany"));
+       sRoster.add(new Tram(2, "Muzeum", "Letnany"));
+        sRoster.add(new Bus(3, "Muzeum", "Letnany"));
+        sRoster.add(new Bus(140, "Muzeum", "Letnany"));
+        sRoster.add(new Bus(50, "Muzeum", "Letnany"));
+        sRoster.add(new Bus(555, "Muzeum", "Letnany"));
+        sRoster.add(new Metro(2, "Muzeum", "Letnany"));
+        sRoster.add(new Metro(3, "Muzeum", "Letnany"));
     }
 
     public boolean contains(Line newLine) {

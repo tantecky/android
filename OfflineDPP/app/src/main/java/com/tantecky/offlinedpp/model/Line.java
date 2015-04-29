@@ -2,8 +2,28 @@ package com.tantecky.offlinedpp.model;
 
 import com.tantecky.offlinedpp.Utils;
 
-public class Line {
-    private int mNumber;
+public abstract class Line {
+
+    //region enum
+    public enum Type {
+        BUS(0),
+        METRO(1),
+        TRAM(2);
+
+        private int mValue;
+
+        private Type(int value)
+        {
+            mValue = value;
+        }
+
+        public int getValue() {
+            return mValue;
+        }
+    }
+    //endregion
+
+    protected int mNumber;
     private String mFrom;
     private String mTo;
 
@@ -29,6 +49,11 @@ public class Line {
         return mNumber;
     }
 
+    // for overloading
+    public String getNumberAsString() {
+        return Integer.toString(mNumber);
+    }
+
     public String getFrom() {
         return mFrom;
     }
@@ -36,6 +61,8 @@ public class Line {
     public String getTo() {
         return mTo;
     }
+
+    public abstract Type getType();
 
     @Override
     public boolean equals(Object o) {
@@ -50,6 +77,9 @@ public class Line {
 
         Line line = (Line) o;
 
+        if(line.getType() != getType())
+            return false;
+
         return mNumber == line.getNumber()
                 && mFrom.equals(line.getFrom())
                 && mTo.equals(line.getTo());
@@ -62,6 +92,6 @@ public class Line {
 
     @Override
     public String toString() {
-        return String.format("Line: %d From: %s To: %s", mNumber, mFrom, mTo);
+        return String.format("Line: %d From: %s To: %s", getNumberAsString(), mFrom, mTo);
     }
 }
