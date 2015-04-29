@@ -22,4 +22,28 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/bus_w" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Malostranská"
+        android:id="@+id/from_label"
+        android:layout_alignTop="@+id/line_icon"
+        android:layout_toRightOf="@+id/line_icon"
+        android:layout_toEndOf="@+id/line_icon"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Muzeum"
+        android:id="@+id/to_label"
+        android:layout_below="@+id/from_label"
+        android:layout_toRightOf="@+id/line_icon"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/line_number"
+        android:layout_marginTop="10dp" />
+
 </RelativeLayout>

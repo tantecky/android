@@ -67,6 +67,12 @@ public class LinesRosterAdapter extends BaseAdapter {
         ImageView icon = (ImageView) view.findViewById(R.id.line_icon);
         icon.setImageResource(mIconsIds[line.getType().getValue()]);
 
+        TextView from = (TextView) view.findViewById(R.id.from_label);
+        from.setText(line.getFrom());
+
+        TextView to = (TextView) view.findViewById(R.id.to_label);
+        to.setText(line.getTo());
+
         return view;
     }
 }

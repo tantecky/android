@@ -47,14 +47,16 @@ public final class LinesRoster implements Iterable<Line> {
     }
 
     public void load() {
-        sRoster.add(new Metro(1, "Muzeum", "Letnany"));
-       sRoster.add(new Tram(2, "Muzeum", "Letnany"));
-        sRoster.add(new Bus(3, "Muzeum", "Letnany"));
-        sRoster.add(new Bus(140, "Muzeum", "Letnany"));
-        sRoster.add(new Bus(50, "Muzeum", "Letnany"));
-        sRoster.add(new Bus(555, "Muzeum", "Letnany"));
-        sRoster.add(new Metro(2, "Muzeum", "Letnany"));
-        sRoster.add(new Metro(3, "Muzeum", "Letnany"));
+        sRoster.add(new Metro(1, "I.P.Pavlova", "Tuchoměřice"));
+        sRoster.add(new Tram(2, "Poliklinika Černý Most", "Obchodní centrum Čakovice"));
+        sRoster.add(new Bus(140, "Českomoravská ", "Avia Letňany"));
+        sRoster.add(new Bus(50, "Podolská vodárna", "Palmovka"));
+        sRoster.add(new Bus(50, "Zemědělská univerzita", "Suchdol"));
+        sRoster.add(new Bus(50, "Nádraží Holešovice", "Dejvická"));
+        sRoster.add(new Metro(2, "Dolnoměcholupská ", "Chaplinovo náměstí"));
+        sRoster.add(new Metro(3, "Sídliště Malešice", "Želivského "));
+        sRoster.add(new Metro(2, "Na Košíku", "Satalice"));
+        sRoster.add(new Metro(3, "Smíchovské nádraží", "Lehovec"));
     }
 
     public boolean contains(Line newLine) {
