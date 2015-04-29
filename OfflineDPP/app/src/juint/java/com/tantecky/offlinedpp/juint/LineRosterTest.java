@@ -1,4 +1,4 @@
-package com.tantecky.offlinedpp;
+package com.tantecky.offlinedpp.juint;
 
 import com.tantecky.offlinedpp.model.Line;
 import com.tantecky.offlinedpp.model.LinesRoster;

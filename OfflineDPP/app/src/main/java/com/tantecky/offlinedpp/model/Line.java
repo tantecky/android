@@ -7,18 +7,6 @@ public class Line {
     private String mFrom;
     private String mTo;
 
-    public int getNumber() {
-        return mNumber;
-    }
-
-    public String getFrom() {
-        return mFrom;
-    }
-
-    public String getTo() {
-        return mTo;
-    }
-
     public Line(int number, String from, String to) {
         if (number < 1) {
             throw new IllegalArgumentException("Line argument is invalid");
@@ -35,6 +23,18 @@ public class Line {
         mNumber = number;
         mFrom = from;
         mTo = to;
+    }
+
+    public int getNumber() {
+        return mNumber;
+    }
+
+    public String getFrom() {
+        return mFrom;
+    }
+
+    public String getTo() {
+        return mTo;
     }
 
     @Override

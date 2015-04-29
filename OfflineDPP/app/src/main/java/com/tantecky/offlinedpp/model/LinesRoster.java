@@ -3,7 +3,7 @@ package com.tantecky.offlinedpp.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class LinesRoster implements Iterable<Line> {
+public final class LinesRoster implements Iterable<Line> {
 
     //region singleton
     private static LinesRoster sRoster = null;
