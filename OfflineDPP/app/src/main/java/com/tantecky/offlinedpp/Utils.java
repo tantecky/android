@@ -3,7 +3,7 @@ package com.tantecky.offlinedpp;
 import android.util.Log;
 
 public class Utils {
-    private final static String sMY_TAG = "MYAPP";
+    private final static String sMY_TAG = "OFFLINEDPP_APP";
 
     public static boolean IsNullOrEmpty(String str) {
         return str == null || str.isEmpty();

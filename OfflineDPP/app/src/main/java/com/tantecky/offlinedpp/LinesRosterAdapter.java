@@ -58,7 +58,7 @@ public class LinesRosterAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO see View holder
-        View view = mInflater.inflate(R.layout.listitem_line, null);
+        View view = mInflater.inflate(R.layout.listitem_line, parent, false);
 
         Line line = mRoster.get(position);
         TextView lineNumber = (TextView) view.findViewById(R.id.line_number);

@@ -12,7 +12,7 @@ public abstract class Line {
 
         private int mValue;
 
-        private Type(int value)
+        Type(int value)
         {
             mValue = value;
         }
@@ -92,6 +92,6 @@ public abstract class Line {
 
     @Override
     public String toString() {
-        return String.format("Line: %d From: %s To: %s", getNumberAsString(), mFrom, mTo);
+        return String.format("Line: %s From: %s To: %s", getNumberAsString(), mFrom, mTo);
     }
 }

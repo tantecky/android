@@ -81,7 +81,7 @@ public final class LinesRoster implements Iterable<Line> {
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<Line> iterator() {
         return new LinesRosterIterator();
     }
 }
