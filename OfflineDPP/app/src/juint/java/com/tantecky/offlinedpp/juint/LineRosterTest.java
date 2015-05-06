@@ -17,7 +17,8 @@ public class LineRosterTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mRoster = new LinesRoster();
+        mRoster = LinesRoster.getInstance();
+        mRoster.clear();
     }
 
     public void testIsEmpty() {

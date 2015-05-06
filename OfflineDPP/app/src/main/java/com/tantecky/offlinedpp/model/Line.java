@@ -24,6 +24,7 @@ public abstract class Line {
     //endregion
 
     protected int mNumber;
+    private String mName;
     private String mFrom;
     private String mTo;
 
@@ -43,6 +44,10 @@ public abstract class Line {
         mNumber = number;
         mFrom = from;
         mTo = to;
+    }
+
+    public String getName() {
+        return mName;
     }
 
     public int getNumber() {

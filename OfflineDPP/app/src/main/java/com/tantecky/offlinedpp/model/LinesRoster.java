@@ -40,12 +40,7 @@ public final class LinesRoster implements Iterable<Line> {
 
     private ArrayList<Line> mLines = new ArrayList<>();
 
-    /**
-     * just for JUint!!!
-     */
-    // TODO refactor tests
-    public LinesRoster() {
-    }
+    private LinesRoster() {}
 
     public void load() {
         sRoster.add(new Metro(1, "I.P.Pavlova", "Tuchoměřice"));
@@ -79,6 +74,10 @@ public final class LinesRoster implements Iterable<Line> {
 
     public boolean isEmpty() {
         return mLines.isEmpty();
+    }
+
+    public void clear() {
+        mLines.clear();
     }
 
     @Override
