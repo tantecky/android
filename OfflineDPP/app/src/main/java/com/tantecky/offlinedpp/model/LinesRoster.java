@@ -43,6 +43,7 @@ public final class LinesRoster implements Iterable<Line> {
     /**
      * just for JUint!!!
      */
+    // TODO refactor tests
     public LinesRoster() {
     }
 

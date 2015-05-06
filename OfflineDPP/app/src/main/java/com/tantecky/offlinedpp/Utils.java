@@ -14,9 +14,8 @@ public class Utils {
     }
 
     public static void log(String msg) {
-        Log.i(sMY_TAG, msg);
+        Log.d(sMY_TAG, msg);
     }
-
 
     public static void logWTF(String msg) {
         Log.wtf(sMY_TAG, msg);
