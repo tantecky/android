@@ -2,8 +2,8 @@ package com.tantecky.offlinedpp.model;
 
 
 public final class Bus extends Line {
-    public Bus(int number, String from, String to) {
-        super(number, from, to);
+    public Bus(String name, String from, String to) {
+        super(name, from, to);
     }
 
     @Override

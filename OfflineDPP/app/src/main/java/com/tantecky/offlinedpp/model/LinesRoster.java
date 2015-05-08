@@ -43,16 +43,16 @@ public final class LinesRoster implements Iterable<Line> {
     private LinesRoster() {}
 
     public void load() {
-        sRoster.add(new Metro(1, "I.P.Pavlova", "Tuchoměřice"));
-        sRoster.add(new Tram(2, "Poliklinika Černý Most", "Obchodní centrum Čakovice"));
-        sRoster.add(new Bus(140, "Českomoravská ", "Avia Letňany"));
-        sRoster.add(new Bus(50, "Podolská vodárna", "Palmovka"));
-        sRoster.add(new Bus(50, "Zemědělská univerzita", "Suchdol"));
-        sRoster.add(new Bus(50, "Nádraží Holešovice", "Dejvická"));
-        sRoster.add(new Metro(2, "Dolnoměcholupská ", "Chaplinovo náměstí"));
-        sRoster.add(new Metro(3, "Sídliště Malešice", "Želivského "));
-        sRoster.add(new Metro(2, "Na Košíku", "Satalice"));
-        sRoster.add(new Metro(3, "Smíchovské nádraží", "Lehovec"));
+        sRoster.add(new Metro("Metro C", "I.P.Pavlova", "Tuchoměřice"));
+        sRoster.add(new Tram("Tram 2", "Poliklinika Černý Most", "Obchodní centrum Čakovice"));
+        sRoster.add(new Bus("Bus 140", "Českomoravská ", "Avia Letňany"));
+        sRoster.add(new Bus("Bus 50", "Podolská vodárna", "Palmovka"));
+        sRoster.add(new Bus("Bus 50", "Zemědělská univerzita", "Suchdol"));
+        sRoster.add(new Bus("Bus 50", "Nádraží Holešovice", "Dejvická"));
+        sRoster.add(new Metro("Metro A", "Dolnoměcholupská ", "Chaplinovo náměstí"));
+        sRoster.add(new Metro("Metro C", "Sídliště Malešice", "Želivského "));
+        sRoster.add(new Metro("Metro C", "Na Košíku", "Satalice"));
+        sRoster.add(new Metro("Metro B", "Smíchovské nádraží", "Lehovec"));
     }
 
     public boolean contains(Line newLine) {

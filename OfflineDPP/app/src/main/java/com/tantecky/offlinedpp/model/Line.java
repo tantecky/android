@@ -2,6 +2,9 @@ package com.tantecky.offlinedpp.model;
 
 import com.tantecky.offlinedpp.Utils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public abstract class Line {
 
     //region enum
@@ -12,8 +15,7 @@ public abstract class Line {
 
         private int mValue;
 
-        Type(int value)
-        {
+        Type(int value) {
             mValue = value;
         }
 
@@ -23,14 +25,17 @@ public abstract class Line {
     }
     //endregion
 
+    private final static Pattern sNUMBER = Pattern.compile("\\d+");
+    private final static Pattern sLETTER = Pattern.compile("[ABC]");
+
     protected int mNumber;
     private String mName;
     private String mFrom;
     private String mTo;
 
-    public Line(int number, String from, String to) {
-        if (number < 1) {
-            throw new IllegalArgumentException("Line argument is invalid");
+    public Line(String name, String from, String to) {
+        if (Utils.IsNullOrEmpty(name)) {
+            throw new IllegalArgumentException("Name argument is invalid");
         }
 
         if (Utils.IsNullOrEmpty(from)) {
@@ -41,9 +46,36 @@ public abstract class Line {
             throw new IllegalArgumentException("To argument is invalid");
         }
 
-        mNumber = number;
+        mName = name;
         mFrom = from;
         mTo = to;
+
+        resolveNumber();
+    }
+
+    /**
+     * Obtain line number from name
+     */
+    private void resolveNumber() {
+        String name = getName();
+        Matcher lineNumber = sNUMBER.matcher(name);
+
+        if (lineNumber.find()) {
+            mNumber = Integer.parseInt(lineNumber.group());
+        } else {
+            Matcher metroLetter = sLETTER.matcher(name);
+
+            if (metroLetter.find()) {
+                mNumber = Metro.letterToLineNumber(metroLetter.group());
+            } else {
+                throw new IllegalArgumentException("Unknown metro letter");
+            }
+
+        }
+
+        if (mNumber < 1) {
+            throw new IllegalArgumentException("Line argument is invalid");
+        }
     }
 
     public String getName() {
@@ -54,7 +86,11 @@ public abstract class Line {
         return mNumber;
     }
 
-    // for overloading
+    /**
+     * for overloading
+     *
+     * @return line number as String, metro returns letter
+     */
     public String getNumberAsString() {
         return Integer.toString(mNumber);
     }
@@ -82,21 +118,22 @@ public abstract class Line {
 
         Line line = (Line) o;
 
-        if(line.getType() != getType())
+        if (line.getType() != getType())
             return false;
 
-        return mNumber == line.getNumber()
+        return mName.equals(line.getName())
                 && mFrom.equals(line.getFrom())
                 && mTo.equals(line.getTo());
     }
 
     @Override
     public int hashCode() {
-        return mNumber ^ mFrom.hashCode() ^ mTo.hashCode();
+        return mName.hashCode() ^ mFrom.hashCode() ^ mTo.hashCode();
     }
 
     @Override
     public String toString() {
-        return String.format("Line: %s From: %s To: %s", getNumberAsString(), mFrom, mTo);
+        return String.format("Line: %s Name: %s From: %s To: %s", getNumberAsString(),
+                mName, mFrom, mTo);
     }
 }

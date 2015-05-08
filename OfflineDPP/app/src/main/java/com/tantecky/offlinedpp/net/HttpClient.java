@@ -4,7 +4,6 @@ import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-import com.tantecky.offlinedpp.Utils;
 
 import java.io.IOException;
 

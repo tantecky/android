@@ -10,9 +10,9 @@ import junit.framework.TestCase;
 
 public class LineRosterTest extends TestCase {
     private LinesRoster mRoster;
-    private Line mLine1 = new Metro(1, "Vltavská", "Holešovice");
-    private Line mLine1Dup = new Metro(1, "Vltavská", "Holešovice");
-    private Line mLine2 = new Bus(42, "Muzeum", "Holešovice");
+    private Line mLine1 = new Metro("Metro A", "Vltavská", "Holešovice");
+    private Line mLine1Dup = new Metro("Metro A", "Vltavská", "Holešovice");
+    private Line mLine2 = new Bus("Bus 42", "Muzeum", "Holešovice");
 
     @Override
     protected void setUp() throws Exception {
