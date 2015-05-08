@@ -25,8 +25,10 @@ public abstract class Line {
     }
     //endregion
 
+    //region static members
     private final static Pattern sNUMBER = Pattern.compile("\\d+");
     private final static Pattern sLETTER = Pattern.compile("[ABC]");
+    //endregion
 
     protected int mNumber;
     private String mName;

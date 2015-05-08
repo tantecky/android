@@ -1,4 +1,5 @@
 package com.tantecky.offlinedpp.juint;
+
 import com.tantecky.offlinedpp.model.Bus;
 import com.tantecky.offlinedpp.model.Line;
 import com.tantecky.offlinedpp.model.Metro;
@@ -11,15 +12,13 @@ public class LineTest extends TestCase {
     private final Line mMetro = new Metro("Metro C", "Vltavská", "Holešovice");
     private final Line mTram = new Metro("Tram 54", "Vltavská", "Holešovice");
 
-    public void testEqual()
-    {
+    public void testEqual() {
         Line line2 = new Bus("Bus 42", "Vltavská", "Holešovice");
-        assertTrue(mBus.equals(mBus));
-        assertTrue(mBus.equals(line2));
+        assertSame(mBus, mBus);
+        assertEquals(mBus, line2);
     }
 
-    public void testNotEqual()
-    {
+    public void testNotEqual() {
         assertFalse(mBus.equals(new Bus("Bus 1", "Vltavská", "Holešovice")));
         assertFalse(mBus.equals(new Bus("Bus 42", "vVltavská", "Holešovice")));
         assertFalse(mBus.equals(new Bus("Bus 43", "Vltavská", "Holešovice")));
@@ -27,8 +26,7 @@ public class LineTest extends TestCase {
         assertFalse(mBus.equals(new Tram("Tram 42", "Vltavská", "Holešovice")));
     }
 
-    public void testResolveNumber()
-    {
+    public void testResolveNumber() {
         assertEquals(mBus.getNumber(), 42);
         assertEquals(mMetro.getNumber(), 3);
         assertEquals(mTram.getNumber(), 54);

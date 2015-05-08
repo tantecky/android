@@ -17,7 +17,7 @@ public final class LinesRoster implements Iterable<Line> {
     }
     //endregion
 
-    //region iterator
+    //region iterator class
     private class LinesRosterIterator implements Iterator<Line> {
         private int mCurrentIndex = 0;
 
