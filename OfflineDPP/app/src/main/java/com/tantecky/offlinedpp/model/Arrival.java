@@ -1,7 +1,5 @@
 package com.tantecky.offlinedpp.model;
 
-import java.util.Comparator;
-
 public final class Arrival implements Comparable<Arrival> {
     //region enum
     public enum DayType {
