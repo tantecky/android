@@ -14,7 +14,7 @@ public class LineTest extends TestCase {
 
     public void testEqual() {
         Line line2 = new Bus("Bus 42", "Vltavská", "Holešovice");
-        assertSame(mBus, mBus);
+        assertEquals(mBus, mBus);
         assertEquals(mBus, line2);
     }
 

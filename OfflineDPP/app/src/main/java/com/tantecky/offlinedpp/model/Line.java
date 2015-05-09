@@ -36,15 +36,15 @@ public abstract class Line {
     private String mTo;
 
     public Line(String name, String from, String to) {
-        if (Utils.IsNullOrEmpty(name)) {
+        if (Utils.isNullOrEmpty(name)) {
             throw new IllegalArgumentException("Name argument is invalid");
         }
 
-        if (Utils.IsNullOrEmpty(from)) {
+        if (Utils.isNullOrEmpty(from)) {
             throw new IllegalArgumentException("From argument is invalid");
         }
 
-        if (Utils.IsNullOrEmpty(to)) {
+        if (Utils.isNullOrEmpty(to)) {
             throw new IllegalArgumentException("To argument is invalid");
         }
 

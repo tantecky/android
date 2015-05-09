@@ -93,13 +93,12 @@ public final class Arrival implements Comparable<Arrival> {
         Arrival arrival = (Arrival) o;
 
         return mMinute == arrival.getMinute()
-                && mHour == arrival.getHour()
-                && mDayType == arrival.getDayType();
+                && mHour == arrival.getHour();
     }
 
     @Override
     public int hashCode() {
-        return mHour ^ mMinute ^ mDayType.getValue();
+        return mHour ^ mMinute;
     }
 
     @Override
