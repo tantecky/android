@@ -1,6 +1,6 @@
 package com.tantecky.offlinedpp.net;
 
-import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -11,17 +11,39 @@ public final class HttpClient {
     private final static OkHttpClient sClient = new OkHttpClient();
 
     private Request.Builder mBuilder;
+    private FormEncodingBuilder mFormData;
 
     public HttpClient() {
-        mBuilder = new Request.Builder();
+    }
+
+    private Request buildRequest(String url) {
+        if (mBuilder == null)
+            mBuilder = new Request.Builder();
+
+        if (mFormData == null)
+            return mBuilder.url(url).build();
+        else
+            return mBuilder.url(url).post(mFormData.build()).build();
     }
 
     public void addHeader(String name, String value) {
         mBuilder = mBuilder.addHeader(name, value);
     }
 
-    public String get(String url) {
-        Request request = mBuilder.url(url).build();
+    public void addFormData(String name, String value) {
+        if (mFormData == null)
+            mFormData = new FormEncodingBuilder();
+
+        mFormData = mFormData.add(name, value);
+    }
+
+    /**
+     * Dispatch GET/POST requests, type depends if there are any FormData
+     * @param url
+     * @return HTTP body response, null in case of error
+     */
+    public String fetch(String url) {
+        Request request = buildRequest(url);
 
         try {
             Response response = sClient.newCall(request).execute();
@@ -33,27 +55,9 @@ public final class HttpClient {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
+        } finally {
+            mBuilder = null;
+            mFormData = null;
         }
-    }
-
-    public void getAsync(String url, final AsyncCallback callback) {
-        Request request = mBuilder.url(url).build();
-
-        sClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Request request, IOException e) {
-                e.printStackTrace();
-
-                callback.onFailure();
-            }
-
-            @Override
-            public void onResponse(Response response) throws IOException {
-                if (!response.isSuccessful())
-                    throw new IOException("Unexpected code " + response);
-
-                callback.onDone(response.body().string());
-            }
-        });
     }
 }

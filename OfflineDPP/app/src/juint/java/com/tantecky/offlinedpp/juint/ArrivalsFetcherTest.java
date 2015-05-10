@@ -1,16 +1,12 @@
 package com.tantecky.offlinedpp.juint;
 
 import android.content.res.Resources;
-import android.test.ActivityTestCase;
 import android.test.InstrumentationTestCase;
 
 import com.tantecky.offlinedpp.R;
 import com.tantecky.offlinedpp.Utils;
 import com.tantecky.offlinedpp.net.ArrivalsFetcher;
-
-import junit.framework.TestCase;
-
-import java.io.InputStream;
+import com.tantecky.offlinedpp.net.ParserException;
 
 public class ArrivalsFetcherTest extends InstrumentationTestCase {
     private Resources mRes;
@@ -21,11 +17,39 @@ public class ArrivalsFetcherTest extends InstrumentationTestCase {
         mRes = getInstrumentation().getTargetContext().getResources();
     }
 
-    public void testObtainSessionInfo() {
+    public void testObtainSessionInfo() throws ParserException {
 
         String html = Utils.readRawTextFile(mRes, R.raw.spojeni);
         assertNotNull(html);
 
         ArrivalsFetcher.fromTestCallObtainSessionInfo(html);
+    }
+
+    public void testBus140() throws ParserException {
+        String html = Utils.readRawTextFile(mRes, R.raw.bus_140);
+        assertNotNull(html);
+
+        assertNotNull(ArrivalsFetcher.fromTestCallParseArrivalsTables(html));
+    }
+
+    public void testBus510() throws ParserException {
+        String html = Utils.readRawTextFile(mRes, R.raw.bus_510);
+        assertNotNull(html);
+
+        assertNotNull(ArrivalsFetcher.fromTestCallParseArrivalsTables(html));
+    }
+
+    public void testMetroB() throws ParserException {
+        String html = Utils.readRawTextFile(mRes, R.raw.metro_b);
+        assertNotNull(html);
+
+        assertNotNull(ArrivalsFetcher.fromTestCallParseArrivalsTables(html));
+    }
+
+    public void testTram3() throws ParserException {
+        String html = Utils.readRawTextFile(mRes, R.raw.tram_3);
+        assertNotNull(html);
+
+        assertNotNull(ArrivalsFetcher.fromTestCallParseArrivalsTables(html));
     }
 }

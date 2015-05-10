@@ -1,39 +1,6 @@
 package com.tantecky.offlinedpp.model;
 
 public final class Arrival implements Comparable<Arrival> {
-    //region enum
-    public enum DayType {
-        WORK_DAY(0),
-        SATURDAY(1),
-        SUNDAY(2);
-
-        private int mValue;
-
-        DayType(int value) {
-            mValue = value;
-        }
-
-        public int getValue() {
-            return mValue;
-        }
-
-        @Override
-        public String toString() {
-            switch (mValue)
-            {
-                case 0:
-                    return "WORK_DAY";
-                case 1:
-                    return "SATURDAY";
-                case 2:
-                    return "SUNDAY";
-                default:
-                    throw new IllegalArgumentException("Invalid DayType");
-            }
-        }
-    }
-    //endregion
-
     //region static members
 
     /**

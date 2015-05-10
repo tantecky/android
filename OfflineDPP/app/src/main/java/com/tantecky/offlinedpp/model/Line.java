@@ -70,6 +70,7 @@ public abstract class Line {
             if (metroLetter.find()) {
                 mNumber = Metro.letterToLineNumber(metroLetter.group());
             } else {
+                // TODO metro can have a number
                 throw new IllegalArgumentException("Unknown metro letter");
             }
 

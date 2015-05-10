@@ -1,6 +1,7 @@
 package com.tantecky.offlinedpp.juint;
 
 import com.tantecky.offlinedpp.model.Arrival;
+import com.tantecky.offlinedpp.model.DayType;
 
 import junit.framework.TestCase;
 
@@ -8,11 +9,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class ArrivalTest extends TestCase {
-    private final Arrival mArrival1 = new Arrival(14, 5, Arrival.DayType.SATURDAY);
-    private final Arrival mArrival2 = new Arrival(14, 0, Arrival.DayType.SATURDAY);
-    private final Arrival mArrival3 = new Arrival(15, 5, Arrival.DayType.SATURDAY);
-    private final Arrival mArrival4 = new Arrival(20, 10, Arrival.DayType.SUNDAY);
-    private final Arrival mArrival5 = new Arrival(14, 5, Arrival.DayType.WORK_DAY);
+    private final Arrival mArrival1 = new Arrival(14, 5, DayType.SATURDAY);
+    private final Arrival mArrival2 = new Arrival(14, 0, DayType.SATURDAY);
+    private final Arrival mArrival3 = new Arrival(15, 5, DayType.SATURDAY);
+    private final Arrival mArrival4 = new Arrival(20, 10, DayType.SUNDAY);
+    private final Arrival mArrival5 = new Arrival(14, 5, DayType.WORK_DAY);
 
     public void testEqual() {
 
