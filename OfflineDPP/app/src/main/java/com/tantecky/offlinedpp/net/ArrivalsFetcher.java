@@ -3,6 +3,7 @@ package com.tantecky.offlinedpp.net;
 
 import com.tantecky.offlinedpp.Utils;
 import com.tantecky.offlinedpp.model.Arrival;
+import com.tantecky.offlinedpp.model.DayType;
 import com.tantecky.offlinedpp.model.Line;
 
 import org.jsoup.Jsoup;
@@ -55,6 +56,7 @@ public final class ArrivalsFetcher {
     }
 
     private static void addArrivals(Element table, List<Arrival> arrivals) throws ParserException {
+        DayType dayType = getDayType(table);
 
         Elements rows = table.select("tbody tr");
 
@@ -170,11 +172,9 @@ public final class ArrivalsFetcher {
 
                     for (double newMinute = minute; newMinute < 60.0; newMinute += delta) {
                         // add it into a list
-                        Utils.log(String.format("%d:%d", hour, (int)Math.floor(newMinute)));
+                        Utils.log(String.format("%d:%d", hour, (int) Math.floor(newMinute)));
                     }
-                }
-                else
-                {
+                } else {
                     // no interval, just add it into a list
                     Utils.log(String.format("%d:%d", hour, minute));
                 }
@@ -182,6 +182,21 @@ public final class ArrivalsFetcher {
         }
 
     }
+
+    private static DayType getDayType(Element table) throws ParserException {
+        Elements element = table.select("thead th:eq(1)");
+
+        if (element.size() != 1)
+            throw new ParserException("Missing table header");
+
+        try {
+            DayType dayType = DayType.fromString(element.text());
+            return dayType;
+        } catch (IllegalArgumentException ex) {
+            throw new ParserException(ex.getMessage());
+        }
+    }
+
 
     private static String fetchArrivals(HttpClient client, Line line) throws IOException {
         client.addFormData("txtLine", line.getName());
