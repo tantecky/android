@@ -35,7 +35,7 @@ public abstract class Line {
     private String mFrom;
     private String mTo;
 
-    public Line(String name, String from, String to) {
+    public Line(String name, String from, String to) throws IllegalArgumentException {
         if (Utils.isNullOrEmpty(name)) {
             throw new IllegalArgumentException("Name argument is invalid");
         }
@@ -58,7 +58,7 @@ public abstract class Line {
     /**
      * Obtain line number from name
      */
-    private void resolveNumber() {
+    private void resolveNumber() throws IllegalArgumentException {
         String name = getName();
         Matcher lineNumber = sNUMBER.matcher(name);
 

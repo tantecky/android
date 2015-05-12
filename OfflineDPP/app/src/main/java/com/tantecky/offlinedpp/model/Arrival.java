@@ -5,6 +5,7 @@ public final class Arrival implements Comparable<Arrival> {
 
     /**
      * Simple arrival subtraction does not do any time wrapping
+     *
      * @param arrival1 arrival1
      * @param arrival2 arrival2
      * @return arrival1 - arrival2 in minutes
@@ -18,8 +19,16 @@ public final class Arrival implements Comparable<Arrival> {
     private int mHour;
     private int mMinute;
     private DayType mDayType;
+    private boolean mLowFloor;
+    private int mStartInterval;
+    private int mEndInterval;
 
-    public Arrival(int hour, int minute, DayType type) {
+    public Arrival(int hour, int minute, DayType type) throws IllegalArgumentException {
+        this(hour, minute, type, false, 0, 0);
+    }
+
+    public Arrival(int hour, int minute, DayType type, boolean lowFloor,
+                   int startInterval, int endInterval) throws IllegalArgumentException {
         if (hour < 0 || hour > 23) {
             throw new IllegalArgumentException("Invalid hour");
         }
@@ -28,10 +37,24 @@ public final class Arrival implements Comparable<Arrival> {
             throw new IllegalArgumentException("Invalid minute");
         }
 
+        if (startInterval < 0) {
+            throw new IllegalArgumentException("Negative startInterval");
+        }
+
+        if (endInterval < 0) {
+            throw new IllegalArgumentException("Negative endInterval");
+        }
+
+        if (startInterval != 0 && startInterval >= endInterval) {
+            throw new IllegalArgumentException("startInterval >= endInterval");
+        }
+
         mHour = hour;
         mMinute = minute;
         mDayType = type;
-
+        mLowFloor = lowFloor;
+        mStartInterval = startInterval;
+        mEndInterval = endInterval;
     }
 
     public int getHour() {
