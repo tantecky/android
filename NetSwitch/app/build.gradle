@@ -32,6 +32,8 @@ dependencies {
     compile 'com.stericson.RootTools.RootTools:RootTools@aar'
     compile 'com.stericson.RootShell.RootShell:RootShell@aar'
     implementation 'com.android.support:design:27.0.2'
+    implementation "android.arch.lifecycle:common-java8:1.0.0"
+    implementation "android.arch.lifecycle:extensions:1.0.0"
 }
 
 repositories{

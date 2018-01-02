@@ -1,17 +1,19 @@
 package cz.antecky.netswitch.ui;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.provider.Settings;
-import android.support.design.widget.Snackbar;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import cz.antecky.netswitch.NetController;
@@ -21,39 +23,41 @@ import static android.Manifest.permission.READ_PHONE_STATE;
 
 public class MainActivity extends AppCompatActivity {
     private final static int READ_PHONE_STATE_REQUEST = READ_PHONE_STATE.hashCode() & 0xFFFF;
+    private final static String TAG = "MainActivity";
 
     private NetController netController;
 
     private Switch wifiSwitch;
     private Switch mobileDataSwitch;
 
-    private void onWifiSwitchClick(View view) {
-        boolean checked = wifiSwitch.isChecked();
-        Log.i("onWifiSwitchClick", String.valueOf(checked));
+    private void onWifiSwitchChanged(CompoundButton buttonView, boolean isChecked) {
+        Log.i(TAG, "onWifiSwitchChanged: "+ String.valueOf(isChecked));
 
-        boolean success = netController.setWifiEnabled(checked);
+        boolean success = netController.setWifiEnabled(isChecked);
 
         if (!success) {
-            wifiSwitch.setChecked(!checked);
+            wifiSwitch.setOnCheckedChangeListener(null);
+            wifiSwitch.toggle();
+            wifiSwitch.setOnCheckedChangeListener(this::onWifiSwitchChanged);
         }
     }
 
-    private void onMobileSwitchClick(View view) {
-        boolean checked = mobileDataSwitch.isChecked();
-        Log.i("onMobileSwitchClick", String.valueOf(checked));
+    private void onMobileSwitchChanged(CompoundButton buttonView, boolean isChecked) {
+        Log.i(TAG, "onMobileSwitchChanged: "+ String.valueOf(isChecked));
 
         if (ContextCompat.checkSelfPermission(this, READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
-            mobileDataSwitch.setChecked(!checked);
             ActivityCompat.requestPermissions(this, new String[]{READ_PHONE_STATE},
                     READ_PHONE_STATE_REQUEST);
             return;
         }
 
-        boolean success = netController.setMobileDataEnabled(checked);
+        boolean success = netController.setMobileDataEnabled(isChecked);
 
         if (!success) {
-            mobileDataSwitch.setChecked(!checked);
+            mobileDataSwitch.setOnCheckedChangeListener(null);
+            mobileDataSwitch.toggle();
+            mobileDataSwitch.setOnCheckedChangeListener(this::onMobileSwitchChanged);
         }
 
     }
@@ -69,30 +73,46 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(TAG, "onCreate");
         setContentView(R.layout.activity_main);
 
         netController = new NetController(getApplicationContext());
 
         wifiSwitch = findViewById(R.id.switch_wifi);
-        wifiSwitch.setOnClickListener(this::onWifiSwitchClick);
+        wifiSwitch.setOnCheckedChangeListener(this::onWifiSwitchChanged);
 
         mobileDataSwitch = findViewById(R.id.switch_mobile_data);
-        mobileDataSwitch.setOnClickListener(this::onMobileSwitchClick);
+        mobileDataSwitch.setOnCheckedChangeListener(this::onMobileSwitchChanged);
 
-        wifiSwitch.setChecked(netController.isWifiEnabled());
-        mobileDataSwitch.setChecked(netController.isMobileDataEnabled());
+        wifiSwitch.setChecked(netController.getIsWifiEnabled());
+        mobileDataSwitch.setChecked(netController.getIsMobileDataEnabled());
 
-        Log.i("Run", "onCreate");
+        registerReceiver(netController.getNetworkChangeReceiver(),
+                new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i(TAG, "onResume");
 
-        //  wifiSwitch.setChecked(netController.isWifiEnabled());
-        //  mobileDataSwitch.setChecked(netController.isMobileDataEnabled());
-        //   Log.i("onResume data", String.valueOf(netController.isMobileDataEnabled()));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(TAG, "onPause");
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "onDestroy");
+
+        unregisterReceiver(netController.getNetworkChangeReceiver());
     }
 
     @Override
@@ -101,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == READ_PHONE_STATE_REQUEST) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mobileDataSwitch.performClick();
+                onMobileSwitchChanged(null, mobileDataSwitch.isChecked());
             } else {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                         READ_PHONE_STATE)) {
@@ -116,8 +136,10 @@ public class MainActivity extends AppCompatActivity {
                     snackbar.setAction("CHANGE", v -> goToSettings());
                     snackbar.show();
                 }
+                mobileDataSwitch.setOnCheckedChangeListener(null);
+                mobileDataSwitch.toggle();
+                mobileDataSwitch.setOnCheckedChangeListener(this::onMobileSwitchChanged);
             }
         }
-
     }
 }

@@ -3,7 +3,11 @@ package cz.antecky.netswitch;
 import com.stericson.RootShell.execution.Command;
 import com.stericson.RootTools.RootTools;
 
+import android.arch.lifecycle.ViewModel;
+import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.provider.Settings;
 import android.telephony.SubscriptionManager;
@@ -12,21 +16,24 @@ import android.telephony.TelephonyManager;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-public final class NetController {
+public final class NetController extends ViewModel {
     private final static String MOBILE_DATA = "mobile_data";
 
     private TelephonyManager teleManager;
     private WifiManager wifiManager;
     private SubscriptionManager subManager;
-    private Context appContext;
+    private ContentResolver contentResolver;
+
+    private boolean isMobileDataEnabled;
+    private boolean isWifiEnabled;
+    private BroadcastReceiver networkChangeReceiver;
 
     private String getTransactionCode() {
         try {
-            final TelephonyManager tManager = (TelephonyManager) appContext.getSystemService(Context.TELEPHONY_SERVICE);
-            final Class<?> tClass = Class.forName(tManager.getClass().getName());
+            final Class<?> tClass = Class.forName(teleManager.getClass().getName());
             final Method tMethod = tClass.getDeclaredMethod("getITelephony");
             tMethod.setAccessible(true);
-            final Object tStub = tMethod.invoke(tManager);
+            final Object tStub = tMethod.invoke(teleManager);
             final Class<?> tSubClass = Class.forName(tStub.getClass().getName());
             final Class<?> mClass = tSubClass.getDeclaringClass();
             final Field field = mClass.getDeclaredField("TRANSACTION_setDataEnabled");
@@ -39,26 +46,57 @@ public final class NetController {
         }
     }
 
-    public NetController(Context appContext) {
-        this.appContext = appContext;
 
-        teleManager = (TelephonyManager) appContext.getSystemService(Context.TELEPHONY_SERVICE);
-        wifiManager = (WifiManager) appContext.getSystemService(Context.WIFI_SERVICE);
-        subManager = (SubscriptionManager) appContext.getSystemService(
-                Context.TELEPHONY_SUBSCRIPTION_SERVICE);
 
-    }
-
-    public boolean isMobileDataEnabled() {
+    private boolean determineIsMobileDataEnabled() {
         boolean mobileData = false;
         if (teleManager.getSimState() == TelephonyManager.SIM_STATE_READY) {
 
-            mobileData = Settings.Global.getInt(appContext.getContentResolver(), MOBILE_DATA,
+            mobileData = Settings.Global.getInt(contentResolver, MOBILE_DATA,
                     0) == 1;
 
         }
 
         return mobileData;
+    }
+
+    private boolean determineIsWifiEnabled() {
+        return wifiManager.isWifiEnabled();
+    }
+
+    public NetController(Context appContext) {
+
+        teleManager = (TelephonyManager) appContext.getSystemService(Context.TELEPHONY_SERVICE);
+        wifiManager = (WifiManager) appContext.getSystemService(Context.WIFI_SERVICE);
+        subManager = (SubscriptionManager) appContext.getSystemService(
+                Context.TELEPHONY_SUBSCRIPTION_SERVICE);
+        contentResolver = appContext.getContentResolver();
+        networkChangeReceiver = new NetworkChangeReceiver(this);
+
+        updateState();
+    }
+
+    public void updateState() {
+        boolean dataEnabled = determineIsMobileDataEnabled();
+
+        if (dataEnabled != isMobileDataEnabled) {
+            isMobileDataEnabled = dataEnabled;
+        }
+
+        boolean wifiEnable = determineIsWifiEnabled();
+
+        if (wifiEnable != isWifiEnabled) {
+            isWifiEnabled = wifiEnable;
+        }
+
+    }
+
+    public BroadcastReceiver getNetworkChangeReceiver() {
+        return networkChangeReceiver;
+    }
+
+    public boolean getIsMobileDataEnabled() {
+        return isMobileDataEnabled;
     }
 
     public boolean setMobileDataEnabled(boolean value) {
@@ -92,8 +130,8 @@ public final class NetController {
         return true;
     }
 
-    public boolean isWifiEnabled() {
-        return wifiManager.isWifiEnabled();
+    public boolean getIsWifiEnabled() {
+        return isWifiEnabled;
     }
 
     public boolean setWifiEnabled(boolean value) {
