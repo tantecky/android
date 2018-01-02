@@ -97,9 +97,6 @@ public final class NetController {
     }
 
     public boolean setWifiEnabled(boolean value) {
-        wifiManager.setWifiEnabled(value);
-
-        return value == isWifiEnabled();
+        return wifiManager.setWifiEnabled(value);
     }
-
 }
