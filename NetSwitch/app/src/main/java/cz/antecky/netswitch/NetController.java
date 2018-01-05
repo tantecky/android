@@ -3,30 +3,36 @@ package cz.antecky.netswitch;
 import com.stericson.RootShell.execution.Command;
 import com.stericson.RootTools.RootTools;
 
-import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-public final class NetController extends ViewModel {
+public final class NetController extends BroadcastReceiver {
     private final static String MOBILE_DATA = "mobile_data";
+    private final static String TAG = "NetController";
+
 
     private TelephonyManager teleManager;
     private WifiManager wifiManager;
     private SubscriptionManager subManager;
     private ContentResolver contentResolver;
 
-    private boolean isMobileDataEnabled;
-    private boolean isWifiEnabled;
-    private BroadcastReceiver networkChangeReceiver;
+    private MutableLiveData<Boolean> isMobileDataEnabled;
+    private MutableLiveData<Boolean> isWifiEnabled;
 
     private String getTransactionCode() {
         try {
@@ -71,32 +77,48 @@ public final class NetController extends ViewModel {
         subManager = (SubscriptionManager) appContext.getSystemService(
                 Context.TELEPHONY_SUBSCRIPTION_SERVICE);
         contentResolver = appContext.getContentResolver();
-        networkChangeReceiver = new NetworkChangeReceiver(this);
+
 
         updateState();
     }
 
-    public void updateState() {
+    private void updateState() {
         boolean dataEnabled = determineIsMobileDataEnabled();
 
-        if (dataEnabled != isMobileDataEnabled) {
-            isMobileDataEnabled = dataEnabled;
+        if(isMobileDataEnabled == null) {
+            isMobileDataEnabled = new MutableLiveData<>();
+            isMobileDataEnabled.setValue(dataEnabled);
+        }
+        else if (dataEnabled != isMobileDataEnabled.getValue().booleanValue()) {
+            isMobileDataEnabled.setValue(dataEnabled);
         }
 
         boolean wifiEnable = determineIsWifiEnabled();
 
-        if (wifiEnable != isWifiEnabled) {
-            isWifiEnabled = wifiEnable;
+        if(isWifiEnabled == null) {
+            isWifiEnabled = new MutableLiveData<>();
+            isWifiEnabled.setValue(wifiEnable);
+        }
+        else if (wifiEnable != isWifiEnabled.getValue().booleanValue()) {
+            isWifiEnabled.setValue(wifiEnable);
         }
 
     }
 
-    public BroadcastReceiver getNetworkChangeReceiver() {
-        return networkChangeReceiver;
+    public void observeMobileData(@NonNull LifecycleOwner owner,
+                                  @NonNull Observer<Boolean> observer) {
+
+        isMobileDataEnabled.observe(owner, observer);
+    }
+
+    public void observeWifi(@NonNull LifecycleOwner owner,
+                                  @NonNull Observer<Boolean> observer) {
+
+        isWifiEnabled.observe(owner, observer);
     }
 
     public boolean getIsMobileDataEnabled() {
-        return isMobileDataEnabled;
+        return isMobileDataEnabled.getValue().booleanValue();
     }
 
     public boolean setMobileDataEnabled(boolean value) {
@@ -131,10 +153,21 @@ public final class NetController extends ViewModel {
     }
 
     public boolean getIsWifiEnabled() {
-        return isWifiEnabled;
+        return isWifiEnabled.getValue().booleanValue();
     }
 
     public boolean setWifiEnabled(boolean value) {
         return wifiManager.setWifiEnabled(value);
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (!isInitialStickyBroadcast()) {
+            Log.i(TAG, "onReceive");
+            updateState();
+            Log.i(TAG, "getIsMobileDataEnabled: " + String.valueOf(getIsMobileDataEnabled()));
+            Log.i(TAG, "getIsWifiEnabled: " + String.valueOf(getIsWifiEnabled()));
+
+        }
     }
 }

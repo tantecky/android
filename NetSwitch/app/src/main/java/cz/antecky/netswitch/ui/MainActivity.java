@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private Switch mobileDataSwitch;
 
     private void onWifiSwitchChanged(CompoundButton buttonView, boolean isChecked) {
-        Log.i(TAG, "onWifiSwitchChanged: "+ String.valueOf(isChecked));
+        Log.i(TAG, "onWifiSwitchChanged: " + String.valueOf(isChecked));
 
         boolean success = netController.setWifiEnabled(isChecked);
 
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onMobileSwitchChanged(CompoundButton buttonView, boolean isChecked) {
-        Log.i(TAG, "onMobileSwitchChanged: "+ String.valueOf(isChecked));
+        Log.i(TAG, "onMobileSwitchChanged: " + String.valueOf(isChecked));
 
         if (ContextCompat.checkSelfPermission(this, READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -87,10 +87,22 @@ public class MainActivity extends AppCompatActivity {
         wifiSwitch.setChecked(netController.getIsWifiEnabled());
         mobileDataSwitch.setChecked(netController.getIsMobileDataEnabled());
 
-        registerReceiver(netController.getNetworkChangeReceiver(),
-                new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-    }
+        registerReceiver(netController, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
+        netController.observeMobileData(this, value -> {
+            Log.i("observeMobileData", value.toString());
+            mobileDataSwitch.setOnCheckedChangeListener(null);
+            mobileDataSwitch.setChecked(value);
+            mobileDataSwitch.setOnCheckedChangeListener(this::onMobileSwitchChanged);
+        });
+
+        netController.observeWifi(this, value -> {
+            Log.i("observeWifi", value.toString());
+            wifiSwitch.setOnCheckedChangeListener(null);
+            wifiSwitch.setChecked(value);
+            wifiSwitch.setOnCheckedChangeListener(this::onWifiSwitchChanged);
+        });
+    }
 
     @Override
     protected void onResume() {
@@ -112,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.i(TAG, "onDestroy");
 
-        unregisterReceiver(netController.getNetworkChangeReceiver());
+        unregisterReceiver(netController);
     }
 
     @Override
