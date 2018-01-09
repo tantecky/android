@@ -20,7 +20,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.68"
+        app:layout_constraintVertical_bias="0.8"
         tools:checked="false" />
 
     <Switch
@@ -37,6 +37,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.65"
         tools:checked="false" />
 
     <TextView
@@ -47,9 +48,11 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:text="Mobile Data"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.65" />
 
     <TextView
         android:id="@+id/textView2"
@@ -59,9 +62,10 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:text="WiFi"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.68" />
+        app:layout_constraintVertical_bias="0.8" />
 
 </android.support.constraint.ConstraintLayout>
