@@ -21,6 +21,18 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".ui.NetSwitchWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/net_switch_widget_info" />
+        </receiver>
+        <service
+            android:name=".NetChangeJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>
