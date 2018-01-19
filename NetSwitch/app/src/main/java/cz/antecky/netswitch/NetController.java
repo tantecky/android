@@ -11,21 +11,26 @@ import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+
+import static android.Manifest.permission.READ_PHONE_STATE;
 
 public final class NetController extends BroadcastReceiver {
     private final static String MOBILE_DATA = "mobile_data";
     private final static String TAG = "NetController";
 
-
+    private Context appContext;
     private TelephonyManager teleManager;
     private WifiManager wifiManager;
     private SubscriptionManager subManager;
@@ -52,6 +57,18 @@ public final class NetController extends BroadcastReceiver {
         }
     }
 
+    private void grantPhonePermission() {
+        Log.v(TAG, "grantPhonePermission");
+        Command command = new Command(0, "pm grant cz.antecky.netswitch android.permission.READ_PHONE_STATE");
+
+        try {
+            RootTools.getShell(true).add(command);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Toast.makeText(appContext, "Perm granted", Toast.LENGTH_LONG).show();
+    }
 
 
     private boolean determineIsMobileDataEnabled() {
@@ -71,6 +88,7 @@ public final class NetController extends BroadcastReceiver {
     }
 
     public NetController(Context appContext) {
+        this.appContext = appContext;
 
         teleManager = (TelephonyManager) appContext.getSystemService(Context.TELEPHONY_SERVICE);
         wifiManager = (WifiManager) appContext.getSystemService(Context.WIFI_SERVICE);
@@ -85,21 +103,19 @@ public final class NetController extends BroadcastReceiver {
     private void updateState() {
         boolean dataEnabled = determineIsMobileDataEnabled();
 
-        if(isMobileDataEnabled == null) {
+        if (isMobileDataEnabled == null) {
             isMobileDataEnabled = new MutableLiveData<>();
             isMobileDataEnabled.setValue(dataEnabled);
-        }
-        else if (dataEnabled != isMobileDataEnabled.getValue().booleanValue()) {
+        } else if (dataEnabled != isMobileDataEnabled.getValue().booleanValue()) {
             isMobileDataEnabled.setValue(dataEnabled);
         }
 
         boolean wifiEnable = determineIsWifiEnabled();
 
-        if(isWifiEnabled == null) {
+        if (isWifiEnabled == null) {
             isWifiEnabled = new MutableLiveData<>();
             isWifiEnabled.setValue(wifiEnable);
-        }
-        else if (wifiEnable != isWifiEnabled.getValue().booleanValue()) {
+        } else if (wifiEnable != isWifiEnabled.getValue().booleanValue()) {
             isWifiEnabled.setValue(wifiEnable);
         }
 
@@ -112,7 +128,7 @@ public final class NetController extends BroadcastReceiver {
     }
 
     public void observeWifi(@NonNull LifecycleOwner owner,
-                                  @NonNull Observer<Boolean> observer) {
+                            @NonNull Observer<Boolean> observer) {
 
         isWifiEnabled.observe(owner, observer);
     }
@@ -130,6 +146,12 @@ public final class NetController extends BroadcastReceiver {
         }
 
         if (!RootTools.isAccessGiven(0, 0)) {
+            return false;
+        }
+
+        if (ContextCompat.checkSelfPermission(appContext, READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED) {
+            grantPhonePermission();
             return false;
         }
 
