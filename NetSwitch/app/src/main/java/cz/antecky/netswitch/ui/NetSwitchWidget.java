@@ -21,29 +21,25 @@ public class NetSwitchWidget extends AppWidgetProvider {
     private final static String WIFI_CLICKED = "wifi_clicked";
     private final static String TAG = "NetSwitchWidget";
 
-    private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                        int appWidgetId,
-                                        NetSwitchWidget widget, NetController nt) {
-
+    private RemoteViews getRemoteViews(Context context, NetController nt) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.net_switch_widget);
 
         views.setOnClickPendingIntent(R.id.button_mobile_data,
-                widget.getPendingSelfIntent(context, MOBILE_DATA_CLICKED));
+                getPendingSelfIntent(context, MOBILE_DATA_CLICKED));
         views.setOnClickPendingIntent(R.id.button_wifi,
-                widget.getPendingSelfIntent(context, WIFI_CLICKED));
+                getPendingSelfIntent(context, WIFI_CLICKED));
 
         Resources resources = context.getResources();
 
         views.setTextColor(R.id.button_mobile_data,
-                nt.getIsMobileDataEnabled() ? resources.getColor(R.color.green)
+                nt.isMobileDataEnabled() ? resources.getColor(R.color.green)
                         : resources.getColor(R.color.red));
 
         views.setTextColor(R.id.button_wifi,
-                nt.getIsWifiEnabled() ? resources.getColor(R.color.green)
+                nt.isWifiEnabled() ? resources.getColor(R.color.green)
                         : resources.getColor(R.color.red));
 
-        // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+        return views;
     }
 
     public static void requestUpdate(Context context) {
@@ -65,16 +61,19 @@ public class NetSwitchWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         NetController nt = new NetController(context);
+        RemoteViews views = getRemoteViews(context, nt);
 
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId, this, nt);
+            appWidgetManager.updateAppWidget(appWidgetId, views);
         }
     }
 
     @Override
     public void onEnabled(Context context) {
         // Enter relevant functionality for when the first widget is created
+        NetController nt = new NetController(context);
+        nt.obtainPermissions();
     }
 
     @Override
@@ -82,14 +81,9 @@ public class NetSwitchWidget extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 
-    private void onButtonClicked(Context context) {
-        Log.v(TAG, "onButtonClicked");
+    private void onNetToggled(Context context) {
+        Log.v(TAG, "onNetToggled");
 
-      /* RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.net_switch_widget);
-        views.setBoolean(R.id.button_mobile_data, "setEnabled", false);
-        views.setBoolean(R.id.button_wifi, "setEnabled", false);
-
-        requestUpdate(context);*/
         NetChangeJobService.schedule(context);
     }
 
@@ -98,18 +92,21 @@ public class NetSwitchWidget extends AppWidgetProvider {
         super.onReceive(context, intent);
 
         String action = intent.getAction();
-        Log.v(TAG, "Action received = " + action);
+        Log.v(TAG, "action received: " + action);
 
-        if (action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
-            //NetChangeJobService.schedule(context);
-        } else if (action.equals(WIFI_CLICKED)) {
-            onButtonClicked(context);
+        if (action.equals(WIFI_CLICKED)) {
             NetController nt = new NetController(context);
-            nt.setWifiEnabled(!nt.getIsWifiEnabled());
+
+            if (nt.setWifiEnabled(!nt.isWifiEnabled())) {
+                onNetToggled(context);
+            }
         } else if (action.equals(MOBILE_DATA_CLICKED)) {
-            onButtonClicked(context);
             NetController nt = new NetController(context);
-            nt.setMobileDataEnabled(!nt.getIsMobileDataEnabled());
+
+            if (nt.setMobileDataEnabled(!nt.isMobileDataEnabled())) {
+                onNetToggled(context);
+            }
+
         }
     }
 }
