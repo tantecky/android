@@ -11,13 +11,15 @@ import android.util.Log;
 import cz.antecky.netswitch.ui.NetSwitchWidget;
 
 public final class NetChangeJobService extends JobService {
-    private final static int ID = 1;
     private final static String TAG = "NetChangeJobService";
 
-    public static void schedule(Context context) {
+    public final static int MOBILE_DATA_CHANGED = 1;
+    public final static int WIFI_CHANGED = 2;
+
+    public static void schedule(Context context, int id) {
         Log.v(TAG, "schedule");
         JobScheduler js = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        JobInfo job = new JobInfo.Builder(ID, new ComponentName(context, NetChangeJobService.class))
+        JobInfo job = new JobInfo.Builder(id, new ComponentName(context, NetChangeJobService.class))
                 .setMinimumLatency(3000)
                 .build();
 
@@ -27,7 +29,16 @@ public final class NetChangeJobService extends JobService {
     @Override
     public boolean onStartJob(JobParameters params) {
         Log.v(TAG, "onStartJob");
-        NetSwitchWidget.requestUpdate(this);
+        switch (params.getJobId()) {
+            case MOBILE_DATA_CHANGED:
+                NetSwitchWidget.requestUpdate(this,
+                        false, null);
+                break;
+            case WIFI_CHANGED:
+                NetSwitchWidget.requestUpdate(this,
+                        null, false);
+                break;
+        }
 
         return false;
     }

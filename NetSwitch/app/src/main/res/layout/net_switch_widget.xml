@@ -1,21 +1,45 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center"
-    android:orientation="horizontal">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-
-    <Button
-        android:id="@+id/button_mobile_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Mobile Data" />
 
     <Button
         android:id="@+id/button_wifi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="WiFi" />
-</LinearLayout>
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="right|center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:text="WI" />
+
+    <Button
+        android:id="@+id/button_mobile_data"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="left|center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="MD" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_mobile_data"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="left|center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:translationZ="2dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_wifi"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="right|center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:translationZ="2dp" />
+
+
+</FrameLayout>

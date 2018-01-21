@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.util.Log;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import cz.antecky.netswitch.NetChangeJobService;
@@ -20,6 +21,9 @@ public class NetSwitchWidget extends AppWidgetProvider {
     private final static String MOBILE_DATA_CLICKED = "mobile_data_clicked";
     private final static String WIFI_CLICKED = "wifi_clicked";
     private final static String TAG = "NetSwitchWidget";
+
+    private static boolean TogglingMobileData = false;
+    private static boolean TogglingWifi = false;
 
     private RemoteViews getRemoteViews(Context context, NetController nt) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.net_switch_widget);
@@ -39,11 +43,37 @@ public class NetSwitchWidget extends AppWidgetProvider {
                 nt.isWifiEnabled() ? resources.getColor(R.color.green)
                         : resources.getColor(R.color.red));
 
+        if (TogglingMobileData) {
+            views.setViewVisibility(R.id.progressBar_mobile_data, View.VISIBLE);
+            views.setBoolean(R.id.button_mobile_data, "setEnabled", false);
+        } else {
+            views.setViewVisibility(R.id.progressBar_mobile_data, View.GONE);
+            views.setBoolean(R.id.button_mobile_data, "setEnabled", true);
+        }
+
+        if (TogglingWifi) {
+            views.setViewVisibility(R.id.progressBar_wifi, View.VISIBLE);
+            views.setBoolean(R.id.button_wifi, "setEnabled", false);
+        } else {
+            views.setViewVisibility(R.id.progressBar_wifi, View.GONE);
+            views.setBoolean(R.id.button_wifi, "setEnabled", true);
+        }
+
         return views;
     }
 
-    public static void requestUpdate(Context context) {
+    public static void requestUpdate(Context context,
+                                     Boolean togglingMobileData, Boolean togglingWifi) {
         Log.v(TAG, "requestUpdate");
+
+        if (togglingMobileData != null) {
+            TogglingMobileData = togglingMobileData;
+        }
+
+        if (togglingWifi != null) {
+            TogglingWifi = togglingWifi;
+        }
+
         Intent intent = new Intent(context, NetSwitchWidget.class);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 
@@ -52,7 +82,7 @@ public class NetSwitchWidget extends AppWidgetProvider {
         context.sendBroadcast(intent);
     }
 
-    protected PendingIntent getPendingSelfIntent(Context context, String action) {
+    private PendingIntent getPendingSelfIntent(Context context, String action) {
         Intent intent = new Intent(context, NetSwitchWidget.class);
         intent.setAction(action);
         return PendingIntent.getBroadcast(context, 0, intent, 0);
@@ -81,12 +111,6 @@ public class NetSwitchWidget extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 
-    private void onNetToggled(Context context) {
-        Log.v(TAG, "onNetToggled");
-
-        NetChangeJobService.schedule(context);
-    }
-
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
@@ -98,13 +122,17 @@ public class NetSwitchWidget extends AppWidgetProvider {
             NetController nt = new NetController(context);
 
             if (nt.setWifiEnabled(!nt.isWifiEnabled())) {
-                onNetToggled(context);
+                NetChangeJobService.schedule(context, NetChangeJobService.WIFI_CHANGED);
+                requestUpdate(context, null, true);
+
             }
         } else if (action.equals(MOBILE_DATA_CLICKED)) {
             NetController nt = new NetController(context);
 
             if (nt.setMobileDataEnabled(!nt.isMobileDataEnabled())) {
-                onNetToggled(context);
+                NetChangeJobService.schedule(context, NetChangeJobService.MOBILE_DATA_CHANGED);
+                requestUpdate(context, true, null);
+
             }
 
         }

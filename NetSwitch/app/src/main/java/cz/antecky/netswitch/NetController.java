@@ -26,11 +26,11 @@ public final class NetController extends BroadcastReceiver {
     private final static String TAG = "NetController";
     private static String TRANSACTION_CODE = null;
 
-    private Context appContext;
-    private TelephonyManager teleManager;
-    private WifiManager wifiManager;
-    private SubscriptionManager subManager;
-    private ContentResolver contentResolver;
+    private final Context appContext;
+    private final TelephonyManager teleManager;
+    private final WifiManager wifiManager;
+    private final SubscriptionManager subManager;
+    private final ContentResolver contentResolver;
 
     private String getTransactionCode() {
         if (TRANSACTION_CODE != null) {
