@@ -35,11 +35,11 @@ public class NetSwitchWidget extends AppWidgetProvider {
 
         Resources resources = context.getResources();
 
-        views.setTextColor(R.id.button_mobile_data,
+        views.setInt(R.id.button_mobile_data, "setColorFilter",
                 nt.isMobileDataEnabled() ? resources.getColor(R.color.green)
                         : resources.getColor(R.color.red));
 
-        views.setTextColor(R.id.button_wifi,
+        views.setInt(R.id.button_wifi, "setColorFilter",
                 nt.isWifiEnabled() ? resources.getColor(R.color.green)
                         : resources.getColor(R.color.red));
 

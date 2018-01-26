@@ -3,22 +3,26 @@
     android:layout_height="match_parent">
 
 
-    <Button
+    <ImageButton
         android:id="@+id/button_wifi"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="right|center"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
+        android:src="@drawable/ic_wifi_black_24dp"
+        android:background="@null"
         android:text="WI" />
 
-    <Button
+    <ImageButton
         android:id="@+id/button_mobile_data"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="left|center"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
+        android:src="@drawable/ic_network_cell_black_24dp"
+        android:background="@null"
         android:text="MD" />
 
     <ProgressBar
