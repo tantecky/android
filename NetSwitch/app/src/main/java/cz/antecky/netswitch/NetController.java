@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
+import android.os.Process;
 import android.provider.Settings;
-import android.support.v4.content.ContextCompat;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -80,7 +80,7 @@ public final class NetController extends BroadcastReceiver {
             return false;
         }
 
-        if (ContextCompat.checkSelfPermission(appContext, READ_PHONE_STATE)
+        if (appContext.checkPermission(READ_PHONE_STATE, Process.myPid(), Process.myUid())
                 != PackageManager.PERMISSION_GRANTED) {
             grantPhonePermission();
             return false;

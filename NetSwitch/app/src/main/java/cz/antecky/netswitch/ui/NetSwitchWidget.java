@@ -35,13 +35,29 @@ public class NetSwitchWidget extends AppWidgetProvider {
 
         Resources resources = context.getResources();
 
-        views.setInt(R.id.button_mobile_data, "setColorFilter",
-                nt.isMobileDataEnabled() ? resources.getColor(R.color.green)
-                        : resources.getColor(R.color.red));
+        if (nt.isMobileDataEnabled()) {
+            views.setImageViewResource(R.id.button_mobile_data,
+                    R.drawable.ic_network_cell_black_24dp);
+            views.setInt(R.id.button_mobile_data,
+                    "setColorFilter", resources.getColor(R.color.green));
+        } else {
+            views.setImageViewResource(R.id.button_mobile_data,
+                    R.drawable.ic_signal_cellular_off_black_24dp);
+            views.setInt(R.id.button_mobile_data,
+                    "setColorFilter", resources.getColor(R.color.red));
+        }
 
-        views.setInt(R.id.button_wifi, "setColorFilter",
-                nt.isWifiEnabled() ? resources.getColor(R.color.green)
-                        : resources.getColor(R.color.red));
+        if (nt.isWifiEnabled()) {
+            views.setImageViewResource(R.id.button_wifi,
+                    R.drawable.ic_network_wifi_black_24dp);
+            views.setInt(R.id.button_wifi,
+                    "setColorFilter", resources.getColor(R.color.green));
+        } else {
+            views.setImageViewResource(R.id.button_wifi,
+                    R.drawable.ic_signal_wifi_off_black_24dp);
+            views.setInt(R.id.button_wifi,
+                    "setColorFilter", resources.getColor(R.color.red));
+        }
 
         if (TogglingMobileData) {
             views.setViewVisibility(R.id.progressBar_mobile_data, View.VISIBLE);
