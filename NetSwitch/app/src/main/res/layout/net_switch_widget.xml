@@ -10,7 +10,10 @@
         android:layout_gravity="right|center"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
-        android:background="@null"
+        android:background="@drawable/ic_background"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:padding="15dp"
         android:src="@drawable/ic_network_wifi_black_24dp" />
 
     <ImageButton
@@ -20,7 +23,10 @@
         android:layout_gravity="left|center"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
-        android:background="@null"
+        android:background="@drawable/ic_background"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:padding="15dp"
         android:src="@drawable/ic_network_cell_black_24dp" />
 
     <ProgressBar
