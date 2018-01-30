@@ -64,7 +64,7 @@ public class NetSwitchWidget extends AppWidgetProvider {
             views.setViewVisibility(R.id.progressBar_mobile_data, View.VISIBLE);
             views.setBoolean(R.id.button_mobile_data, "setEnabled", false);
         } else {
-            views.setViewVisibility(R.id.progressBar_mobile_data, View.GONE);
+            views.setViewVisibility(R.id.progressBar_mobile_data, View.INVISIBLE);
             views.setBoolean(R.id.button_mobile_data, "setEnabled", true);
         }
 
@@ -72,7 +72,7 @@ public class NetSwitchWidget extends AppWidgetProvider {
             views.setViewVisibility(R.id.progressBar_wifi, View.VISIBLE);
             views.setBoolean(R.id.button_wifi, "setEnabled", false);
         } else {
-            views.setViewVisibility(R.id.progressBar_wifi, View.GONE);
+            views.setViewVisibility(R.id.progressBar_wifi, View.INVISIBLE);
             views.setBoolean(R.id.button_wifi, "setEnabled", true);
         }
 

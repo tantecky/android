@@ -1,48 +1,64 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/padding_bottom"
-    android:paddingLeft="@dimen/padding_left_right"
-    android:paddingRight="@dimen/padding_left_right">
+    android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/button_wifi"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
-        android:layout_gravity="right|center"
-        android:adjustViewBounds="true"
-        android:background="@drawable/ic_background"
-        android:padding="15dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_network_wifi_black_24dp" />
+        <ImageButton
+            android:id="@+id/button_mobile_data"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/spacing"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@drawable/ic_background"
+            android:padding="@dimen/icon_size"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_network_cell_black_24dp" />
 
-    <ImageButton
-        android:id="@+id/button_mobile_data"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
-        android:layout_gravity="left|center"
-        android:adjustViewBounds="true"
-        android:background="@drawable/ic_background"
-        android:padding="15dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_network_cell_black_24dp" />
+        <ImageButton
+            android:id="@+id/button_wifi"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/spacing"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@drawable/ic_background"
+            android:padding="@dimen/icon_size"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_network_wifi_black_24dp" />
+    </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar_mobile_data"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
-        android:layout_gravity="left|center"
-        android:translationZ="2dp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
 
-    <ProgressBar
-        android:id="@+id/progressBar_wifi"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
-        android:layout_gravity="right|center"
-        android:translationZ="2dp" />
+        <ProgressBar
+            android:id="@+id/progressBar_mobile_data"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/spacing"
+            android:layout_weight="1" />
+
+        <ProgressBar
+            android:id="@+id/progressBar_wifi"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/spacing"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 
 </FrameLayout>
