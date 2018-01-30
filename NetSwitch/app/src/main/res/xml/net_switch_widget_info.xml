@@ -2,8 +2,8 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialKeyguardLayout="@layout/net_switch_widget"
     android:initialLayout="@layout/net_switch_widget"
-    android:minHeight="40dp"
-    android:minWidth="110dp"
+    android:minHeight="65dp"
+    android:minWidth="122dp"
     android:previewImage="@drawable/example_appwidget_preview"
     android:updatePeriodMillis="3600000"
     android:widgetCategory="home_screen|keyguard" />
