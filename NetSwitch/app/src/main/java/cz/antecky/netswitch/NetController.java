@@ -53,16 +53,16 @@ public final class NetController extends BroadcastReceiver {
         }
 
         if (TRANSACTION_CODE == null) {
-            final String error = "Unable to get transaction code";
-            Log.e(TAG, error);
-            Toast.makeText(appContext, error, Toast.LENGTH_LONG).show();
+            final String error = "Unable to get transaction code.";
+            Utils.logE(TAG, error);
+            Utils.showToast(appContext, error);
         }
 
         return TRANSACTION_CODE;
     }
 
     private void grantPhonePermission() {
-        Log.v(TAG, "trying to grant Phone permission");
+        Utils.logD(TAG, "trying to grant Phone permission");
         Command command = new Command(0,
                 String.format("pm grant %s android.permission.READ_PHONE_STATE",
                         appContext.getPackageName()));
@@ -70,13 +70,13 @@ public final class NetController extends BroadcastReceiver {
             RootTools.getShell(true).add(command);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(appContext, "Unable to grant Phone permission", Toast.LENGTH_LONG).show();
+            Utils.showToast(appContext, "Unable to grant Phone permission.");
         }
     }
 
     public boolean obtainPermissions() {
         if (!RootTools.isAccessGiven(0, 0)) {
-            Toast.makeText(appContext, "Root access required", Toast.LENGTH_LONG).show();
+            Utils.showToast(appContext, "Root access required to toggle mobile data.");
             return false;
         }
 
@@ -109,9 +109,9 @@ public final class NetController extends BroadcastReceiver {
                 case 1:
                     return true;
                 default:
-                    final String error = "Unable to get mobile data state";
-                    Log.e(TAG, error);
-                    Toast.makeText(appContext, error, Toast.LENGTH_LONG).show();
+                    final String error = "Unable to get mobile data state.";
+                    Utils.logE(TAG, error);
+                    Utils.showToast(appContext, error);
                     return false;
             }
         } else
@@ -161,9 +161,9 @@ public final class NetController extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (!isInitialStickyBroadcast()) {
-            Log.i(TAG, "onReceive");
-            Log.i(TAG, "isMobileDataEnabled: " + String.valueOf(isMobileDataEnabled()));
-            Log.i(TAG, "isWifiEnabled: " + String.valueOf(isWifiEnabled()));
+            Utils.logD(TAG, "onReceive");
+            Utils.logD(TAG, "isMobileDataEnabled: " + String.valueOf(isMobileDataEnabled()));
+            Utils.logD(TAG, "isWifiEnabled: " + String.valueOf(isWifiEnabled()));
 
         }
     }

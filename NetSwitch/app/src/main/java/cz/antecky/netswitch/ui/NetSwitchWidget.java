@@ -14,6 +14,7 @@ import android.widget.RemoteViews;
 import cz.antecky.netswitch.NetChangeJobService;
 import cz.antecky.netswitch.NetController;
 import cz.antecky.netswitch.R;
+import cz.antecky.netswitch.Utils;
 
 
 public class NetSwitchWidget extends AppWidgetProvider {
@@ -80,7 +81,7 @@ public class NetSwitchWidget extends AppWidgetProvider {
 
     public static void requestUpdate(Context context,
                                      Boolean togglingMobileData, Boolean togglingWifi) {
-        Log.v(TAG, "requestUpdate");
+        Utils.logD(TAG, "requestUpdate");
 
         if (togglingMobileData != null) {
             TogglingMobileData = togglingMobileData;
@@ -132,7 +133,7 @@ public class NetSwitchWidget extends AppWidgetProvider {
         super.onReceive(context, intent);
 
         String action = intent.getAction();
-        Log.v(TAG, "action received: " + action);
+        Utils.logD(TAG, "action received: " + action);
 
         if (action.equals(WIFI_CLICKED)) {
             NetController nt = new NetController(context);

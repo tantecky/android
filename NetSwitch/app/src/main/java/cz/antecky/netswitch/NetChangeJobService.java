@@ -17,7 +17,7 @@ public final class NetChangeJobService extends JobService {
     public final static int WIFI_CHANGED = 2;
 
     public static void schedule(Context context, int id) {
-        Log.v(TAG, "schedule");
+        Utils.logD(TAG, "schedule");
         JobScheduler js = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         JobInfo job = new JobInfo.Builder(id, new ComponentName(context, NetChangeJobService.class))
                 .setMinimumLatency(3000)
@@ -28,7 +28,7 @@ public final class NetChangeJobService extends JobService {
 
     @Override
     public boolean onStartJob(JobParameters params) {
-        Log.v(TAG, "onStartJob");
+        Utils.logD(TAG, "onStartJob");
         switch (params.getJobId()) {
             case MOBILE_DATA_CHANGED:
                 NetSwitchWidget.requestUpdate(this,
@@ -45,7 +45,7 @@ public final class NetChangeJobService extends JobService {
 
     @Override
     public boolean onStopJob(JobParameters params) {
-        Log.v(TAG, "onStopJob");
+        Utils.logD(TAG, "onStopJob");
 
         return true;
     }
