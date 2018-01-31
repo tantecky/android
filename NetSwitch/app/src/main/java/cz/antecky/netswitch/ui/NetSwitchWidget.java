@@ -7,7 +7,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -36,36 +35,24 @@ public class NetSwitchWidget extends AppWidgetProvider {
 
         Resources resources = context.getResources();
 
-        if (nt.isMobileDataEnabled()) {
-            views.setImageViewResource(R.id.button_mobile_data,
-                    R.drawable.ic_network_cell_black_24dp);
-            views.setInt(R.id.button_mobile_data,
-                    "setColorFilter", resources.getColor(R.color.green));
-        } else {
-            views.setImageViewResource(R.id.button_mobile_data,
-                    R.drawable.ic_signal_cellular_off_black_24dp);
-            views.setInt(R.id.button_mobile_data,
-                    "setColorFilter", resources.getColor(R.color.red));
-        }
-
-        if (nt.isWifiEnabled()) {
-            views.setImageViewResource(R.id.button_wifi,
-                    R.drawable.ic_network_wifi_black_24dp);
-            views.setInt(R.id.button_wifi,
-                    "setColorFilter", resources.getColor(R.color.green));
-        } else {
-            views.setImageViewResource(R.id.button_wifi,
-                    R.drawable.ic_signal_wifi_off_black_24dp);
-            views.setInt(R.id.button_wifi,
-                    "setColorFilter", resources.getColor(R.color.red));
-        }
-
         if (TogglingMobileData) {
             views.setViewVisibility(R.id.progressBar_mobile_data, View.VISIBLE);
             views.setBoolean(R.id.button_mobile_data, "setEnabled", false);
         } else {
             views.setViewVisibility(R.id.progressBar_mobile_data, View.INVISIBLE);
             views.setBoolean(R.id.button_mobile_data, "setEnabled", true);
+
+            if (nt.isMobileDataEnabled()) {
+                views.setImageViewResource(R.id.button_mobile_data,
+                        R.drawable.ic_network_cell_black_24dp);
+                views.setInt(R.id.button_mobile_data,
+                        "setColorFilter", resources.getColor(R.color.green));
+            } else {
+                views.setImageViewResource(R.id.button_mobile_data,
+                        R.drawable.ic_signal_cellular_off_black_24dp);
+                views.setInt(R.id.button_mobile_data,
+                        "setColorFilter", resources.getColor(R.color.red));
+            }
         }
 
         if (TogglingWifi) {
@@ -74,6 +61,18 @@ public class NetSwitchWidget extends AppWidgetProvider {
         } else {
             views.setViewVisibility(R.id.progressBar_wifi, View.INVISIBLE);
             views.setBoolean(R.id.button_wifi, "setEnabled", true);
+
+            if (nt.isWifiEnabled()) {
+                views.setImageViewResource(R.id.button_wifi,
+                        R.drawable.ic_network_wifi_black_24dp);
+                views.setInt(R.id.button_wifi,
+                        "setColorFilter", resources.getColor(R.color.green));
+            } else {
+                views.setImageViewResource(R.id.button_wifi,
+                        R.drawable.ic_signal_wifi_off_black_24dp);
+                views.setInt(R.id.button_wifi,
+                        "setColorFilter", resources.getColor(R.color.red));
+            }
         }
 
         return views;
