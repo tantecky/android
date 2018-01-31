@@ -2,7 +2,7 @@
 <resources>
 
     <style name="WidgetButton">
-        <item name="android:background">@drawable/ic_button</item>
+        <item name="android:background">@drawable/button</item>
     </style>
 
 

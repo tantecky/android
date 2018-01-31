@@ -9,6 +9,7 @@
     <application
         android:allowBackup="false"
         android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true">
 
         <receiver android:name=".ui.NetSwitchWidget">
