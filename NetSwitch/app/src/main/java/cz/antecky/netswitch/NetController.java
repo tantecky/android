@@ -10,14 +10,12 @@ import android.os.Process;
 import android.provider.Settings;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.stericson.RootShell.execution.Command;
-import com.stericson.RootTools.RootTools;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.List;
+
+import eu.chainfire.libsuperuser.Shell;
 
 import static android.Manifest.permission.READ_PHONE_STATE;
 
@@ -63,19 +61,17 @@ public final class NetController extends BroadcastReceiver {
 
     private void grantPhonePermission() {
         Utils.logD(TAG, "trying to grant Phone permission");
-        Command command = new Command(0,
+        List<String> result = Shell.SU.run(
                 String.format("pm grant %s android.permission.READ_PHONE_STATE",
                         appContext.getPackageName()));
-        try {
-            RootTools.getShell(true).add(command);
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        if (result == null) {
             Utils.showToast(appContext, "Unable to grant Phone permission.");
         }
     }
 
     public boolean obtainPermissions() {
-        if (!RootTools.isAccessGiven(0, 0)) {
+        if (!Shell.SU.available()) {
             Utils.showToast(appContext, "Root access required to toggle mobile data.");
             return false;
         }
@@ -138,11 +134,9 @@ public final class NetController extends BroadcastReceiver {
             String cmd = String.format("service call phone %s i32 %d i32 %d",
                     transCode, subscriptionId, state);
 
-            Command command = new Command(0, cmd);
-            try {
-                RootTools.getShell(true).add(command);
-            } catch (Exception e) {
-                e.printStackTrace();
+            List<String> result = Shell.SU.run(cmd);
+
+            if (result == null) {
                 return false;
             }
         }
