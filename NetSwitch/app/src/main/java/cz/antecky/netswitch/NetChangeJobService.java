@@ -12,6 +12,7 @@ import cz.antecky.netswitch.ui.NetSwitchWidget;
 
 public final class NetChangeJobService extends JobService {
     private final static String TAG = "NetChangeJobService";
+    private final static long ANIMATION_LENGTH = 3000;
 
     public final static int MOBILE_DATA_CHANGED = 1;
     public final static int WIFI_CHANGED = 2;
@@ -20,7 +21,8 @@ public final class NetChangeJobService extends JobService {
         Utils.logD(TAG, "schedule");
         JobScheduler js = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         JobInfo job = new JobInfo.Builder(id, new ComponentName(context, NetChangeJobService.class))
-                .setMinimumLatency(3000)
+                .setOverrideDeadline(ANIMATION_LENGTH)
+                .setMinimumLatency(ANIMATION_LENGTH)
                 .build();
 
         js.schedule(job);
