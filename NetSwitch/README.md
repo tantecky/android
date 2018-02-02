@@ -1,11 +1,10 @@
 # NetSwitch ![](app/src/main/res/mipmap-mdpi/ic_launcher_round.png)
 A simple widget for WiFi/mobile data toggling on Android.
 
-## Screenshot
-![](screenshot.png)
+<img align="right" width="240" height="400" src="screenshot.png">
 
 ## Details
-* Requires root access in order to toggle mobile data
+* Requires root access in order to toggle mobile data 
 * Supports Android 5.1+ (API level 22+)
 
 ## License
