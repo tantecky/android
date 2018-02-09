@@ -25,6 +25,19 @@ public class NetSwitchWidget extends AppWidgetProvider {
     private static boolean TogglingMobileData = false;
     private static boolean TogglingWifi = false;
 
+    private final static Class<?> WIDGETS[] = {NetSwitchWidget.class,
+            NetSwitchWiFiWidget.class,
+            NetSwitchMobileWidget.class
+    };
+
+    protected boolean ShowMobileButton() {
+        return true;
+    }
+
+    protected boolean ShowWifiButton() {
+        return true;
+    }
+
     private RemoteViews getRemoteViews(Context context, NetController nt) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.net_switch_widget);
 
@@ -35,44 +48,54 @@ public class NetSwitchWidget extends AppWidgetProvider {
 
         Resources resources = context.getResources();
 
-        if (TogglingMobileData) {
-            views.setViewVisibility(R.id.progressBar_mobile_data, View.VISIBLE);
-            views.setBoolean(R.id.button_mobile_data, "setEnabled", false);
-        } else {
-            views.setViewVisibility(R.id.progressBar_mobile_data, View.INVISIBLE);
-            views.setBoolean(R.id.button_mobile_data, "setEnabled", true);
-
-            if (nt.isMobileDataEnabled()) {
-                views.setImageViewResource(R.id.button_mobile_data,
-                        R.drawable.ic_network_cell_black_24dp);
-                views.setInt(R.id.button_mobile_data,
-                        "setColorFilter", resources.getColor(R.color.green));
+        if (ShowMobileButton()) {
+            if (TogglingMobileData) {
+                views.setViewVisibility(R.id.progressBar_mobile_data, View.VISIBLE);
+                views.setBoolean(R.id.button_mobile_data, "setEnabled", false);
             } else {
-                views.setImageViewResource(R.id.button_mobile_data,
-                        R.drawable.ic_signal_cellular_off_black_24dp);
-                views.setInt(R.id.button_mobile_data,
-                        "setColorFilter", resources.getColor(R.color.red));
+                views.setViewVisibility(R.id.progressBar_mobile_data, View.INVISIBLE);
+                views.setBoolean(R.id.button_mobile_data, "setEnabled", true);
+
+                if (nt.isMobileDataEnabled()) {
+                    views.setImageViewResource(R.id.button_mobile_data,
+                            R.drawable.ic_network_cell_black_24dp);
+                    views.setInt(R.id.button_mobile_data,
+                            "setColorFilter", resources.getColor(R.color.green));
+                } else {
+                    views.setImageViewResource(R.id.button_mobile_data,
+                            R.drawable.ic_signal_cellular_off_black_24dp);
+                    views.setInt(R.id.button_mobile_data,
+                            "setColorFilter", resources.getColor(R.color.red));
+                }
             }
+        } else {
+            views.setViewVisibility(R.id.progressBar_mobile_data, View.GONE);
+            views.setViewVisibility(R.id.button_mobile_data, View.GONE);
         }
 
-        if (TogglingWifi) {
-            views.setViewVisibility(R.id.progressBar_wifi, View.VISIBLE);
-            views.setBoolean(R.id.button_wifi, "setEnabled", false);
-        } else {
-            views.setViewVisibility(R.id.progressBar_wifi, View.INVISIBLE);
-            views.setBoolean(R.id.button_wifi, "setEnabled", true);
-
-            if (nt.isWifiEnabled()) {
-                views.setImageViewResource(R.id.button_wifi,
-                        R.drawable.ic_network_wifi_black_24dp);
-                views.setInt(R.id.button_wifi,
-                        "setColorFilter", resources.getColor(R.color.green));
+        if (ShowWifiButton()) {
+            if (TogglingWifi) {
+                views.setViewVisibility(R.id.progressBar_wifi, View.VISIBLE);
+                views.setBoolean(R.id.button_wifi, "setEnabled", false);
             } else {
-                views.setImageViewResource(R.id.button_wifi,
-                        R.drawable.ic_signal_wifi_off_black_24dp);
-                views.setInt(R.id.button_wifi,
-                        "setColorFilter", resources.getColor(R.color.red));
+                views.setViewVisibility(R.id.progressBar_wifi, View.INVISIBLE);
+                views.setBoolean(R.id.button_wifi, "setEnabled", true);
+
+                if (nt.isWifiEnabled()) {
+                    views.setImageViewResource(R.id.button_wifi,
+                            R.drawable.ic_network_wifi_black_24dp);
+                    views.setInt(R.id.button_wifi,
+                            "setColorFilter", resources.getColor(R.color.green));
+                } else {
+                    views.setImageViewResource(R.id.button_wifi,
+                            R.drawable.ic_signal_wifi_off_black_24dp);
+                    views.setInt(R.id.button_wifi,
+                            "setColorFilter", resources.getColor(R.color.red));
+                }
             }
+        } else {
+            views.setViewVisibility(R.id.progressBar_wifi, View.GONE);
+            views.setViewVisibility(R.id.button_wifi, View.GONE);
         }
 
         return views;
@@ -90,16 +113,24 @@ public class NetSwitchWidget extends AppWidgetProvider {
             TogglingWifi = togglingWifi;
         }
 
-        Intent intent = new Intent(context, NetSwitchWidget.class);
-        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        for (final Class<?> cls : WIDGETS) {
 
-        int ids[] = AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context, NetSwitchWidget.class));
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
-        context.sendBroadcast(intent);
+            int ids[] = AppWidgetManager.getInstance(context).getAppWidgetIds(
+                    new ComponentName(context, cls));
+            Utils.logD(TAG,
+                    cls.getSimpleName() + " instances: " + String.valueOf(ids.length));
+
+            if (ids.length > 0) {
+                Intent intent = new Intent(context, cls);
+                intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+                context.sendBroadcast(intent);
+            }
+        }
     }
 
     private PendingIntent getPendingSelfIntent(Context context, String action) {
-        Intent intent = new Intent(context, NetSwitchWidget.class);
+        Intent intent = new Intent(context, this.getClass());
         intent.setAction(action);
         return PendingIntent.getBroadcast(context, 0, intent, 0);
     }

@@ -3,6 +3,6 @@
     android:initialKeyguardLayout="@layout/net_switch_widget"
     android:initialLayout="@layout/net_switch_widget_init"
     android:minHeight="50dp"
-    android:minWidth="120dp"
-    android:previewImage="@drawable/netswitch_preview"
+    android:minWidth="50dp"
+    android:previewImage="@drawable/netswitch_wifi_preview"
     android:widgetCategory="home_screen|keyguard" />
