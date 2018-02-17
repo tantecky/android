@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
 import android.os.Process;
 import android.provider.Settings;
+import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 
@@ -66,13 +67,17 @@ public final class NetController extends BroadcastReceiver {
                         appContext.getPackageName()));
 
         if (result == null) {
-            Utils.showToast(appContext, "Unable to grant Phone permission.");
+            final String error = "Unable to grant Phone permission.";
+            Utils.logE(TAG, error);
+            Utils.showToast(appContext, error);
         }
     }
 
     public boolean obtainPermissions() {
         if (!Shell.SU.available()) {
-            Utils.showToast(appContext, "Root access required to toggle mobile data.");
+            final String error = "Root access required to toggle mobile data.";
+            Utils.logE(TAG, error);
+            Utils.showToast(appContext, error);
             return false;
         }
 
@@ -110,8 +115,10 @@ public final class NetController extends BroadcastReceiver {
                     Utils.showToast(appContext, error);
                     return false;
             }
-        } else
+        } else {
+            Utils.logE(TAG, "SimState not SIM_STATE_READY");
             return false;
+        }
 
     }
 
@@ -127,16 +134,27 @@ public final class NetController extends BroadcastReceiver {
             return false;
         }
 
-        // Loop through the subscription list i.e. SIM list.
-        for (int i = 0; i < subManager.getActiveSubscriptionInfoCountMax(); i++) {
+        List<SubscriptionInfo> listInfo = subManager.getActiveSubscriptionInfoList();
+
+        if (listInfo == null) {
+            final String error = "SubscriptionInfo list is null.";
+            Utils.logE(TAG, error);
+            Utils.showToast(appContext, error);
+            return false;
+        }
+
+        for (SubscriptionInfo info : listInfo) {
             // Get the active subscription ID for a given SIM card.
-            int subscriptionId = subManager.getActiveSubscriptionInfoList().get(i).getSubscriptionId();
+            int subscriptionId = info.getSubscriptionId();
             String cmd = String.format("service call phone %s i32 %d i32 %d",
                     transCode, subscriptionId, state);
 
             List<String> result = Shell.SU.run(cmd);
 
             if (result == null) {
+                final String error = "service call failed.";
+                Utils.logE(TAG, error);
+                Utils.showToast(appContext, error);
                 return false;
             }
         }
