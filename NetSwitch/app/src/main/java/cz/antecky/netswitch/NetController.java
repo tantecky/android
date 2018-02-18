@@ -20,7 +20,7 @@ import eu.chainfire.libsuperuser.Shell;
 
 import static android.Manifest.permission.READ_PHONE_STATE;
 
-public final class NetController extends BroadcastReceiver {
+public final class NetController {
     private final static String MOBILE_DATA = "mobile_data";
     private final static String TAG = "NetController";
     private static String TRANSACTION_CODE = null;
@@ -143,6 +143,8 @@ public final class NetController extends BroadcastReceiver {
             return false;
         }
 
+        Utils.logD(TAG, "listInfo size: " + String.valueOf(listInfo.size()));
+
         for (SubscriptionInfo info : listInfo) {
             // Get the active subscription ID for a given SIM card.
             int subscriptionId = info.getSubscriptionId();
@@ -170,13 +172,9 @@ public final class NetController extends BroadcastReceiver {
         return wifiManager.setWifiEnabled(value);
     }
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        if (!isInitialStickyBroadcast()) {
-            Utils.logD(TAG, "onReceive");
-            Utils.logD(TAG, "isMobileDataEnabled: " + String.valueOf(isMobileDataEnabled()));
-            Utils.logD(TAG, "isWifiEnabled: " + String.valueOf(isWifiEnabled()));
-
-        }
+    public void logCurrentState() {
+        Utils.logD(TAG, "logCurrentState");
+        Utils.logD(TAG, "isMobileDataEnabled: " + String.valueOf(isMobileDataEnabled()));
+        Utils.logD(TAG, "isWifiEnabled: " + String.valueOf(isWifiEnabled()));
     }
 }

@@ -167,6 +167,7 @@ public class NetSwitchWidget extends AppWidgetProvider {
 
         if (action.equals(WIFI_CLICKED)) {
             NetController nt = new NetController(context);
+            nt.logCurrentState();
 
             if (nt.setWifiEnabled(!nt.isWifiEnabled())) {
                 NetChangeJobService.schedule(context, NetChangeJobService.WIFI_CHANGED);
@@ -175,6 +176,7 @@ public class NetSwitchWidget extends AppWidgetProvider {
             }
         } else if (action.equals(MOBILE_DATA_CLICKED)) {
             NetController nt = new NetController(context);
+            nt.logCurrentState();
 
             if (nt.setMobileDataEnabled(!nt.isMobileDataEnabled())) {
                 NetChangeJobService.schedule(context, NetChangeJobService.MOBILE_DATA_CHANGED);
