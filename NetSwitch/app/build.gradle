@@ -12,7 +12,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -20,7 +21,22 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    applicationVariants.all { variant ->
+        if (variant.getBuildType().isMinifyEnabled()) {
+            variant.assemble.doLast {
+                copy {
+                    from variant.mappingFile
+                    into "${rootDir}/proguardTools"
+                    rename { String fileName ->
+                        "mapping-${variant.name}.txt"
+                    }
+                }
+            }
+        }
+    }
 }
+
+
 
 dependencies {
     testImplementation 'junit:junit:4.12'
