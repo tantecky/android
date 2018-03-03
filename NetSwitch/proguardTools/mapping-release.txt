@@ -1,0 +1,82 @@
+cz.antecky.netswitch.NetChangeJobService -> cz.antecky.netswitch.NetChangeJobService:
+    12:12:void <init>() -> <init>
+    20:28:void schedule(android.content.Context,int) -> a
+    32:44:boolean onStartJob(android.app.job.JobParameters) -> onStartJob
+    49:51:boolean onStopJob(android.app.job.JobParameters) -> onStopJob
+cz.antecky.netswitch.NetController -> cz.antecky.netswitch.a:
+    android.content.Context appContext -> a
+    android.net.wifi.WifiManager wifiManager -> b
+    android.content.ContentResolver contentResolver -> c
+    24:31:boolean obtainPermissions() -> a
+    36:41:void <init>(android.content.Context) -> <init>
+    45:54:boolean isMobileDataEnabled() -> b
+    61:78:boolean setMobileDataEnabled(boolean) -> a
+    82:82:boolean isWifiEnabled() -> c
+    86:86:boolean setWifiEnabled(boolean) -> b
+    90:93:void logCurrentState() -> d
+cz.antecky.netswitch.Utils -> cz.antecky.netswitch.b:
+    11:12:void showToast(android.content.Context,java.lang.String) -> a
+    15:16:void logE(java.lang.String,java.lang.String) -> a
+    22:22:void logD(java.lang.String,java.lang.String) -> b
+cz.antecky.netswitch.ui.NetSwitchMobileWidget -> cz.antecky.netswitch.ui.NetSwitchMobileWidget:
+    3:3:void <init>() -> <init>
+    6:6:boolean ShowWifiButton() -> a
+cz.antecky.netswitch.ui.NetSwitchWiFiWidget -> cz.antecky.netswitch.ui.NetSwitchWiFiWidget:
+    5:5:void <init>() -> <init>
+    8:8:boolean ShowMobileButton() -> b
+    15:15:void onEnabled(android.content.Context) -> onEnabled
+cz.antecky.netswitch.ui.NetSwitchWidget -> cz.antecky.netswitch.ui.NetSwitchWidget:
+    boolean TogglingMobileData -> a
+    boolean TogglingWifi -> b
+    java.lang.Class[] WIDGETS -> c
+    19:19:void <init>() -> <init>
+    34:34:boolean ShowMobileButton() -> b
+    38:38:boolean ShowWifiButton() -> a
+    42:101:android.widget.RemoteViews getRemoteViews(android.content.Context,cz.antecky.netswitch.NetController) -> a
+    106:130:void requestUpdate(android.content.Context,java.lang.Boolean,java.lang.Boolean) -> a
+    133:135:android.app.PendingIntent getPendingSelfIntent(android.content.Context,java.lang.String) -> a
+    140:147:void onUpdate(android.content.Context,android.appwidget.AppWidgetManager,int[]) -> onUpdate
+    152:154:void onEnabled(android.content.Context) -> onEnabled
+    159:159:void onDisabled(android.content.Context) -> onDisabled
+    163:188:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    25:28:void <clinit>() -> <clinit>
+eu.chainfire.libsuperuser.Debug -> a.a.a.a:
+    boolean debug -> a
+    int logTypes -> b
+    eu.chainfire.libsuperuser.Debug$OnLogListener logListener -> c
+    boolean sanityChecks -> d
+    50:50:boolean getDebug() -> a
+    83:90:void logCommon(int,java.lang.String,java.lang.String) -> a
+    100:101:void log(java.lang.String) -> a
+    111:112:void logCommand(java.lang.String) -> b
+    122:123:void logOutput(java.lang.String) -> c
+    219:219:boolean getSanityChecksEnabled() -> b
+    230:230:boolean getSanityChecksEnabledEffective() -> c
+    239:239:boolean onMainThread() -> d
+    29:196:void <clinit>() -> <clinit>
+eu.chainfire.libsuperuser.Debug$OnLogListener -> a.a.a.a$a:
+    void onLog(int,java.lang.String,java.lang.String) -> a
+eu.chainfire.libsuperuser.Shell -> a.a.a.b:
+    java.lang.String[] availableTestCommands -> a
+    103:200:java.util.List run(java.lang.String,java.lang.String[],java.lang.String[],boolean) -> a
+    217:235:boolean parseAvailableResult(java.util.List,boolean) -> a
+    203:203:void <clinit>() -> <clinit>
+eu.chainfire.libsuperuser.Shell$SU -> a.a.a.b$a:
+    java.lang.Boolean isSELinuxEnforcing -> a
+    java.lang.String[] suVersion -> b
+    294:294:java.util.List run(java.lang.String) -> a
+    318:318:java.util.List run(java.lang.String[]) -> a
+    331:332:boolean available() -> a
+    401:412:boolean isSU(java.lang.String) -> b
+    281:282:void <clinit>() -> <clinit>
+eu.chainfire.libsuperuser.ShellOnMainThreadException -> a.a.a.c:
+    31:32:void <init>(java.lang.String) -> <init>
+eu.chainfire.libsuperuser.StreamGobbler -> a.a.a.d:
+    java.lang.String shell -> a
+    java.io.BufferedReader reader -> b
+    java.util.List writer -> c
+    eu.chainfire.libsuperuser.StreamGobbler$OnLineListener listener -> d
+    45:65:void <init>(java.lang.String,java.io.InputStream,java.util.List) -> <init>
+    89:104:void run() -> run
+eu.chainfire.libsuperuser.StreamGobbler$OnLineListener -> a.a.a.d$a:
+    void onLine(java.lang.String) -> a
