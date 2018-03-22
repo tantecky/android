@@ -14,9 +14,9 @@ import android.view.ViewGroup;
 import cz.numsolution.cfdpal.R;
 import cz.numsolution.cfdpal.Utils;
 import cz.numsolution.cfdpal.presenter.SelectionPresenter;
+import cz.numsolution.cfdpal.presenter.SelectionPresenterImpl;
 
-
-public class SelectionFragment extends Fragment {
+public class SelectionFragment extends Fragment implements SelectionView {
 
     private static final String TAG = "SelectionFragment";
 
@@ -25,6 +25,7 @@ public class SelectionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPresenter = new SelectionPresenterImpl(this);
     }
 
     @Override
@@ -43,5 +44,10 @@ public class SelectionFragment extends Fragment {
     public void onDestroyView() {
         mPresenter.onDestroyView();
         super.onDestroyView();
+    }
+
+    @Override
+    public void onCalculationSelected() {
+
     }
 }

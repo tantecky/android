@@ -9,4 +9,6 @@ public interface SelectionPresenter {
 
     void onDestroyView();
 
+    void onSelectionButtonClicked();
+
 }
