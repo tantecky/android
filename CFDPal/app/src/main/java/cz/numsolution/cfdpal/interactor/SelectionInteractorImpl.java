@@ -6,6 +6,6 @@ package cz.numsolution.cfdpal.interactor;
 
 public class SelectionInteractorImpl implements SelectionInteractor {
     @Override
-    public void selectCalculation(CharSequence buttonText, OnSelectionListener listener) {
+    public void selectCalculation(int buttonTag, OnSelectionListener listener) {
     }
 }

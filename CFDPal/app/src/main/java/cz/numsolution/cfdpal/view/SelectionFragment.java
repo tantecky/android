@@ -19,6 +19,7 @@ import butterknife.Unbinder;
 import cz.numsolution.cfdpal.R;
 import cz.numsolution.cfdpal.Utils;
 import cz.numsolution.cfdpal.interactor.SelectionInteractorImpl;
+import cz.numsolution.cfdpal.model.CalculationType;
 import cz.numsolution.cfdpal.presenter.SelectionPresenter;
 import cz.numsolution.cfdpal.presenter.SelectionPresenterImpl;
 
@@ -28,6 +29,13 @@ public class SelectionFragment extends Fragment implements SelectionView {
 
     private SelectionPresenter mPresenter;
     private Unbinder mUnbinder;
+
+    @BindView(R.id.buttonHeight)
+    Button mHeight;
+    @BindView(R.id.buttonQuantities)
+    Button mQuantities;
+    @BindView(R.id.buttonGrid)
+    Button mGrid;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +48,11 @@ public class SelectionFragment extends Fragment implements SelectionView {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_selection, container, false);
         mUnbinder = ButterKnife.bind(this, view);
+
+        mHeight.setTag(CalculationType.CELL_HEIGHT);
+        mQuantities.setTag(CalculationType.TURBULENT_QUANTITIES);
+        mGrid.setTag(CalculationType.GRID_CONVERGENCE);
+
         return view;
     }
 
@@ -58,7 +71,11 @@ public class SelectionFragment extends Fragment implements SelectionView {
 
     @OnClick({R.id.buttonHeight, R.id.buttonQuantities, R.id.buttonGrid})
     public void onButtonClick(Button button) {
-        Utils.showToast(this.getContext(), button.getText());
+        @CalculationType int calcType = (int)button.getTag();
+        CalculationActivity.start(getContext(), calcType, button.getText());
+
+
+        mPresenter.onSelectionButtonClick((int)button.getTag());
     }
 
     @Override
