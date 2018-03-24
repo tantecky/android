@@ -1,17 +1,20 @@
 package cz.numsolution.cfdpal.presenter;
 
+import cz.numsolution.cfdpal.interactor.SelectionInteractor;
 import cz.numsolution.cfdpal.view.SelectionView;
 
 /**
  * Created by Tomas Antecky on 22. 3. 2018.
  */
 
-public final class SelectionPresenterImpl implements SelectionPresenter {
+public final class SelectionPresenterImpl implements SelectionPresenter, SelectionInteractor.OnSelectionListener {
 
-    private SelectionView mSelectionView;
+    private SelectionView mView;
+    private SelectionInteractor mInteractor;
 
-    public SelectionPresenterImpl(SelectionView selectionView) {
-        mSelectionView = selectionView;
+    public SelectionPresenterImpl(SelectionView view, SelectionInteractor interactor) {
+        mView = view;
+        mInteractor = interactor;
     }
 
     @Override
@@ -25,7 +28,17 @@ public final class SelectionPresenterImpl implements SelectionPresenter {
     }
 
     @Override
-    public void onSelectionButtonClicked() {
+    public void onSelectionButtonClick(CharSequence buttonText) {
+        mInteractor.selectCalculation(buttonText, this);
+    }
+
+    @Override
+    public void onSelectionError() {
+
+    }
+
+    @Override
+    public void onSelectionSuccess() {
 
     }
 }

@@ -9,6 +9,7 @@ public interface SelectionPresenter {
 
     void onDestroyView();
 
-    void onSelectionButtonClicked();
+    void onSelectionButtonClick(CharSequence buttonText);
 
 }
+

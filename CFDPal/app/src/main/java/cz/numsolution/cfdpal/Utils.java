@@ -11,7 +11,7 @@ import android.widget.Toast;
 public final class Utils {
 
 
-    public static void showToast(Context context, final String message) {
+    public static void showToast(Context context, final CharSequence message) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 

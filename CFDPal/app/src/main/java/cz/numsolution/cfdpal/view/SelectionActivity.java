@@ -10,7 +10,7 @@ import android.os.Bundle;
 
 import cz.numsolution.cfdpal.R;
 
-public class SelectionActivity extends AppCompatActivity {
+public class SelectionActivity extends AppCompatActivity implements SelectionView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +20,10 @@ public class SelectionActivity extends AppCompatActivity {
         SelectionFragment selectionFragment = new SelectionFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, selectionFragment).commit();
+    }
+
+    @Override
+    public void onCalculationSelected() {
+
     }
 }
