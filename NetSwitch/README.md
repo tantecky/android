@@ -4,8 +4,8 @@ A simple widget for WiFi/mobile data toggling on Android.
 <a href="https://f-droid.org/packages/cz.antecky.netswitch/" target="_blank">
 <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80"/></a>
 <p>
-<img align="right" width="200" src="app/src/main/play/en-US/listing/phoneScreenshots/2.png"/>
-<img align="right" width="200" src="app/src/main/play/en-US/listing/phoneScreenshots/1.png"/>
+<img align="right" width="200" src="metadata/en-US/images/phoneScreenshots/2.png"/>
+<img align="right" width="200" src="metadata/en-US/images/phoneScreenshots/1.png"/>
 </p>
 
 
