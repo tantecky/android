@@ -3,4 +3,5 @@
     <string name="first_cell_height">First cell height</string>
     <string name="turbulent_quantities">Turbulent quantities</string>
     <string name="grid_convergence">Grid convergence</string>
+    <string name="web">www.numsolution.cz</string>
 </resources>
