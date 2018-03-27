@@ -4,4 +4,8 @@
     <string name="turbulent_quantities">Turbulent quantities</string>
     <string name="grid_convergence">Grid convergence</string>
     <string name="web">www.numsolution.cz</string>
+    <string name="web_url">https://www.numsolution.cz</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

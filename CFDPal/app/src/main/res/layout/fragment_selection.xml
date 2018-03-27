@@ -17,6 +17,7 @@
         android:layout_marginStart="8dp"
         android:text="Select calculation"
         android:textAppearance="@android:style/TextAppearance.Large"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/buttonHeight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,8 +74,8 @@
         app:layout_constraintGuide_percent="0.85" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="250dp"
+        android:id="@+id/imLogo"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
         android:layout_marginEnd="8dp"
@@ -93,10 +94,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/web"
-        android:autoLink="web"
         android:textAppearance="@android:style/TextAppearance.Small"
+        android:textColor="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imLogo" />
 
 </android.support.constraint.ConstraintLayout>

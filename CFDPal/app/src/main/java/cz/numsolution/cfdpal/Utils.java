@@ -5,6 +5,8 @@ package cz.numsolution.cfdpal;
  */
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,5 +25,10 @@ public final class Utils {
         if (BuildConfig.DEBUG) {
             Log.d(tag, message);
         }
+    }
+
+    public static void openUrl(Context context, final String url) {
+        context.startActivity(new Intent(Intent.ACTION_VIEW,
+                Uri.parse(url)));
     }
 }

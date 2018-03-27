@@ -10,6 +10,8 @@ import cz.numsolution.cfdpal.model.CalculationType;
 
 public class CalculationActivity extends AppCompatActivity {
 
+    private static final String TAG = "CalculationActivity";
+
     private static final String EXTRA_CALCULATION_TYPE = "CalculationType";
     private static final String EXTRA_CALCULATION_NAME = "CalculationName";
 
@@ -21,6 +23,9 @@ public class CalculationActivity extends AppCompatActivity {
         context.startActivity(intent);
     }
 
+    private @CalculationType
+    int mCalcType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,5 +34,13 @@ public class CalculationActivity extends AppCompatActivity {
         Intent intent = this.getIntent();
         CharSequence calculationName = intent.getStringExtra(EXTRA_CALCULATION_NAME);
         setTitle(calculationName);
+
+        mCalcType = intent.getIntExtra(EXTRA_CALCULATION_TYPE, CalculationType.UNKNOWN);
+
+        CalculationFragment calculationFragment = new CalculationFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, calculationFragment).commit();
+
     }
+
 }
