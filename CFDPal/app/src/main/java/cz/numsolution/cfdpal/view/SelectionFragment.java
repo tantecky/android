@@ -19,16 +19,13 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cz.numsolution.cfdpal.R;
 import cz.numsolution.cfdpal.Utils;
-import cz.numsolution.cfdpal.interactor.SelectionInteractorImpl;
 import cz.numsolution.cfdpal.model.CalculationType;
-import cz.numsolution.cfdpal.presenter.SelectionPresenter;
-import cz.numsolution.cfdpal.presenter.SelectionPresenterImpl;
 
-public class SelectionFragment extends Fragment implements SelectionView {
+
+public class SelectionFragment extends Fragment {
 
     private static final String TAG = "SelectionFragment";
 
-    private SelectionPresenter mPresenter;
     private Unbinder mUnbinder;
 
     @BindView(R.id.buttonHeight)
@@ -44,7 +41,6 @@ public class SelectionFragment extends Fragment implements SelectionView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = new SelectionPresenterImpl(this, new SelectionInteractorImpl());
     }
 
     @Override
@@ -62,15 +58,9 @@ public class SelectionFragment extends Fragment implements SelectionView {
         return view;
     }
 
-    @Override
-    public void onResume() {
-        mPresenter.onResume();
-        super.onResume();
-    }
 
     @Override
     public void onDestroyView() {
-        mPresenter.onDestroyView();
         super.onDestroyView();
         mUnbinder.unbind();
     }
@@ -80,17 +70,11 @@ public class SelectionFragment extends Fragment implements SelectionView {
         @CalculationType int calcType = (int) button.getTag();
         CalculationActivity.start(getContext(), calcType, button.getText());
 
-        mPresenter.onSelectionButtonClick((int) button.getTag());
     }
 
     @OnClick({R.id.imLogo, R.id.tvWeb})
     public void onLinkClick(View v) {
         Utils.openUrl(this.getContext(), getString(R.string.web_url));
-
-    }
-
-    @Override
-    public void onCalculationSelected() {
 
     }
 }
