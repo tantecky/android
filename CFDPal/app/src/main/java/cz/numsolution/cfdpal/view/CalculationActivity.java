@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import cz.numsolution.cfdpal.R;
+import cz.numsolution.cfdpal.Utils;
 import cz.numsolution.cfdpal.model.CalculationType;
 
 public class CalculationActivity extends AppCompatActivity {
@@ -41,6 +44,24 @@ public class CalculationActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, calculationFragment).commit();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_activities, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuWeb:
+                Utils.openUrl(this, getString(R.string.web_url));
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
