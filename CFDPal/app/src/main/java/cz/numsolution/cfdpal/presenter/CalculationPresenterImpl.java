@@ -25,4 +25,15 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
     public void onSuccess() {
 
     }
+
+    @Override
+    public void onDestroyView() {
+        mView = null;
+        mInteractor = null;
+    }
+
+    @Override
+    public void onCreateView() {
+        mView.setValues(20, 1.225, 0, 0, 0);
+    }
 }

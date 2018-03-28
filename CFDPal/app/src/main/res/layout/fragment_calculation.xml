@@ -10,7 +10,7 @@
 
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/lay1"
+        android:id="@+id/layVelocity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -25,10 +25,12 @@
         >
 
         <android.support.design.widget.TextInputEditText
+            android:id="@+id/etVelocity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Velocity (m/s)"
             android:inputType="numberDecimal|numberSigned"
+            android:selectAllOnFocus="true"
             android:singleLine="true" />
 
 
@@ -46,14 +48,87 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lay1">
+        app:layout_constraintTop_toBottomOf="@+id/layVelocity">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/etDensity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="numberDecimal|numberSigned"
             android:hint="Density (kg/m3)"
+            android:inputType="numberDecimal|numberSigned"
+            android:selectAllOnFocus="true"
+            android:singleLine="true" />
+
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layViscosity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layDensity">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/etViscosity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Dynamic viscosity (kg/ms)"
+            android:inputType="numberDecimal|numberSigned"
+            android:singleLine="true" />
+
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layLength"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layViscosity">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/etLength"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Characteristic length (m)"
+            android:inputType="numberDecimal|numberSigned"
+            android:singleLine="true" />
+
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layYplus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layLength">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/etYplus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Desired y+"
+            android:inputType="numberDecimal|numberSigned"
             android:singleLine="true" />
 
 
