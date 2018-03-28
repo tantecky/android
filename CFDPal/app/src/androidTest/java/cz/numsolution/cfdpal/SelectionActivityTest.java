@@ -42,7 +42,7 @@ public class SelectionActivityTest {
 
     @Test
     public void clickOnHieghtCalculation() {
-        onView(withId(R.id.buttonHeight)).perform(click());
+        onView(withId(R.id.btnHeight)).perform(click());
 
         Activity activity = getCurrentActivity();
         assertThat(activity.getTitle().toString(),
@@ -52,7 +52,7 @@ public class SelectionActivityTest {
 
     @Test
     public void clickOnQuantitiesCalculation() {
-        onView(withId(R.id.buttonQuantities)).perform(click());
+        onView(withId(R.id.btnQuantities)).perform(click());
 
         Activity activity = getCurrentActivity();
         assertThat(activity.getTitle().toString(),
@@ -62,7 +62,7 @@ public class SelectionActivityTest {
 
     @Test
     public void clickOnGridCalculation() {
-        onView(withId(R.id.buttonGrid)).perform(click());
+        onView(withId(R.id.btnGrid)).perform(click());
 
         Activity activity = getCurrentActivity();
         assertThat(activity.getTitle().toString(),

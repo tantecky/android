@@ -28,11 +28,11 @@ public class SelectionFragment extends Fragment {
 
     private Unbinder mUnbinder;
 
-    @BindView(R.id.buttonHeight)
+    @BindView(R.id.btnHeight)
     Button mHeight;
-    @BindView(R.id.buttonQuantities)
+    @BindView(R.id.btnQuantities)
     Button mQuantities;
-    @BindView(R.id.buttonGrid)
+    @BindView(R.id.btnGrid)
     Button mGrid;
 
     @BindView(R.id.tvWeb)
@@ -65,7 +65,7 @@ public class SelectionFragment extends Fragment {
         mUnbinder.unbind();
     }
 
-    @OnClick({R.id.buttonHeight, R.id.buttonQuantities, R.id.buttonGrid})
+    @OnClick({R.id.btnHeight, R.id.btnQuantities, R.id.btnGrid})
     public void onButtonClick(Button button) {
         @CalculationType int calcType = (int) button.getTag();
         CalculationActivity.start(getContext(), calcType, button.getText());

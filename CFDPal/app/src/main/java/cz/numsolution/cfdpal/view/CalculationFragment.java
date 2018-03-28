@@ -1,16 +1,21 @@
 package cz.numsolution.cfdpal.view;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import cz.numsolution.cfdpal.R;
+import cz.numsolution.cfdpal.Utils;
 import cz.numsolution.cfdpal.interactor.CalculationInteractorImpl;
 import cz.numsolution.cfdpal.presenter.CalculationPresenter;
 import cz.numsolution.cfdpal.presenter.CalculationPresenterImpl;
@@ -61,5 +66,21 @@ public class CalculationFragment extends Fragment implements CalculationView {
                           double length, double yplus) {
         mVelocity.setText(String.valueOf(velocity));
         mDensity.setText(String.valueOf(density));
+    }
+
+
+    @OnClick(R.id.btnCalculate)
+    public void onCalculateClick(Button btn) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this.getContext()).create();
+        alertDialog.setTitle("Alert");
+        alertDialog.setMessage("Alert message to be shown");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        alertDialog.show();
     }
 }

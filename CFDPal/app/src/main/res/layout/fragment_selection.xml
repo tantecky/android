@@ -18,42 +18,42 @@
         android:text="Select calculation"
         android:textAppearance="@android:style/TextAppearance.Large"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/buttonHeight"
+        app:layout_constraintBottom_toTopOf="@+id/btnHeight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_conversion_absoluteHeight="30dp"
         tools:layout_conversion_absoluteWidth="175dp" />
 
     <Button
-        android:id="@+id/buttonHeight"
+        android:id="@+id/btnHeight"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/first_cell_height"
-        app:layout_constraintBottom_toTopOf="@+id/buttonQuantities"
+        app:layout_constraintBottom_toTopOf="@+id/btnQuantities"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_conversion_absoluteHeight="48dp"
         tools:layout_conversion_absoluteWidth="200dp" />
 
     <Button
-        android:id="@+id/buttonQuantities"
+        android:id="@+id/btnQuantities"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/turbulent_quantities"
-        app:layout_constraintBottom_toTopOf="@+id/buttonGrid"
+        app:layout_constraintBottom_toTopOf="@+id/btnGrid"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_conversion_absoluteHeight="48dp"
         tools:layout_conversion_absoluteWidth="200dp" />
 
     <Button
-        android:id="@+id/buttonGrid"
+        android:id="@+id/btnGrid"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
