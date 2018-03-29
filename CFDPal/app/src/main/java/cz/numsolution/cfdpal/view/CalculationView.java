@@ -5,4 +5,5 @@ package cz.numsolution.cfdpal.view;
  */
 public interface CalculationView {
     void setValues(double velocity, double density, double viscosity, double length, double yplus);
+
 }

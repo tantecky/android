@@ -15,15 +15,23 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cz.numsolution.cfdpal.R;
-import cz.numsolution.cfdpal.Utils;
 import cz.numsolution.cfdpal.interactor.CalculationInteractorImpl;
+import cz.numsolution.cfdpal.model.CalculationType;
 import cz.numsolution.cfdpal.presenter.CalculationPresenter;
 import cz.numsolution.cfdpal.presenter.CalculationPresenterImpl;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class CalculationFragment extends Fragment implements CalculationView {
+
+    private static final String TAG = "CalculationFragment";
+    private static final String EXTRA_CALCULATION_TYPE = "CalculationType";
+
+    public static CalculationFragment newInstance(@CalculationType int calcType) {
+        CalculationFragment fragment = new CalculationFragment();
+        Bundle bundle = new Bundle(1);
+        bundle.putInt(EXTRA_CALCULATION_TYPE, calcType);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     private CalculationPresenter mPresenter;
     private Unbinder mUnbinder;
@@ -32,15 +40,23 @@ public class CalculationFragment extends Fragment implements CalculationView {
     TextInputEditText mVelocity;
     @BindView(R.id.etDensity)
     TextInputEditText mDensity;
+    @BindView(R.id.etViscosity)
+    TextInputEditText mViscosity;
+    @BindView(R.id.etLength)
+    TextInputEditText mLength;
+    @BindView(R.id.etYplus)
+    TextInputEditText mYplus;
 
     public CalculationFragment() {
-        // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = new CalculationPresenterImpl(this, new CalculationInteractorImpl());
+        @CalculationType int calcType = getArguments().getInt(EXTRA_CALCULATION_TYPE,
+                CalculationType.UNKNOWN);
+        mPresenter = new CalculationPresenterImpl(this, calcType,
+                new CalculationInteractorImpl());
     }
 
     @Override
@@ -66,6 +82,9 @@ public class CalculationFragment extends Fragment implements CalculationView {
                           double length, double yplus) {
         mVelocity.setText(String.valueOf(velocity));
         mDensity.setText(String.valueOf(density));
+        mViscosity.setText(String.valueOf(viscosity));
+        mLength.setText(String.valueOf(length));
+        mYplus.setText(String.valueOf(yplus));
     }
 
 

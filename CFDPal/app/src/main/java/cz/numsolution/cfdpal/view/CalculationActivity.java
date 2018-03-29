@@ -26,8 +26,6 @@ public class CalculationActivity extends AppCompatActivity {
         context.startActivity(intent);
     }
 
-    private @CalculationType
-    int mCalcType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +36,11 @@ public class CalculationActivity extends AppCompatActivity {
         CharSequence calculationName = intent.getStringExtra(EXTRA_CALCULATION_NAME);
         setTitle(calculationName);
 
-        mCalcType = intent.getIntExtra(EXTRA_CALCULATION_TYPE, CalculationType.UNKNOWN);
+        @CalculationType int calcType = intent.getIntExtra(EXTRA_CALCULATION_TYPE,
+                CalculationType.UNKNOWN);
 
-        CalculationFragment calculationFragment = new CalculationFragment();
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, calculationFragment).commit();
+                .add(R.id.fragment_container, CalculationFragment.newInstance(calcType)).commit();
 
     }
 

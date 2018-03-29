@@ -26,6 +26,11 @@ public class SelectionFragment extends Fragment {
 
     private static final String TAG = "SelectionFragment";
 
+    public static SelectionFragment newInstance() {
+        SelectionFragment fragment = new SelectionFragment();
+        return fragment;
+    }
+
     private Unbinder mUnbinder;
 
     @BindView(R.id.btnHeight)
@@ -37,6 +42,10 @@ public class SelectionFragment extends Fragment {
 
     @BindView(R.id.tvWeb)
     TextView mWeb;
+
+    public SelectionFragment() {
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

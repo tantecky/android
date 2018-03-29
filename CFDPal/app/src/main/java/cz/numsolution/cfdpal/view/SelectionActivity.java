@@ -22,9 +22,8 @@ public class SelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection);
 
-        SelectionFragment selectionFragment = new SelectionFragment();
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, selectionFragment).commit();
+                .add(R.id.fragment_container, SelectionFragment.newInstance()).commit();
     }
 
     @Override
