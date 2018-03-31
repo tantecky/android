@@ -9,13 +9,13 @@ public interface CalculationInteractor {
 
     CellHeightCalculation getDefaultCellHeightCalculation();
 
-    void calculateCellHeight(OnCalculationListener listiner, String velocity, String density,
+    void calculateCellHeight(OnCalculationListener listener, String velocity, String density,
                              String viscosity, String length, String yplus);
 
 
     interface OnCalculationListener {
         void onError();
 
-        void onSuccess();
+        void onSuccess(String results);
     }
 }

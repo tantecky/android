@@ -34,8 +34,8 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
     }
 
     @Override
-    public void onSuccess() {
-
+    public void onSuccess(String results) {
+        mView.showResults(results);
     }
 
     @Override
@@ -53,10 +53,12 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
     public void onCalculationClick() {
         switch (mCalcType) {
             case CalculationType.CELL_HEIGHT:
-         //    mInteractor.calculateCellHeight(this);
+                mInteractor.calculateCellHeight(this, mView.getVelocity(),
+                        mView.getDensity(), mView.getViscosity(),
+                        mView.getLength(), mView.getYplus());
                 break;
             default:
-                throw new AssertionError();
+                break;
 
         }
     }
@@ -64,12 +66,12 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
     private void setDefaultInputValues() {
         switch (mCalcType) {
             case CalculationType.CELL_HEIGHT:
-                CellHeightCalculation calcualtion = mInteractor.getDefaultCellHeightCalculation();
-                mView.setInputValues(String.valueOf(calcualtion.getVelocity()),
-                        String.valueOf(calcualtion.getDensity()),
-                        String.valueOf(calcualtion.getViscosity()),
-                        String.valueOf(calcualtion.getLength()),
-                        String.valueOf(calcualtion.getYplus()));
+                CellHeightCalculation calculation = mInteractor.getDefaultCellHeightCalculation();
+                mView.setInputValues(String.valueOf(calculation.getVelocity()),
+                        String.valueOf(calculation.getDensity()),
+                        String.valueOf(calculation.getViscosity()),
+                        String.valueOf(calculation.getLength()),
+                        String.valueOf(calculation.getYplus()));
                 break;
             default:
                 throw new AssertionError();

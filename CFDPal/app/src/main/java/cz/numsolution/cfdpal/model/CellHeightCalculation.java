@@ -64,4 +64,9 @@ public final class CellHeightCalculation implements Calculation {
         double ustar = Math.sqrt(tauw / mDensity);
         mCellHeight = mYplus * mViscosity / (mDensity * ustar);
     }
+
+    @Override
+    public String getResults() {
+        return "height: " + String.valueOf(mCellHeight);
+    }
 }

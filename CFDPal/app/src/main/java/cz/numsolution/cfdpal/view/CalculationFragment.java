@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cz.numsolution.cfdpal.R;
+import cz.numsolution.cfdpal.Utils;
 import cz.numsolution.cfdpal.interactor.CalculationInteractorImpl;
 import cz.numsolution.cfdpal.model.CalculationType;
 import cz.numsolution.cfdpal.presenter.CalculationPresenter;
@@ -91,9 +92,15 @@ public class CalculationFragment extends Fragment implements CalculationView {
     @Override
     public void onCalculationClick() {
         mPresenter.onCalculationClick();
+        Utils.logD(TAG, "onCalculationClick");
+
+    }
+
+    @Override
+    public void showResults(String results) {
         AlertDialog alertDialog = new AlertDialog.Builder(this.getContext()).create();
-        alertDialog.setTitle("Alert");
-        alertDialog.setMessage("Alert message to be shown");
+        alertDialog.setTitle("Results");
+        alertDialog.setMessage(results);
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -102,6 +109,31 @@ public class CalculationFragment extends Fragment implements CalculationView {
                 });
 
         alertDialog.show();
+    }
+
+    @Override
+    public String getVelocity() {
+        return mVelocity.getText().toString();
+    }
+
+    @Override
+    public String getDensity() {
+        return mDensity.getText().toString();
+    }
+
+    @Override
+    public String getViscosity() {
+        return mViscosity.getText().toString();
+    }
+
+    @Override
+    public String getLength() {
+        return mLength.getText().toString();
+    }
+
+    @Override
+    public String getYplus() {
+        return mYplus.getText().toString();
     }
 
 }
