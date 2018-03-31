@@ -8,6 +8,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,6 +52,7 @@ public class SelectionActivityTest {
     }
 
     @Test
+    @Ignore
     public void clickOnQuantitiesCalculation() {
         onView(withId(R.id.btnQuantities)).perform(click());
 
@@ -61,6 +63,7 @@ public class SelectionActivityTest {
     }
 
     @Test
+    @Ignore
     public void clickOnGridCalculation() {
         onView(withId(R.id.btnGrid)).perform(click());
 

@@ -78,18 +78,19 @@ public class CalculationFragment extends Fragment implements CalculationView {
     }
 
     @Override
-    public void setValues(double velocity, double density, double viscosity,
-                          double length, double yplus) {
-        mVelocity.setText(String.valueOf(velocity));
-        mDensity.setText(String.valueOf(density));
-        mViscosity.setText(String.valueOf(viscosity));
-        mLength.setText(String.valueOf(length));
-        mYplus.setText(String.valueOf(yplus));
+    public void setInputValues(String velocity, String density, String viscosity,
+                               String length, String yplus) {
+        mVelocity.setText(velocity);
+        mDensity.setText(density);
+        mViscosity.setText(viscosity);
+        mLength.setText(length);
+        mYplus.setText(yplus);
     }
 
-
     @OnClick(R.id.btnCalculate)
-    public void onCalculateClick(Button btn) {
+    @Override
+    public void onCalculationClick() {
+        mPresenter.onCalculationClick();
         AlertDialog alertDialog = new AlertDialog.Builder(this.getContext()).create();
         alertDialog.setTitle("Alert");
         alertDialog.setMessage("Alert message to be shown");
@@ -102,4 +103,5 @@ public class CalculationFragment extends Fragment implements CalculationView {
 
         alertDialog.show();
     }
+
 }

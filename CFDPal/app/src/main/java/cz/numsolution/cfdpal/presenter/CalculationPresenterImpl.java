@@ -2,6 +2,7 @@ package cz.numsolution.cfdpal.presenter;
 
 import cz.numsolution.cfdpal.interactor.CalculationInteractor;
 import cz.numsolution.cfdpal.model.CalculationType;
+import cz.numsolution.cfdpal.model.CellHeightCalculation;
 import cz.numsolution.cfdpal.view.CalculationView;
 
 /**
@@ -11,10 +12,17 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
         CalculationInteractor.OnCalculationListener {
     private CalculationView mView;
     private CalculationInteractor mInteractor;
-    @CalculationType int mCalcType;
+    @CalculationType
+    int mCalcType;
 
-    public CalculationPresenterImpl(CalculationView view, @CalculationType int calcType,
+    public CalculationPresenterImpl(CalculationView view,
+                                    @CalculationType int calcType,
                                     CalculationInteractor interactor) {
+
+        if (calcType == CalculationType.UNKNOWN) {
+            throw new AssertionError();
+        }
+
         mView = view;
         mInteractor = interactor;
         mCalcType = calcType;
@@ -38,7 +46,34 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
 
     @Override
     public void onCreateView() {
-        mView.setValues(20, 1.225,
-                1.8e-5, 1, 50);
+        setDefaultInputValues();
+    }
+
+    @Override
+    public void onCalculationClick() {
+        switch (mCalcType) {
+            case CalculationType.CELL_HEIGHT:
+         //    mInteractor.calculateCellHeight(this);
+                break;
+            default:
+                throw new AssertionError();
+
+        }
+    }
+
+    private void setDefaultInputValues() {
+        switch (mCalcType) {
+            case CalculationType.CELL_HEIGHT:
+                CellHeightCalculation calcualtion = mInteractor.getDefaultCellHeightCalculation();
+                mView.setInputValues(String.valueOf(calcualtion.getVelocity()),
+                        String.valueOf(calcualtion.getDensity()),
+                        String.valueOf(calcualtion.getViscosity()),
+                        String.valueOf(calcualtion.getLength()),
+                        String.valueOf(calcualtion.getYplus()));
+                break;
+            default:
+                throw new AssertionError();
+
+        }
     }
 }

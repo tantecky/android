@@ -6,5 +6,6 @@ package cz.numsolution.cfdpal.presenter;
 public interface CalculationPresenter {
     void onDestroyView();
     void onCreateView();
+    void onCalculationClick();
 }
 

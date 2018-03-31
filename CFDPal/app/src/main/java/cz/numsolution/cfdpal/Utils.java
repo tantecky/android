@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 public final class Utils {
 
+    public static final double EPS = 1e-5;
+
 
     public static void showToast(Context context, final CharSequence message) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();

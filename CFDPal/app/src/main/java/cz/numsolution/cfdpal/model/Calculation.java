@@ -6,6 +6,6 @@ package cz.numsolution.cfdpal.model;
  */
 
 
-public abstract class Calculation {
-
+interface Calculation {
+    void calculate();
 }
