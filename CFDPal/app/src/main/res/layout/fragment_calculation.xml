@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.CalculationFragment"
@@ -10,7 +10,8 @@
 
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/layVelocity"
+        android:id="@+id/tilVelocity"
+        android:tag="velocity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -21,7 +22,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
         >
 
         <android.support.design.widget.TextInputEditText
@@ -38,7 +38,8 @@
 
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/layDensity"
+        android:id="@+id/tilDensity"
+        android:tag="density"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -48,7 +49,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layVelocity">
+        app:layout_constraintTop_toBottomOf="@+id/tilVelocity">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/etDensity"
@@ -63,7 +64,8 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/layViscosity"
+        android:id="@+id/tilViscosity"
+        android:tag="viscosity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -73,7 +75,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layDensity">
+        app:layout_constraintTop_toBottomOf="@+id/tilDensity">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/etViscosity"
@@ -87,7 +89,8 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/layLength"
+        android:id="@+id/tilLength"
+        android:tag="length"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -97,7 +100,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layViscosity">
+        app:layout_constraintTop_toBottomOf="@+id/tilViscosity">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/etLength"
@@ -111,7 +114,8 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/layYplus"
+        android:id="@+id/tilYplus"
+        android:tag="yplus"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -121,7 +125,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layLength">
+        app:layout_constraintTop_toBottomOf="@+id/tilLength">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/etYplus"
@@ -148,7 +152,7 @@
         android:text="Calculate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layYplus">
+        app:layout_constraintTop_toBottomOf="@+id/tilYplus">
 
         <requestFocus />
     </Button>

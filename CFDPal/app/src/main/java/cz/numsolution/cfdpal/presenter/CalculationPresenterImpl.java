@@ -30,7 +30,7 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
 
     @Override
     public void onCalculationError(String problematicVariable, String message) {
-
+        mView.setError(problematicVariable, message);
     }
 
     @Override

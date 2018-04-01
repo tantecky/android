@@ -1,5 +1,6 @@
 package cz.numsolution.cfdpal.interactor;
 
+import cz.numsolution.cfdpal.Utils;
 import cz.numsolution.cfdpal.model.CellHeightCalculation;
 
 /**
@@ -15,8 +16,7 @@ public final class CalculationInteractorImpl implements CalculationInteractor {
                                     String velocity, String density, String viscosity,
                                     String length, String yplus) {
 
-        if(isValid(listener, velocity, density, viscosity, length, yplus))
-        {
+        if (isValid(listener, velocity, density, viscosity, length, yplus)) {
             CellHeightCalculation calculation = new CellHeightCalculation(
                     velocity, density, viscosity, length, yplus);
             calculation.calculate();
@@ -27,8 +27,14 @@ public final class CalculationInteractorImpl implements CalculationInteractor {
 
     @Override
     public boolean isValid(OnCalculationListener listener, String velocity,
-                                       String density, String viscosity, String length,
-                                       String yplus) {
+                           String density, String viscosity, String length,
+                           String yplus) {
+        if (!Utils.isPositiveNumber(velocity)) {
+            listener.onCalculationError("velocity",
+                    "has to be positive number");
+            return false;
+        }
+
         return true;
     }
 }

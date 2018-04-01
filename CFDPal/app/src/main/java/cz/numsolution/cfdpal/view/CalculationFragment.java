@@ -3,12 +3,16 @@ package cz.numsolution.cfdpal.view;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +41,9 @@ public class CalculationFragment extends Fragment implements CalculationView {
     private CalculationPresenter mPresenter;
     private Unbinder mUnbinder;
 
+    @BindView(R.id.root)
+    ViewGroup mRoot;
+
     @BindView(R.id.etVelocity)
     TextInputEditText mVelocity;
     @BindView(R.id.etDensity)
@@ -47,6 +54,8 @@ public class CalculationFragment extends Fragment implements CalculationView {
     TextInputEditText mLength;
     @BindView(R.id.etYplus)
     TextInputEditText mYplus;
+
+    List<TextInputLayout> mTextInputLayouts;
 
     public CalculationFragment() {
     }
@@ -67,6 +76,8 @@ public class CalculationFragment extends Fragment implements CalculationView {
         mUnbinder = ButterKnife.bind(this, view);
 
         mPresenter.onCreateView();
+        mTextInputLayouts = findAll();
+        clearAllErrors();
 
         return view;
     }
@@ -91,9 +102,9 @@ public class CalculationFragment extends Fragment implements CalculationView {
     @OnClick(R.id.btnCalculate)
     @Override
     public void onCalculationClick() {
+        clearAllErrors();
         mPresenter.onCalculationClick();
         Utils.logD(TAG, "onCalculationClick");
-
     }
 
     @Override
@@ -109,6 +120,23 @@ public class CalculationFragment extends Fragment implements CalculationView {
                 });
 
         alertDialog.show();
+    }
+
+    @Override
+    public void setError(String problematicVariable, String message) {
+
+        for (TextInputLayout til : mTextInputLayouts) {
+            Object tag = til.getTag();
+
+            if (tag != null) {
+                String problematicTag = ((String) tag);
+                if (problematicVariable.contentEquals(problematicTag)) {
+                    til.setErrorEnabled(true);
+                    til.setError(message);
+                    break;
+                }
+            }
+        }
     }
 
     @Override
@@ -136,4 +164,25 @@ public class CalculationFragment extends Fragment implements CalculationView {
         return mYplus.getText().toString();
     }
 
+    private List<TextInputLayout> findAll() {
+        int count = mRoot.getChildCount();
+        List<TextInputLayout> tils = new ArrayList<TextInputLayout>(count);
+
+        for (int i = 0; i < count; i++) {
+            View v = mRoot.getChildAt(i);
+            if (v instanceof TextInputLayout) {
+                tils.add((TextInputLayout) v);
+            }
+        }
+
+        return tils;
+    }
+
+    private void clearAllErrors() {
+        for (TextInputLayout til : mTextInputLayouts) {
+            til.setErrorEnabled(false);
+            til.setError(null);
+        }
+
+    }
 }

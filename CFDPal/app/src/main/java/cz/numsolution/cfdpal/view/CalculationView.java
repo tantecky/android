@@ -8,6 +8,7 @@ public interface CalculationView {
                         String viscosity, String length, String yplus);
     void onCalculationClick();
     void showResults(String results);
+    void setError(String problematicVariable, String message);
 
     String getVelocity();
     String getDensity();
