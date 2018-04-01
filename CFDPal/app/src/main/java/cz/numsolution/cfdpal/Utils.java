@@ -33,4 +33,12 @@ public final class Utils {
         context.startActivity(new Intent(Intent.ACTION_VIEW,
                 Uri.parse(url)));
     }
+
+    public static boolean isPositiveNumber(String value) {
+        try {
+            return value != null && Double.valueOf(value) > 0.0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }

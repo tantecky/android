@@ -14,6 +14,12 @@ public final class CellHeightCalculation implements Calculation {
     private double mReynoldsNumber;
     private double mCellHeight;
 
+    public CellHeightCalculation(String velocity, String density,
+                                 String viscosity, String length, String yplus) {
+        this(Double.valueOf(velocity), Double.valueOf(density), Double.valueOf(viscosity),
+                Double.valueOf(length), Double.valueOf(yplus));
+    }
+
     public CellHeightCalculation() {
         this(20, 1.225,
                 1.8e-5, 1, 50);

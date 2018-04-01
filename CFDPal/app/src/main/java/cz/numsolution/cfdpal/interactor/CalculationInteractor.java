@@ -12,10 +12,13 @@ public interface CalculationInteractor {
     void calculateCellHeight(OnCalculationListener listener, String velocity, String density,
                              String viscosity, String length, String yplus);
 
+    boolean isValid(OnCalculationListener listener, String velocity, String density,
+                    String viscosity, String length, String yplus);
+
 
     interface OnCalculationListener {
-        void onError();
+        void onCalculationError(String problematicVariable, String message);
 
-        void onSuccess(String results);
+        void onCalculationSuccess(String results);
     }
 }

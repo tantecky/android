@@ -29,12 +29,12 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
     }
 
     @Override
-    public void onError() {
+    public void onCalculationError(String problematicVariable, String message) {
 
     }
 
     @Override
-    public void onSuccess(String results) {
+    public void onCalculationSuccess(String results) {
         mView.showResults(results);
     }
 
