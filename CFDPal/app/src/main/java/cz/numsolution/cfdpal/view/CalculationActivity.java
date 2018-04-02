@@ -30,17 +30,21 @@ public class CalculationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utils.logD(TAG, "onCreate");
         setContentView(R.layout.activity_calculation);
 
         Intent intent = this.getIntent();
         CharSequence calculationName = intent.getStringExtra(EXTRA_CALCULATION_NAME);
         setTitle(calculationName);
 
-        @CalculationType int calcType = intent.getIntExtra(EXTRA_CALCULATION_TYPE,
-                CalculationType.UNKNOWN);
+        if (savedInstanceState == null) {
+            @CalculationType int calcType = intent.getIntExtra(EXTRA_CALCULATION_TYPE,
+                    CalculationType.UNKNOWN);
 
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, CalculationFragment.newInstance(calcType)).commit();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container, CalculationFragment.newInstance(calcType))
+                    .commit();
+        }
 
     }
 

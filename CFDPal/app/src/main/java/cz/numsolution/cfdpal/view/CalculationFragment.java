@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ScrollView;
 
 import java.sql.Array;
 import java.util.ArrayList;
@@ -46,6 +47,10 @@ public class CalculationFragment extends Fragment implements CalculationView {
     @BindView(R.id.root)
     ViewGroup mRoot;
 
+    @BindView(R.id.scrollView)
+    ScrollView mScrollView;
+
+
     @BindView(R.id.etVelocity)
     TextInputEditText mVelocity;
     @BindView(R.id.etDensity)
@@ -69,6 +74,8 @@ public class CalculationFragment extends Fragment implements CalculationView {
                 CalculationType.UNKNOWN);
         mPresenter = new CalculationPresenterImpl(this, calcType,
                 new CalculationInteractorImpl());
+
+        Utils.logD(TAG, "onCreate");
     }
 
     @Override
@@ -81,6 +88,10 @@ public class CalculationFragment extends Fragment implements CalculationView {
         mTextInputLayouts = findAll();
         clearAllErrors();
 
+        mScrollView.fullScroll(ScrollView.FOCUS_UP);
+
+        Utils.logD(TAG, "onCreateView");
+
         return view;
     }
 
@@ -89,6 +100,8 @@ public class CalculationFragment extends Fragment implements CalculationView {
         mPresenter.onDestroyView();
         super.onDestroyView();
         mUnbinder.unbind();
+
+        Utils.logD(TAG, "onDestroyView");
     }
 
     @Override
