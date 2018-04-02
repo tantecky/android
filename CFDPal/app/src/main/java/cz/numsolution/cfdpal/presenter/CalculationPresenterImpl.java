@@ -29,8 +29,8 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
     }
 
     @Override
-    public void onCalculationError(String problematicVariable, String message) {
-        mView.setError(problematicVariable, message);
+    public void onCalculationError(String problematicTag, String message) {
+        mView.setError(problematicTag, message);
     }
 
     @Override

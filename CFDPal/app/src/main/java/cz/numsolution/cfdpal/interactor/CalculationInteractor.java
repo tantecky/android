@@ -17,7 +17,7 @@ public interface CalculationInteractor {
 
 
     interface OnCalculationListener {
-        void onCalculationError(String problematicVariable, String message);
+        void onCalculationError(String problematicTag, String message);
 
         void onCalculationSuccess(String results);
     }

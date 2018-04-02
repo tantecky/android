@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.sql.Array;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnFocusChange;
 import butterknife.Unbinder;
 import cz.numsolution.cfdpal.R;
 import cz.numsolution.cfdpal.Utils;
@@ -133,7 +135,6 @@ public class CalculationFragment extends Fragment implements CalculationView {
                 if (problematicVariable.contentEquals(problematicTag)) {
                     til.setErrorEnabled(true);
                     til.setError(message);
-                    break;
                 }
             }
         }
@@ -164,6 +165,13 @@ public class CalculationFragment extends Fragment implements CalculationView {
         return mYplus.getText().toString();
     }
 
+    @OnFocusChange(R.id.btnCalculate)
+    public void onFocusChange(View v, boolean hasFocus) {
+        if (hasFocus) {
+            onCalculationClick();
+        }
+    }
+
     private List<TextInputLayout> findAll() {
         int count = mRoot.getChildCount();
         List<TextInputLayout> tils = new ArrayList<TextInputLayout>(count);
@@ -185,4 +193,5 @@ public class CalculationFragment extends Fragment implements CalculationView {
         }
 
     }
+
 }

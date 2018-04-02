@@ -29,12 +29,29 @@ public final class CalculationInteractorImpl implements CalculationInteractor {
     public boolean isValid(OnCalculationListener listener, String velocity,
                            String density, String viscosity, String length,
                            String yplus) {
+        boolean valid = true;
+        final String errorMessage = "has to be positive number";
         if (!Utils.isPositiveNumber(velocity)) {
-            listener.onCalculationError("velocity",
-                    "has to be positive number");
-            return false;
+            listener.onCalculationError("velocity", errorMessage);
+            valid = false;
         }
+        if (!Utils.isPositiveNumber(density)) {
+            listener.onCalculationError("density", errorMessage);
+            valid = false;
+        }
+        if (!Utils.isPositiveNumber(viscosity)) {
+            listener.onCalculationError("viscosity", errorMessage);
+            valid = false;
+        }
+        if (!Utils.isPositiveNumber(length)) {
+            listener.onCalculationError("length", errorMessage);
+            valid = false;
+        }
+        if (!Utils.isPositiveNumber(yplus)) {
+            listener.onCalculationError("yplus", errorMessage);
+            valid = false;
+        }
+        return valid;
 
-        return true;
     }
 }
