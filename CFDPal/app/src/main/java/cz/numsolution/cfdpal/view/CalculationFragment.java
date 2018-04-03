@@ -123,7 +123,12 @@ public class CalculationFragment extends Fragment implements CalculationView {
 
     @Override
     public void showResults(String results) {
-        AlertDialog alertDialog = new AlertDialog.Builder(this.getContext()).create();
+        ResultsFragment fragment = ResultsFragment.newInstance();
+        fragment.setResults(results);
+        fragment.show(getFragmentManager(), ResultsFragment.TAG);
+
+
+       /* AlertDialog alertDialog = new AlertDialog.Builder(this.getContext()).create();
         alertDialog.setTitle("Results");
         alertDialog.setMessage(results);
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -133,7 +138,7 @@ public class CalculationFragment extends Fragment implements CalculationView {
                     }
                 });
 
-        alertDialog.show();
+        alertDialog.show();*/
     }
 
     @Override
