@@ -21,7 +21,6 @@ import cz.numsolution.cfdpal.R;
 import cz.numsolution.cfdpal.Utils;
 import cz.numsolution.cfdpal.model.CalculationType;
 
-
 public class SelectionFragment extends Fragment {
 
     private static final String TAG = "SelectionFragment";
@@ -46,7 +45,6 @@ public class SelectionFragment extends Fragment {
     public SelectionFragment() {
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +64,6 @@ public class SelectionFragment extends Fragment {
 
         return view;
     }
-
 
     @Override
     public void onDestroyView() {

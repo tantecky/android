@@ -50,7 +50,6 @@ public class CalculationFragment extends Fragment implements CalculationView {
     @BindView(R.id.scrollView)
     ScrollView mScrollView;
 
-
     @BindView(R.id.etVelocity)
     TextInputEditText mVelocity;
     @BindView(R.id.etDensity)
@@ -88,9 +87,8 @@ public class CalculationFragment extends Fragment implements CalculationView {
         mTextInputLayouts = findAll();
         clearAllErrors();
 
-        mScrollView.fullScroll(ScrollView.FOCUS_UP);
-
         Utils.logD(TAG, "onCreateView");
+        mScrollView.smoothScrollTo(0, 0);
 
         return view;
     }
@@ -117,6 +115,7 @@ public class CalculationFragment extends Fragment implements CalculationView {
     @OnClick(R.id.btnCalculate)
     @Override
     public void onCalculationClick() {
+
         clearAllErrors();
         mPresenter.onCalculationClick();
         Utils.logD(TAG, "onCalculationClick");
