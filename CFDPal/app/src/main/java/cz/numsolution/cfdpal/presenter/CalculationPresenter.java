@@ -7,5 +7,6 @@ public interface CalculationPresenter {
     void onDestroyView();
     void onCreateView();
     void onCalculationClick();
+    void onResetClick();
 }
 

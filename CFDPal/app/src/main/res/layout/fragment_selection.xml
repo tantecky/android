@@ -38,6 +38,7 @@
 
         <Button
             android:id="@+id/btnHeight"
+            android:theme="@style/RedButton"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -53,6 +54,7 @@
 
         <Button
             android:id="@+id/btnQuantities"
+            android:theme="@style/OrangeButton"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -68,6 +70,7 @@
 
         <Button
             android:id="@+id/btnGrid"
+            android:theme="@style/YellowButton"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"

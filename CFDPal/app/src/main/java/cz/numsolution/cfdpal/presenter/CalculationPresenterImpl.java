@@ -34,8 +34,8 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
     }
 
     @Override
-    public void onCalculationSuccess(String results) {
-        mView.showResults(results);
+    public void onCalculationSuccess(String inputValues, String results) {
+        mView.showResults(inputValues, results);
     }
 
     @Override
@@ -61,6 +61,11 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
                 break;
 
         }
+    }
+
+    @Override
+    public void onResetClick() {
+        setDefaultInputValues();
     }
 
     private void setDefaultInputValues() {

@@ -8,5 +8,6 @@ package cz.numsolution.cfdpal.model;
 
 interface Calculation {
     void calculate();
-    String getResults();
+    String resultsToString();
+    String inputValuesToString();
 }

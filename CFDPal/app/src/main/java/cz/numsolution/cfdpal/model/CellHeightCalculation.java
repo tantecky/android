@@ -1,5 +1,9 @@
 package cz.numsolution.cfdpal.model;
 
+import java.util.Locale;
+
+import cz.numsolution.cfdpal.Utils;
+
 /**
  * Created by Tomas Antecky on 31.3.18.
  */
@@ -72,7 +76,27 @@ public final class CellHeightCalculation implements Calculation {
     }
 
     @Override
-    public String getResults() {
-        return "height: " + String.valueOf(mCellHeight);
+    public String resultsToString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format(Locale.US, "Reynolds number: %.1f", mReynoldsNumber));
+        sb.append(Utils.LINE_SEPARATOR);
+        sb.append(String.format(Locale.US, "First cell height: %.4e (m)", mCellHeight));
+        return sb.toString();
+
+    }
+
+    @Override
+    public String inputValuesToString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format(Locale.US, "Velocity: %s (m/s)", mVelocity));
+        sb.append(Utils.LINE_SEPARATOR);
+        sb.append(String.format(Locale.US, "Density: %s (kg/m3)", mDensity));
+        sb.append(Utils.LINE_SEPARATOR);
+        sb.append(String.format(Locale.US, "Viscosity: %s (kg/ms)", mViscosity));
+        sb.append(Utils.LINE_SEPARATOR);
+        sb.append(String.format(Locale.US, "Length: %s (m)", mLength));
+        sb.append(Utils.LINE_SEPARATOR);
+        sb.append(String.format(Locale.US, "y+: %s", mYplus));
+        return sb.toString();
     }
 }

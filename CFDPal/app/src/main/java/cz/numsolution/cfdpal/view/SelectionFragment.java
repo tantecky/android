@@ -75,12 +75,12 @@ public class SelectionFragment extends Fragment {
     @OnClick({R.id.btnHeight})
     public void onButtonClick(Button button) {
         @CalculationType int calcType = (int) button.getTag();
-        CalculationActivity.start(getContext(), calcType, button.getText());
+        CalculationActivity.start(this.getContext(), calcType, button.getText());
 
     }
 
     @OnClick({R.id.imLogo, R.id.tvWeb})
-    public void onLinkClick(View v) {
+    public void onLinkClick() {
         Utils.openUrl(this.getContext(), getString(R.string.web_url));
 
     }

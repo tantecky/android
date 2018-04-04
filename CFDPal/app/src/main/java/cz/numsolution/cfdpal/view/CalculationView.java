@@ -7,7 +7,8 @@ public interface CalculationView {
     void setInputValues(String velocity, String density,
                         String viscosity, String length, String yplus);
     void onCalculationClick();
-    void showResults(String results);
+    void onResetClick();
+    void showResults(String inputValues, String results);
     void setError(String problematicVariable, String message);
 
     String getVelocity();

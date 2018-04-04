@@ -1,18 +1,14 @@
 package cz.numsolution.cfdpal.view;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ScrollView;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,24 +117,18 @@ public class CalculationFragment extends Fragment implements CalculationView {
         Utils.logD(TAG, "onCalculationClick");
     }
 
+    @OnClick(R.id.btnReset)
     @Override
-    public void showResults(String results) {
+    public void onResetClick() {
+        mPresenter.onResetClick();
+    }
+
+    @Override
+    public void showResults(String inputValues, String results) {
         ResultsFragment fragment = ResultsFragment.newInstance();
+        fragment.setInputValues(inputValues);
         fragment.setResults(results);
         fragment.show(getFragmentManager(), ResultsFragment.TAG);
-
-
-       /* AlertDialog alertDialog = new AlertDialog.Builder(this.getContext()).create();
-        alertDialog.setTitle("Results");
-        alertDialog.setMessage(results);
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-        alertDialog.show();*/
     }
 
     @Override
@@ -182,16 +172,9 @@ public class CalculationFragment extends Fragment implements CalculationView {
         return mYplus.getText().toString();
     }
 
-    @OnFocusChange(R.id.btnCalculate)
-    public void onFocusChange(View v, boolean hasFocus) {
-        if (hasFocus) {
-            onCalculationClick();
-        }
-    }
-
     private List<TextInputLayout> findAll() {
         int count = mRoot.getChildCount();
-        List<TextInputLayout> tils = new ArrayList<TextInputLayout>(count);
+        List<TextInputLayout> tils = new ArrayList<>(count);
 
         for (int i = 0; i < count; i++) {
             View v = mRoot.getChildAt(i);

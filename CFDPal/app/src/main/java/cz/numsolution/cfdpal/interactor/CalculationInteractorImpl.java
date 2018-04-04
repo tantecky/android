@@ -20,7 +20,8 @@ public final class CalculationInteractorImpl implements CalculationInteractor {
             CellHeightCalculation calculation = new CellHeightCalculation(
                     velocity, density, viscosity, length, yplus);
             calculation.calculate();
-            listener.onCalculationSuccess(calculation.getResults());
+            listener.onCalculationSuccess(calculation.inputValuesToString(),
+                    calculation.resultsToString());
         }
 
     }

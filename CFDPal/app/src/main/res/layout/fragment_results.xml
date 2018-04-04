@@ -21,23 +21,23 @@
 
     <TextView
         android:id="@+id/tvOk"
+        style="@style/DialogActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="OK"
-        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvResults" />
 
     <TextView
         android:id="@+id/tvShare"
+        style="@style/DialogActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="SHARE"
-        android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toStartOf="@+id/tvOk"
         app:layout_constraintTop_toTopOf="@+id/tvOk" />
 

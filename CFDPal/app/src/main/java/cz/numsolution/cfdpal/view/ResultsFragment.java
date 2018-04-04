@@ -1,5 +1,6 @@
 package cz.numsolution.cfdpal.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ public class ResultsFragment extends AppCompatDialogFragment {
 
     private Unbinder mUnbinder;
     private String mResults;
+    private String mInputValues;
 
     public static ResultsFragment newInstance() {
         return new ResultsFragment();
@@ -53,7 +55,23 @@ public class ResultsFragment extends AppCompatDialogFragment {
         this.dismiss();
     }
 
+    @OnClick(R.id.tvShare)
+    public void onShareClick() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT,
+                mInputValues + Utils.LINE_SEPARATOR + mResults);
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, "Results"));
+
+    }
+
     public void setResults(String results) {
         mResults = results;
+    }
+
+    public void setInputValues(String inputValues) {
+        mInputValues = inputValues;
+
     }
 }
