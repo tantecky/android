@@ -19,7 +19,7 @@ public class ResultsFragment extends AppCompatDialogFragment {
 
     public static final String TAG = "ResultsFragment";
 
-    @BindView(R.id.tvResults)
+    @BindView(R.id.btnResults)
     public TextView mTextView;
 
     private Unbinder mUnbinder;
@@ -50,7 +50,7 @@ public class ResultsFragment extends AppCompatDialogFragment {
         mUnbinder.unbind();
     }
 
-    @OnClick(R.id.tvOk)
+    @OnClick(R.id.btnOk)
     public void onOkClick() {
         this.dismiss();
     }

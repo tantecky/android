@@ -2,43 +2,41 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="8dp"
-    android:paddingBottom="24dp"
-    android:paddingLeft="24dp"
-    android:paddingRight="24dp"
     tools:context=".view.ResultsFragment">
 
     <TextView
-        android:id="@+id/tvResults"
+        android:id="@+id/btnResults"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
         android:text="results"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvOk"
-        style="@style/DialogActionButton"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btnOk"
+        style="@style/DialogActionButton.Text"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="OK"
+        android:text="Ok"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvResults" />
+        app:layout_constraintTop_toBottomOf="@+id/btnResults" />
 
-    <TextView
+    <Button
         android:id="@+id/tvShare"
-        style="@style/DialogActionButton"
+        style="@style/DialogActionButton.Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:text="SHARE"
-        app:layout_constraintEnd_toStartOf="@+id/tvOk"
-        app:layout_constraintTop_toTopOf="@+id/tvOk" />
+        android:text="Share"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnOk" />
 
 </android.support.constraint.ConstraintLayout>
