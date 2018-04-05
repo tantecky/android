@@ -20,11 +20,20 @@ public class SelectionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_selection);
+        setContentView(R.layout.activity_masterdetail);
 
-        if (savedInstanceState == null ) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, SelectionFragment.newInstance()).commit();
+        if (savedInstanceState == null) {
+            if (Utils.isTwoPane(this)) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container_master, SelectionFragment.newInstance())
+                        .commit();
+            } else {
+
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, SelectionFragment.newInstance())
+                        .commit();
+
+            }
         }
     }
 

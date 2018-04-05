@@ -7,6 +7,8 @@ package cz.numsolution.cfdpal.view;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +77,23 @@ public class SelectionFragment extends Fragment {
     @OnClick({R.id.btnHeight})
     public void onButtonClick(Button button) {
         @CalculationType int calcType = (int) button.getTag();
-        CalculationActivity.start(this.getContext(), calcType, button.getText());
+
+        if (Utils.isTwoPane(this.getActivity())) {
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+
+            Fragment oldCalculation = fm.findFragmentById(R.id.fragment_container_detail);
+            Fragment newCalculation = CalculationFragment.newInstance(calcType);
+
+            if (oldCalculation != null) {
+                ft.remove(oldCalculation);
+            }
+
+            ft.add(R.id.fragment_container_detail, newCalculation);
+            ft.commit();
+        } else {
+            CalculationActivity.start(this.getContext(), calcType, button.getText());
+        }
 
     }
 

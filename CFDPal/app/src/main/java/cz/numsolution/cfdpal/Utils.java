@@ -4,6 +4,7 @@ package cz.numsolution.cfdpal;
  * Created by Tomas Antecky on 21. 3. 2018.
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -13,8 +14,7 @@ import android.widget.Toast;
 public final class Utils {
 
     public static final double EPS = 1e-5;
-    public static final String LINE_SEPARATOR  = System.getProperty("line.separator");
-
+    public static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
     public static void showToast(Context context, final CharSequence message) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
@@ -41,5 +41,9 @@ public final class Utils {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    public static boolean isTwoPane(Activity activity) {
+        return activity.findViewById(R.id.fragment_container_master) != null;
     }
 }
