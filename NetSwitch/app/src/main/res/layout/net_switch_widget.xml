@@ -17,12 +17,9 @@
             android:layout_weight="1"
             android:adjustViewBounds="true"
             style="@style/WidgetButton"
-            android:paddingBottom="@dimen/icon_size"
-            android:paddingTop="@dimen/icon_size"
-            android:paddingLeft="10dp"
-            android:paddingRight="12dp"
+            android:padding="@dimen/icon_size"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_network_cell_black_24dp" />
+            android:src="@drawable/ic_mobile" />
 
         <ImageButton
             android:id="@+id/button_wifi"
@@ -35,7 +32,7 @@
             style="@style/WidgetButton"
             android:padding="@dimen/icon_size"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_network_wifi_black_24dp" />
+            android:src="@drawable/ic_wifi" />
     </LinearLayout>
 
     <LinearLayout

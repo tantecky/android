@@ -57,13 +57,9 @@ public class NetSwitchWidget extends AppWidgetProvider {
                 views.setBoolean(R.id.button_mobile_data, "setEnabled", true);
 
                 if (nt.isMobileDataEnabled()) {
-                    views.setImageViewResource(R.id.button_mobile_data,
-                            R.drawable.ic_network_cell_black_24dp);
                     views.setInt(R.id.button_mobile_data,
                             "setColorFilter", resources.getColor(R.color.green));
                 } else {
-                    views.setImageViewResource(R.id.button_mobile_data,
-                            R.drawable.ic_signal_cellular_off_black_24dp);
                     views.setInt(R.id.button_mobile_data,
                             "setColorFilter", resources.getColor(R.color.red));
                 }
@@ -82,13 +78,9 @@ public class NetSwitchWidget extends AppWidgetProvider {
                 views.setBoolean(R.id.button_wifi, "setEnabled", true);
 
                 if (nt.isWifiEnabled()) {
-                    views.setImageViewResource(R.id.button_wifi,
-                            R.drawable.ic_network_wifi_black_24dp);
                     views.setInt(R.id.button_wifi,
                             "setColorFilter", resources.getColor(R.color.green));
                 } else {
-                    views.setImageViewResource(R.id.button_wifi,
-                            R.drawable.ic_signal_wifi_off_black_24dp);
                     views.setInt(R.id.button_wifi,
                             "setColorFilter", resources.getColor(R.color.red));
                 }
