@@ -11,4 +11,10 @@
     <color name="yellow">#FCBF0D</color>
     <color name="green">#8F9F66</color>
     <color name="grey">#544F4D</color>
+
+    <!-- card colors -->
+    <color name="card_background">#ffffff</color>
+    <color name="card_shadow_1">#d4d4d4</color>
+    <color name="card_shadow_2">#dddddd</color>
+    <color name="card_detailing">#eee</color>
 </resources>
