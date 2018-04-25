@@ -22,12 +22,13 @@
 
     <EditText
         android:id="@+id/etValue"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:ems="10"
         android:gravity="right"
+        android:selectAllOnFocus="true"
         android:inputType="numberSigned"
         android:singleLine="true"
         android:textSize="20sp"
@@ -40,6 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textColor="@color/grey"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvName"

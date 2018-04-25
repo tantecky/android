@@ -47,21 +47,17 @@ public class CalculationFragment extends Fragment implements CalculationView {
     @BindView(R.id.scrollView)
     ScrollView mScrollView;
 
-    @BindView(R.id.etVelocity)
-    TextInputEditText mVelocity;
-    @BindView(R.id.etDensity)
-    TextInputEditText mDensity;
-    @BindView(R.id.etViscosity)
-    TextInputEditText mViscosity;
-    @BindView(R.id.etLength)
-    TextInputEditText mLength;
-    @BindView(R.id.etYplus)
-    TextInputEditText mYplus;
-
     @BindView(R.id.qVelocity)
     QuantityInput qVelocity;
+    @BindView(R.id.qDensity)
+    QuantityInput qDensity;
+    @BindView(R.id.qViscosity)
+    QuantityInput qViscosity;
+    @BindView(R.id.qLength)
+    QuantityInput qLength;
+    @BindView(R.id.qYplus)
+    QuantityInput qYplus;
 
-    List<TextInputLayout> mTextInputLayouts;
     List<QuantityInput> mQuantityInputs;
 
     public CalculationFragment() {
@@ -85,8 +81,7 @@ public class CalculationFragment extends Fragment implements CalculationView {
         mUnbinder = ButterKnife.bind(this, view);
 
         mPresenter.onCreateView();
-        mTextInputLayouts = findAll(TextInputLayout.class);
-        mQuantityInputs = this.<QuantityInput>findAll(QuantityInput.class);
+        mQuantityInputs = findAll(QuantityInput.class);
         clearAllErrors();
 
         Utils.logD(TAG, "onCreateView");
@@ -107,13 +102,11 @@ public class CalculationFragment extends Fragment implements CalculationView {
     @Override
     public void setInputValues(String velocity, String density, String viscosity,
                                String length, String yplus) {
-        mVelocity.setText(velocity);
-        mDensity.setText(density);
-        mViscosity.setText(viscosity);
-        mLength.setText(length);
-        mYplus.setText(yplus);
-
         qVelocity.setValue(velocity);
+        qDensity.setValue(density);
+        qViscosity.setValue(viscosity);
+        qLength.setValue(length);
+        qYplus.setValue(yplus);
     }
 
     @OnClick(R.id.btnCalculate)
@@ -143,18 +136,6 @@ public class CalculationFragment extends Fragment implements CalculationView {
     @Override
     public void setError(String problematicVariable, String message) {
 
-        for (TextInputLayout til : mTextInputLayouts) {
-            Object tag = til.getTag();
-
-            if (tag != null) {
-                String problematicTag = ((String) tag);
-                if (problematicVariable.contentEquals(problematicTag)) {
-                    til.setErrorEnabled(true);
-                    til.setError(message);
-                }
-            }
-        }
-
         for (QuantityInput input : mQuantityInputs) {
             Object tag = input.getTag();
 
@@ -169,27 +150,27 @@ public class CalculationFragment extends Fragment implements CalculationView {
 
     @Override
     public String getVelocity() {
-        return mVelocity.getText().toString();
+        return qVelocity.getValue();
     }
 
     @Override
     public String getDensity() {
-        return mDensity.getText().toString();
+        return qDensity.getValue();
     }
 
     @Override
     public String getViscosity() {
-        return mViscosity.getText().toString();
+        return qViscosity.getValue();
     }
 
     @Override
     public String getLength() {
-        return mLength.getText().toString();
+        return qLength.getValue();
     }
 
     @Override
     public String getYplus() {
-        return mYplus.getText().toString();
+        return qYplus.getValue();
     }
 
     private <T> List<T> findAll(Class<T> type) {
@@ -208,10 +189,6 @@ public class CalculationFragment extends Fragment implements CalculationView {
     }
 
     private void clearAllErrors() {
-        for (TextInputLayout til : mTextInputLayouts) {
-            til.setErrorEnabled(false);
-            til.setError(null);
-        }
 
         for (QuantityInput input : mQuantityInputs) {
             input.setError(null);

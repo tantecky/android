@@ -35,8 +35,8 @@ public class QuantityInput extends ConstraintLayout {
         return mName.getText();
     }
 
-    public CharSequence getValue() {
-        return mValue.getText();
+    public String getValue() {
+        return mValue.getText().toString();
     }
 
     public void setValue(CharSequence value) {
@@ -46,7 +46,7 @@ public class QuantityInput extends ConstraintLayout {
     public void setError(String message) {
         if (message == null) {
             mError.setVisibility(GONE);
-            mValue.setTextColor(Color.BLACK);
+            mValue.setTextColor(getResources().getColor(R.color.black));
         } else {
             mError.setText(message);
             mValue.setTextColor(getResources().getColor(R.color.red));
@@ -62,8 +62,15 @@ public class QuantityInput extends ConstraintLayout {
                 R.styleable.QuantityInput, 0, 0);
 
         mName.setText(a.getString(R.styleable.QuantityInput_name));
-        mUnits.setText(a.getString(R.styleable.QuantityInput_units));
         mValue.setText(a.getString(R.styleable.QuantityInput_value));
+
+        final String units = a.getString(R.styleable.QuantityInput_units);
+
+        if (units.isEmpty()) {
+            mUnits.setVisibility(GONE);
+        } else {
+            mUnits.setText(units);
+        }
     }
 
     private void init(Context context) {
