@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +58,11 @@ public class CalculationFragment extends Fragment implements CalculationView {
     @BindView(R.id.etYplus)
     TextInputEditText mYplus;
 
+    @BindView(R.id.qVelocity)
+    QuantityInput qVelocity;
+
     List<TextInputLayout> mTextInputLayouts;
+    List<QuantityInput> mQuantityInputs;
 
     public CalculationFragment() {
     }
@@ -80,7 +85,8 @@ public class CalculationFragment extends Fragment implements CalculationView {
         mUnbinder = ButterKnife.bind(this, view);
 
         mPresenter.onCreateView();
-        mTextInputLayouts = findAll();
+        mTextInputLayouts = findAll(TextInputLayout.class);
+        mQuantityInputs = this.<QuantityInput>findAll(QuantityInput.class);
         clearAllErrors();
 
         Utils.logD(TAG, "onCreateView");
@@ -106,6 +112,8 @@ public class CalculationFragment extends Fragment implements CalculationView {
         mViscosity.setText(viscosity);
         mLength.setText(length);
         mYplus.setText(yplus);
+
+        qVelocity.setValue(velocity);
     }
 
     @OnClick(R.id.btnCalculate)
@@ -121,6 +129,7 @@ public class CalculationFragment extends Fragment implements CalculationView {
     @Override
     public void onResetClick() {
         mPresenter.onResetClick();
+        clearAllErrors();
     }
 
     @Override
@@ -142,6 +151,17 @@ public class CalculationFragment extends Fragment implements CalculationView {
                 if (problematicVariable.contentEquals(problematicTag)) {
                     til.setErrorEnabled(true);
                     til.setError(message);
+                }
+            }
+        }
+
+        for (QuantityInput input : mQuantityInputs) {
+            Object tag = input.getTag();
+
+            if (tag != null) {
+                String problematicTag = ((String) tag);
+                if (problematicVariable.contentEquals(problematicTag)) {
+                    input.setError(message);
                 }
             }
         }
@@ -172,18 +192,19 @@ public class CalculationFragment extends Fragment implements CalculationView {
         return mYplus.getText().toString();
     }
 
-    private List<TextInputLayout> findAll() {
+    private <T> List<T> findAll(Class<T> type) {
         int count = mRoot.getChildCount();
-        List<TextInputLayout> tils = new ArrayList<>(count);
+        List<T> inputs = new ArrayList<>(count);
 
         for (int i = 0; i < count; i++) {
             View v = mRoot.getChildAt(i);
-            if (v instanceof TextInputLayout) {
-                tils.add((TextInputLayout) v);
+            if (type.isInstance(v)) {
+                inputs.add((T) v);
             }
+
         }
 
-        return tils;
+        return inputs;
     }
 
     private void clearAllErrors() {
@@ -192,6 +213,8 @@ public class CalculationFragment extends Fragment implements CalculationView {
             til.setError(null);
         }
 
+        for (QuantityInput input : mQuantityInputs) {
+            input.setError(null);
+        }
     }
-
 }
