@@ -22,7 +22,7 @@
 
     <Button
         android:id="@+id/btnOk"
-        style="@style/DialogActionButton.Text"
+        style="@style/DialogActionButton"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:text="Ok"
@@ -32,7 +32,7 @@
 
     <Button
         android:id="@+id/tvShare"
-        style="@style/DialogActionButton.Text"
+        style="@style/DialogActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Share"
