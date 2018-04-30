@@ -40,11 +40,13 @@
 
         <Button
             android:id="@+id/btnHeight"
-            android:layout_width="200dp"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:drawableLeft="@drawable/arrow"
+            android:gravity="center_vertical|center_horizontal"
             android:text="@string/first_cell_height"
             android:theme="@style/RedButton"
             app:layout_constraintBottom_toTopOf="@+id/btnQuantities"
@@ -57,11 +59,12 @@
 
         <Button
             android:id="@+id/btnQuantities"
-            android:layout_width="200dp"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:drawableLeft="@drawable/arrow2"
             android:text="@string/turbulent_quantities"
             android:theme="@style/OrangeButton"
             app:layout_constraintBottom_toTopOf="@+id/btnGrid"
@@ -74,10 +77,11 @@
 
         <Button
             android:id="@+id/btnGrid"
-            android:layout_width="200dp"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:drawableLeft="@drawable/grid"
             android:text="@string/grid_convergence"
             android:theme="@style/YellowButton"
             app:layout_constraintBottom_toBottomOf="parent"
