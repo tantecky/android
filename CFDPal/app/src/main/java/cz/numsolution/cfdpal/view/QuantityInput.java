@@ -2,7 +2,9 @@ package cz.numsolution.cfdpal.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -13,12 +15,13 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cz.numsolution.cfdpal.R;
-import cz.numsolution.cfdpal.Utils;
 
 /**
  * Created by Tomas Antecky on 23. 4. 2018.
  */
 public class QuantityInput extends ConstraintLayout {
+
+    private static final String EDIT_TEXT_KEY = "EDIT_TEXT_KEY";
 
     public static final String TAG = "QuantityInput";
 
@@ -78,5 +81,26 @@ public class QuantityInput extends ConstraintLayout {
         View view = inflater.inflate(R.layout.quantity_input, this);
 
         ButterKnife.bind(this, view);
+    }
+
+    @Nullable
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("superState", super.onSaveInstanceState());
+        bundle.putString(EDIT_TEXT_KEY, getValue());
+        return bundle;
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if (state instanceof Bundle)
+        {
+            Bundle bundle = (Bundle) state;
+            setValue(bundle.getString(EDIT_TEXT_KEY));
+            state = bundle.getParcelable("superState");
+        }
+        super.onRestoreInstanceState(state);
     }
 }
