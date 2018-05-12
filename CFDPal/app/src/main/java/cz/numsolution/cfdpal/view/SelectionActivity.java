@@ -4,6 +4,7 @@ package cz.numsolution.cfdpal.view;
  * Created by Tomas Antecky on 21. 3. 2018.
  */
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,7 +29,7 @@ public class SelectionActivity extends AppCompatActivity {
                         .add(R.id.fragment_container_master, SelectionFragment.newInstance())
                         .commit();
             } else {
-
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.fragment_container, SelectionFragment.newInstance())
                         .commit();
