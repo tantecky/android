@@ -14,6 +14,8 @@ A simple widget for WiFi/mobile data toggling on Android.
 * Supports Android 5.1+ (API level 22+)
 
 ## Changelog
+* 1.4:
+  * fix the widget shape on some devices
 * 1.3:
   * add new graphics by [revilationer](https://github.com/revilationer)
 * 1.2:
