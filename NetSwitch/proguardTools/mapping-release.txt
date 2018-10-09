@@ -29,17 +29,18 @@ cz.antecky.netswitch.ui.NetSwitchWidget -> cz.antecky.netswitch.ui.NetSwitchWidg
     boolean TogglingMobileData -> a
     boolean TogglingWifi -> b
     java.lang.Class[] WIDGETS -> c
-    19:19:void <init>() -> <init>
-    34:34:boolean ShowMobileButton() -> b
-    38:38:boolean ShowWifiButton() -> a
-    42:93:android.widget.RemoteViews getRemoteViews(android.content.Context,cz.antecky.netswitch.NetController) -> a
-    98:122:void requestUpdate(android.content.Context,java.lang.Boolean,java.lang.Boolean) -> a
-    125:127:android.app.PendingIntent getPendingSelfIntent(android.content.Context,java.lang.String) -> a
-    132:139:void onUpdate(android.content.Context,android.appwidget.AppWidgetManager,int[]) -> onUpdate
-    144:146:void onEnabled(android.content.Context) -> onEnabled
-    151:151:void onDisabled(android.content.Context) -> onDisabled
-    155:180:void onReceive(android.content.Context,android.content.Intent) -> onReceive
-    25:28:void <clinit>() -> <clinit>
+    18:18:void <init>() -> <init>
+    33:33:boolean ShowMobileButton() -> b
+    37:37:boolean ShowWifiButton() -> a
+    41:41:boolean ShowBothButtons() -> c
+    45:101:android.widget.RemoteViews getRemoteViews(android.content.Context,cz.antecky.netswitch.NetController) -> a
+    106:130:void requestUpdate(android.content.Context,java.lang.Boolean,java.lang.Boolean) -> a
+    133:135:android.app.PendingIntent getPendingSelfIntent(android.content.Context,java.lang.String) -> a
+    140:147:void onUpdate(android.content.Context,android.appwidget.AppWidgetManager,int[]) -> onUpdate
+    152:154:void onEnabled(android.content.Context) -> onEnabled
+    159:159:void onDisabled(android.content.Context) -> onDisabled
+    163:188:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    24:27:void <clinit>() -> <clinit>
 eu.chainfire.libsuperuser.Debug -> a.a.a.a:
     boolean debug -> a
     int logTypes -> b
