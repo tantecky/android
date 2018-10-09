@@ -15,7 +15,6 @@ import cz.antecky.netswitch.NetController;
 import cz.antecky.netswitch.R;
 import cz.antecky.netswitch.Utils;
 
-
 public class NetSwitchWidget extends AppWidgetProvider {
 
     private final static String MOBILE_DATA_CLICKED = "mobile_data_clicked";
@@ -38,6 +37,10 @@ public class NetSwitchWidget extends AppWidgetProvider {
         return true;
     }
 
+    private boolean ShowBothButtons() {
+        return ShowWifiButton() && ShowMobileButton();
+    }
+
     private RemoteViews getRemoteViews(Context context, NetController nt) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.net_switch_widget);
 
@@ -47,6 +50,11 @@ public class NetSwitchWidget extends AppWidgetProvider {
                 getPendingSelfIntent(context, WIFI_CLICKED));
 
         Resources resources = context.getResources();
+
+        if (!ShowBothButtons()) {
+            views.setViewVisibility(R.id.tv_spacer1, View.GONE);
+            views.setViewVisibility(R.id.tv_spacer2, View.GONE);
+        }
 
         if (ShowMobileButton()) {
             if (TogglingMobileData) {
