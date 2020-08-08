@@ -6,13 +6,11 @@ package cz.numsolution.cfdpal.view;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cz.numsolution.cfdpal.R;
 import cz.numsolution.cfdpal.Utils;
 
