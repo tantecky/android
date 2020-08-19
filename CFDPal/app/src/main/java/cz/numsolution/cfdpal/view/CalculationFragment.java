@@ -19,6 +19,7 @@ import cz.numsolution.cfdpal.R;
 import cz.numsolution.cfdpal.Utils;
 import cz.numsolution.cfdpal.interactor.CalculationInteractorImpl;
 import cz.numsolution.cfdpal.model.CalculationType;
+import cz.numsolution.cfdpal.model.CellHeightCalculation;
 import cz.numsolution.cfdpal.presenter.CalculationPresenter;
 import cz.numsolution.cfdpal.presenter.CalculationPresenterImpl;
 
@@ -77,8 +78,8 @@ public class CalculationFragment extends Fragment implements CalculationView {
         View view = inflater.inflate(R.layout.fragment_calculation, container, false);
         mUnbinder = ButterKnife.bind(this, view);
 
-        mPresenter.onCreateView();
         mQuantityInputs = findAll(QuantityInput.class);
+        mPresenter.onCreateView();
         clearAllErrors();
 
         Utils.logD(TAG, "onCreateView");
@@ -143,6 +144,30 @@ public class CalculationFragment extends Fragment implements CalculationView {
                 }
             }
         }
+    }
+
+    @Override
+    public void showHideInputs(@CalculationType int calcType) {
+        for (QuantityInput input : mQuantityInputs) {
+            input.setVisibility(View.GONE);
+        }
+
+        switch (calcType) {
+            case CalculationType.CELL_HEIGHT:
+                qVelocity.setVisibility(View.VISIBLE);
+                qDensity.setVisibility(View.VISIBLE);
+                qViscosity.setVisibility(View.VISIBLE);
+                qLength.setVisibility(View.VISIBLE);
+                break;
+            case CalculationType.TURBULENT_QUANTITIES:
+                break;
+            case CalculationType.GRID_CONVERGENCE:
+                break;
+            default:
+                throw new AssertionError();
+
+        }
+
     }
 
     @Override

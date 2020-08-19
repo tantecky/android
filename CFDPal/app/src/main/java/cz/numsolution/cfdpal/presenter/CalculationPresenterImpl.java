@@ -66,6 +66,7 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
     @Override
     public void onResetClick() {
         setDefaultInputValues();
+        mView.showHideInputs(mCalcType);
     }
 
     private void setDefaultInputValues() {
