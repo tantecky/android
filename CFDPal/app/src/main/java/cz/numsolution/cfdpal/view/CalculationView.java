@@ -8,6 +8,7 @@ import cz.numsolution.cfdpal.model.CalculationType;
 public interface CalculationView {
     void setInputValues(String velocity, String density,
                         String viscosity, String length, String yplus);
+    void setInputValues(String velocity,  String length, String intensity);
 
     void onCalculationClick();
 
@@ -28,5 +29,7 @@ public interface CalculationView {
     String getLength();
 
     String getYplus();
+
+    String getIntensity();
 
 }

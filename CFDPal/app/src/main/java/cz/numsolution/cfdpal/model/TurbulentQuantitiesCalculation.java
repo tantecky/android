@@ -8,7 +8,7 @@ import cz.numsolution.cfdpal.Utils;
  * Created by Tomas Antecky on 18. 8. 2020.
  */
 
-public final class TurbulentQuantities implements Calculation {
+public final class TurbulentQuantitiesCalculation implements Calculation {
     private final double mVelocity;
     private final double mIntensity;
     private final double mLength;
@@ -18,15 +18,15 @@ public final class TurbulentQuantities implements Calculation {
     private double mSpecificDisRate;
     private double mModViscosity;
 
-    public TurbulentQuantities(String velocity, String intensity, String length) {
+    public TurbulentQuantitiesCalculation(String velocity, String intensity, String length) {
         this(Double.valueOf(velocity), Double.valueOf(intensity), Double.valueOf(length));
     }
 
-    public TurbulentQuantities() {
+    public TurbulentQuantitiesCalculation() {
         this(20, 5, 1);
     }
 
-    public TurbulentQuantities(double velocity, double intensity, double length) {
+    public TurbulentQuantitiesCalculation(double velocity, double intensity, double length) {
         mVelocity = velocity;
         mIntensity = intensity;
         mLength = length;

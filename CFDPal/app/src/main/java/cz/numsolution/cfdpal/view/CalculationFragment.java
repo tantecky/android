@@ -55,6 +55,8 @@ public class CalculationFragment extends Fragment implements CalculationView {
     QuantityInput qLength;
     @BindView(R.id.qYplus)
     QuantityInput qYplus;
+    @BindView(R.id.qIntensity)
+    QuantityInput qIntensity;
 
     List<QuantityInput> mQuantityInputs;
 
@@ -105,6 +107,13 @@ public class CalculationFragment extends Fragment implements CalculationView {
         qViscosity.setValue(viscosity);
         qLength.setValue(length);
         qYplus.setValue(yplus);
+    }
+
+    @Override
+    public void setInputValues(String velocity, String length, String intensity) {
+        qVelocity.setValue(velocity);
+        qLength.setValue(length);
+        qIntensity.setValue(intensity);
     }
 
     @OnClick(R.id.btnCalculate)
@@ -160,6 +169,9 @@ public class CalculationFragment extends Fragment implements CalculationView {
                 qLength.setVisibility(View.VISIBLE);
                 break;
             case CalculationType.TURBULENT_QUANTITIES:
+                qVelocity.setVisibility(View.VISIBLE);
+                qLength.setVisibility(View.VISIBLE);
+                qIntensity.setVisibility(View.VISIBLE);
                 break;
             case CalculationType.GRID_CONVERGENCE:
                 break;
@@ -193,6 +205,11 @@ public class CalculationFragment extends Fragment implements CalculationView {
     @Override
     public String getYplus() {
         return qYplus.getValue();
+    }
+
+    @Override
+    public String getIntensity() {
+        return qIntensity.getValue();
     }
 
     private <T> List<T> findAll(Class<T> type) {

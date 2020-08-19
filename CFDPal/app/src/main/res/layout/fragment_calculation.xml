@@ -105,6 +105,23 @@
 
         </cz.numsolution.cfdpal.view.QuantityInput>
 
+        <cz.numsolution.cfdpal.view.QuantityInput
+            android:id="@+id/qIntensity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:tag="intensity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/qYplus"
+            app:name="Turbulence intensity"
+            app:units="(%)">
+
+        </cz.numsolution.cfdpal.view.QuantityInput>
+
         <Button
             android:id="@+id/btnCalculate"
             android:layout_width="0dp"
@@ -117,7 +134,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btnReset"
-            app:layout_constraintTop_toBottomOf="@+id/qYplus">
+            app:layout_constraintTop_toBottomOf="@+id/qIntensity">
 
             <requestFocus />
         </Button>
@@ -135,7 +152,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/qYplus" />
+            app:layout_constraintTop_toBottomOf="@+id/qIntensity" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

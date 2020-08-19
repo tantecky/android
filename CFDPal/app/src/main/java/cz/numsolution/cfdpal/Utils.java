@@ -36,8 +36,12 @@ public final class Utils {
     }
 
     public static boolean isPositiveNumber(String value) {
+        return isPositiveNumber(value, 0.0);
+    }
+
+    public static boolean isPositiveNumber(String value, double limit) {
         try {
-            return value != null && Double.valueOf(value) > 0.0;
+            return value != null && Double.valueOf(value) > limit;
         } catch (NumberFormatException e) {
             return false;
         }

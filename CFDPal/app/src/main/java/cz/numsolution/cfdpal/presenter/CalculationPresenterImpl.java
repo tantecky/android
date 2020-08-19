@@ -3,6 +3,7 @@ package cz.numsolution.cfdpal.presenter;
 import cz.numsolution.cfdpal.interactor.CalculationInteractor;
 import cz.numsolution.cfdpal.model.CalculationType;
 import cz.numsolution.cfdpal.model.CellHeightCalculation;
+import cz.numsolution.cfdpal.model.TurbulentQuantitiesCalculation;
 import cz.numsolution.cfdpal.view.CalculationView;
 
 /**
@@ -47,6 +48,7 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
     @Override
     public void onCreateView() {
         setDefaultInputValues();
+        mView.showHideInputs(mCalcType);
     }
 
     @Override
@@ -57,8 +59,12 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
                         mView.getDensity(), mView.getViscosity(),
                         mView.getLength(), mView.getYplus());
                 break;
-            default:
+            case CalculationType.TURBULENT_QUANTITIES:
+                mInteractor.calculateTurbulentQuantities(this, mView.getVelocity(),
+                        mView.getLength(), mView.getIntensity());
                 break;
+            default:
+                throw new AssertionError();
 
         }
     }
@@ -66,12 +72,11 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
     @Override
     public void onResetClick() {
         setDefaultInputValues();
-        mView.showHideInputs(mCalcType);
     }
 
     private void setDefaultInputValues() {
         switch (mCalcType) {
-            case CalculationType.CELL_HEIGHT:
+            case CalculationType.CELL_HEIGHT: {
                 CellHeightCalculation calculation = mInteractor.getDefaultCellHeightCalculation();
                 mView.setInputValues(String.valueOf(calculation.getVelocity()),
                         String.valueOf(calculation.getDensity()),
@@ -79,6 +84,14 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
                         String.valueOf(calculation.getLength()),
                         String.valueOf(calculation.getYplus()));
                 break;
+            }
+            case CalculationType.TURBULENT_QUANTITIES: {
+                TurbulentQuantitiesCalculation calculation = mInteractor.getDefaultTurbulentQuantitiesCalculation();
+                mView.setInputValues(String.valueOf(calculation.getVelocity()),
+                        String.valueOf(calculation.getLength()),
+                        String.valueOf(calculation.getIntensity()));
+                break;
+            }
             default:
                 throw new AssertionError();
 
