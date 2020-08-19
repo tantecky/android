@@ -11,6 +11,8 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.arch.core.util.Function;
+
 public final class Utils {
 
     public static final double EPS = 1e-4;
@@ -49,5 +51,31 @@ public final class Utils {
 
     public static boolean isTwoPane(Activity activity) {
         return activity.findViewById(R.id.fragment_container_master) != null;
+    }
+
+    public static double secant(Function<Double,Double> f, double init) {
+        double f0;
+        double f1;
+        double x0 = init;
+        double x1 = init * (1 + 1e-4) + 1e-4;
+        double x = x1;
+
+        for (int i = 0; i < 50; i++) {
+
+            f0 = f.apply(x0);
+            f1 = f.apply(x1);
+
+            if (Math.abs(f0 - f1) < 1e-8) {
+                return x;
+            }
+
+            x = x1 - f1 * (x1 - x0) / (f1 - f0);
+
+            x0 = x1;
+            x1 = x;
+        }
+
+        return 0;
+
     }
 }
