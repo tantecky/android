@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public final class Utils {
 
-    public static final double EPS = 1e-5;
+    public static final double EPS = 1e-4;
     public static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
     public static void showToast(Context context, final CharSequence message) {
