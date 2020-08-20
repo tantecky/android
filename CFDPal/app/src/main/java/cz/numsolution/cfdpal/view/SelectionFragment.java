@@ -73,8 +73,7 @@ public class SelectionFragment extends Fragment {
         mUnbinder.unbind();
     }
 
-    //TODO @OnClick({R.id.btnHeight, R.id.btnQuantities, R.id.btnGrid})
-    @OnClick({R.id.btnHeight, R.id.btnQuantities})
+    @OnClick({R.id.btnHeight, R.id.btnQuantities, R.id.btnGrid})
     public void onButtonClick(Button button) {
         @CalculationType int calcType = (int) button.getTag();
 

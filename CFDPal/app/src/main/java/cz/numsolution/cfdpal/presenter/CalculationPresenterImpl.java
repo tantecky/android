@@ -3,6 +3,7 @@ package cz.numsolution.cfdpal.presenter;
 import cz.numsolution.cfdpal.interactor.CalculationInteractor;
 import cz.numsolution.cfdpal.model.CalculationType;
 import cz.numsolution.cfdpal.model.CellHeightCalculation;
+import cz.numsolution.cfdpal.model.GridConvergenceCalculation;
 import cz.numsolution.cfdpal.model.TurbulentQuantitiesCalculation;
 import cz.numsolution.cfdpal.view.CalculationView;
 
@@ -63,6 +64,14 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
                 mInteractor.calculateTurbulentQuantities(this, mView.getVelocity(),
                         mView.getLength(), mView.getIntensity());
                 break;
+            case CalculationType.GRID_CONVERGENCE:
+                mInteractor.calculateGridConvergence(this,
+                        mView.getGrid1(), mView.getQuantity1(),
+                        mView.getGrid2(), mView.getQuantity2(),
+                        mView.getGrid3(), mView.getQuantity3()
+
+                );
+                break;
             default:
                 throw new AssertionError();
 
@@ -90,6 +99,18 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
                 mView.setInputValues(String.valueOf(calculation.getVelocity()),
                         String.valueOf(calculation.getLength()),
                         String.valueOf(calculation.getIntensity()));
+                break;
+            }
+            case CalculationType.GRID_CONVERGENCE: {
+                GridConvergenceCalculation calculation = mInteractor.getDefaultGridConvergenceCalculation();
+                mView.setInputValues(
+                        String.valueOf(calculation.getGrid1()),
+                        String.valueOf(calculation.getQuantity1()),
+                        String.valueOf(calculation.getGrid2()),
+                        String.valueOf(calculation.getQuantity2()),
+                        String.valueOf(calculation.getGrid3()),
+                        String.valueOf(calculation.getQuantity3())
+                );
                 break;
             }
             default:

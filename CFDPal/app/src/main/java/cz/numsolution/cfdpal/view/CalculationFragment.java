@@ -3,6 +3,7 @@ package cz.numsolution.cfdpal.view;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,20 @@ public class CalculationFragment extends Fragment implements CalculationView {
     QuantityInput qYplus;
     @BindView(R.id.qIntensity)
     QuantityInput qIntensity;
+
+    @BindView(R.id.qGrid1)
+    QuantityInput qGrid1;
+    @BindView(R.id.qGrid2)
+    QuantityInput qGrid2;
+    @BindView(R.id.qGrid3)
+    QuantityInput qGrid3;
+
+    @BindView(R.id.qQuantity1)
+    QuantityInput qQuantity1;
+    @BindView(R.id.qQuantity2)
+    QuantityInput qQuantity2;
+    @BindView(R.id.qQuantity3)
+    QuantityInput qQuantity3;
 
     List<QuantityInput> mQuantityInputs;
 
@@ -114,6 +129,19 @@ public class CalculationFragment extends Fragment implements CalculationView {
         qVelocity.setValue(velocity);
         qLength.setValue(length);
         qIntensity.setValue(intensity);
+    }
+
+    @Override
+    public void setInputValues(String grid1, String quantity1,
+                               String grid2, String quantity2,
+                               String grid3, String quantity3
+    ) {
+        qGrid1.setValue(grid1);
+        qQuantity1.setValue(quantity1);
+        qGrid2.setValue(grid2);
+        qQuantity2.setValue(quantity2);
+        qGrid3.setValue(grid3);
+        qQuantity3.setValue(quantity3);
     }
 
     @OnClick(R.id.btnCalculate)
@@ -174,6 +202,12 @@ public class CalculationFragment extends Fragment implements CalculationView {
                 qIntensity.setVisibility(View.VISIBLE);
                 break;
             case CalculationType.GRID_CONVERGENCE:
+                qGrid1.setVisibility(View.VISIBLE);
+                qQuantity1.setVisibility(View.VISIBLE);
+                qGrid2.setVisibility(View.VISIBLE);
+                qQuantity2.setVisibility(View.VISIBLE);
+                qGrid3.setVisibility(View.VISIBLE);
+                qQuantity3.setVisibility(View.VISIBLE);
                 break;
             default:
                 throw new AssertionError();
@@ -210,6 +244,36 @@ public class CalculationFragment extends Fragment implements CalculationView {
     @Override
     public String getIntensity() {
         return qIntensity.getValue();
+    }
+
+    @Override
+    public String getGrid1() {
+        return qGrid1.getValue();
+    }
+
+    @Override
+    public String getGrid2() {
+        return qGrid2.getValue();
+    }
+
+    @Override
+    public String getGrid3() {
+        return qGrid3.getValue();
+    }
+
+    @Override
+    public String getQuantity1() {
+        return qQuantity1.getValue();
+    }
+
+    @Override
+    public String getQuantity2() {
+        return qQuantity2.getValue();
+    }
+
+    @Override
+    public String getQuantity3() {
+        return qQuantity3.getValue();
     }
 
     private <T> List<T> findAll(Class<T> type) {

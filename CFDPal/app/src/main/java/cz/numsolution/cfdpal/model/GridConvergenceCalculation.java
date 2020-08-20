@@ -1,5 +1,7 @@
 package cz.numsolution.cfdpal.model;
 
+import java.util.Locale;
+
 import androidx.arch.core.util.Function;
 import cz.numsolution.cfdpal.Utils;
 
@@ -26,7 +28,7 @@ public final class GridConvergenceCalculation implements Calculation {
 
     // in percent
     private static double gci(double eps, double p, double r) {
-        return 1.25 * Math.abs(eps) / (Math.pow(r, p) - 1.0) ;
+        return 1.25 * Math.abs(eps) / (Math.pow(r, p) - 1.0);
     }
 
     public GridConvergenceCalculation(String grid1, String quantity1,
@@ -56,24 +58,24 @@ public final class GridConvergenceCalculation implements Calculation {
         mQuantity3 = quantity3;
     }
 
-    public double getGrid1() {
-        return mGrid1;
+    public int getGrid1() {
+        return (int) mGrid1;
     }
 
     public double getQuantity1() {
         return mQuantity1;
     }
 
-    public double getGrid2() {
-        return mGrid2;
+    public int getGrid2() {
+        return (int) mGrid2;
     }
 
     public double getQuantity2() {
         return mQuantity2;
     }
 
-    public double getGrid3() {
-        return mGrid3;
+    public int getGrid3() {
+        return (int) mGrid3;
     }
 
     public double getQuantity3() {
@@ -137,18 +139,42 @@ public final class GridConvergenceCalculation implements Calculation {
         mIndex21 = gci(eps21, mOrder, r21);
         mIndex32 = gci(eps32, mOrder, r32);
 
-
         mLower = mExtrapolated * (1.0 - mIndex21);
-        mUpper = mExtrapolated * (1.0 + mIndex21 );
+        mUpper = mExtrapolated * (1.0 + mIndex21);
     }
 
     @Override
     public String resultsToString() {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format(Locale.US, "Order of convergence: %.4f", mOrder));
+        sb.append(Utils.LINE_SEPARATOR);
+        sb.append(String.format(Locale.US, "Extrapolated quantity: %.4e", mExtrapolated));
+        sb.append(Utils.LINE_SEPARATOR);
+        sb.append(String.format(Locale.US, "95%% interval: %.3e, %.3e",
+                mLower, mUpper));
+        sb.append(Utils.LINE_SEPARATOR);
+        sb.append(String.format(Locale.US, "Grid 3/2 convergence index: %.3f%%",
+                getIndex32()));
+        sb.append(Utils.LINE_SEPARATOR);
+        sb.append(String.format(Locale.US, "Grid 1/2 convergence index: %.3f%%",
+                getIndex21()));
+        return sb.toString();
     }
 
     @Override
     public String inputValuesToString() {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format(Locale.US, "Grid 1 node count: %s", getGrid1()));
+        sb.append(Utils.LINE_SEPARATOR);
+        sb.append(String.format(Locale.US, "Grid 1 quantity: %s", mQuantity1));
+        sb.append(Utils.LINE_SEPARATOR);
+        sb.append(String.format(Locale.US, "Grid 2 node count: %s", getGrid2()));
+        sb.append(Utils.LINE_SEPARATOR);
+        sb.append(String.format(Locale.US, "Grid 2 quantity: %s", mQuantity2));
+        sb.append(Utils.LINE_SEPARATOR);
+        sb.append(String.format(Locale.US, "Grid 3 node count: %s", getGrid3()));
+        sb.append(Utils.LINE_SEPARATOR);
+        sb.append(String.format(Locale.US, "Grid 3 quantity: %s", mQuantity3));
+        return sb.toString();
     }
 }

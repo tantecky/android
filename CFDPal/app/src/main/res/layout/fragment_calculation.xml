@@ -119,7 +119,102 @@
             app:layout_constraintTop_toBottomOf="@+id/qYplus"
             app:name="Turbulence intensity"
             app:units="(%)">
+        </cz.numsolution.cfdpal.view.QuantityInput>
 
+        <cz.numsolution.cfdpal.view.QuantityInput
+            android:id="@+id/qGrid1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:tag="grid1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/qIntensity"
+            app:name="Grid 1 node count"
+            app:units="">
+        </cz.numsolution.cfdpal.view.QuantityInput>
+
+        <cz.numsolution.cfdpal.view.QuantityInput
+            android:id="@+id/qQuantity1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:tag="quantity1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/qGrid1"
+            app:name="Grid 1 quantity"
+            app:units="">
+        </cz.numsolution.cfdpal.view.QuantityInput>
+
+        <cz.numsolution.cfdpal.view.QuantityInput
+            android:id="@+id/qGrid2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:tag="grid2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/qQuantity1"
+            app:name="Grid 2 node count"
+            app:units="">
+        </cz.numsolution.cfdpal.view.QuantityInput>
+
+        <cz.numsolution.cfdpal.view.QuantityInput
+            android:id="@+id/qQuantity2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:tag="quantity2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/qGrid2"
+            app:name="Grid 2 quantity"
+            app:units="">
+        </cz.numsolution.cfdpal.view.QuantityInput>
+
+        <cz.numsolution.cfdpal.view.QuantityInput
+            android:id="@+id/qGrid3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:tag="grid3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/qQuantity2"
+            app:name="Grid 3 node count"
+            app:units="">
+        </cz.numsolution.cfdpal.view.QuantityInput>
+
+        <cz.numsolution.cfdpal.view.QuantityInput
+            android:id="@+id/qQuantity3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:tag="quantity3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/qGrid3"
+            app:name="Grid 3 quantity"
+            app:units="">
         </cz.numsolution.cfdpal.view.QuantityInput>
 
         <Button
@@ -134,7 +229,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btnReset"
-            app:layout_constraintTop_toBottomOf="@+id/qIntensity">
+            app:layout_constraintTop_toBottomOf="@+id/qQuantity3">
 
             <requestFocus />
         </Button>
@@ -152,7 +247,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/qIntensity" />
+            app:layout_constraintTop_toBottomOf="@+id/qQuantity3" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
