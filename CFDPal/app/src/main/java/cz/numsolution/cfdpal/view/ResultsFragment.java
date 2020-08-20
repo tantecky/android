@@ -19,7 +19,7 @@ public class ResultsFragment extends AppCompatDialogFragment {
 
     public static final String TAG = "ResultsFragment";
 
-    @BindView(R.id.btnResults)
+    @BindView(R.id.tvVersion)
     public TextView mTextView;
 
     private Unbinder mUnbinder;
@@ -55,7 +55,7 @@ public class ResultsFragment extends AppCompatDialogFragment {
         this.dismiss();
     }
 
-    @OnClick(R.id.tvShare)
+    @OnClick(R.id.btnShare)
     public void onShareClick() {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);

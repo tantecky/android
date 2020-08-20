@@ -5,7 +5,7 @@
     tools:context=".view.SelectionActivity">
 
     <item
-        android:id="@+id/menuWeb"
-        android:title="@string/web"
+        android:id="@+id/menuAbout"
+        android:title="@string/menu_about"
         app:showAsAction="never" />
 </menu>

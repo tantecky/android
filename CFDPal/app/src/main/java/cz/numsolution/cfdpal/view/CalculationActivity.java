@@ -58,8 +58,8 @@ public class CalculationActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menuWeb:
-                Utils.openUrl(this, getString(R.string.web_url));
+            case R.id.menuAbout:
+                AboutFragment.show(getSupportFragmentManager());
                 break;
 
         }

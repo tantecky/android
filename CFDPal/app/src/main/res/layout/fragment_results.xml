@@ -7,16 +7,13 @@
     tools:context=".view.ResultsFragment">
 
     <TextView
-        android:id="@+id/btnResults"
+        android:id="@+id/tvVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
+        android:paddingRight="24dp"
         android:text="results"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,10 +25,10 @@
         android:text="Ok"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnResults" />
+        app:layout_constraintTop_toBottomOf="@+id/tvVersion" />
 
     <Button
-        android:id="@+id/tvShare"
+        android:id="@+id/btnShare"
         style="@style/DialogActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

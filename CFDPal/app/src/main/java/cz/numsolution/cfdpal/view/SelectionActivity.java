@@ -7,7 +7,7 @@ package cz.numsolution.cfdpal.view;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -46,8 +46,8 @@ public class SelectionActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menuWeb:
-                Utils.openUrl(this, getString(R.string.web_url));
+            case R.id.menuAbout:
+                AboutFragment.show(getSupportFragmentManager());
                 break;
 
         }

@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">CFD Pal</string>
+    <string name="app_version">Version: 1.0</string>
     <string name="first_cell_height">First cell height</string>
     <string name="turbulent_quantities">Turbulent quantities</string>
     <string name="grid_convergence">Grid convergence</string>
-    <string name="web">www.numsolution.cz</string>
+    <string name="menu_about">About</string>
     <string name="web_url">https://www.numsolution.cz</string>
+    <string name="web">www.numsolution.cz</string>
 </resources>
