@@ -9,16 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.SelectionActivity">
+        <activity android:name=".view.SelectionActivity" android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".view.CalculationActivity">
+        <activity android:name=".view.CalculationActivity" android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.SelectionActivity" />
         </activity>
         <activity
-            android:name=".view.SplashActivity"
+            android:name=".view.SplashActivity" android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
