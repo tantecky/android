@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cz.numsolution.cfdpal.R;
@@ -50,12 +51,13 @@ public class QuantityInput extends ConstraintLayout {
     }
 
     public void setError(String message) {
+        Context context = getContext();
         if (message == null) {
             mError.setVisibility(GONE);
-            mValue.setTextColor(getResources().getColor(R.color.black));
+            mValue.setTextColor(ContextCompat.getColor(context, R.color.black));
         } else {
             mError.setText(message);
-            mValue.setTextColor(getResources().getColor(R.color.red));
+            mValue.setTextColor(ContextCompat.getColor(context, R.color.red));
             mError.setVisibility(VISIBLE);
         }
     }

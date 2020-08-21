@@ -300,9 +300,8 @@ public class CalculationFragment extends Fragment implements CalculationView {
         for (int i = 0; i < count; i++) {
             View v = mRoot.getChildAt(i);
             if (type.isInstance(v)) {
-                inputs.add((T) v);
+                inputs.add(type.cast(v));
             }
-
         }
 
         return inputs;

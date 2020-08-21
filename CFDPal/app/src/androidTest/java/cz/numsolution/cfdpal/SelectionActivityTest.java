@@ -1,11 +1,6 @@
 package cz.numsolution.cfdpal;
 
 import android.app.Activity;
-import androidx.test.espresso.NoMatchingViewException;
-import androidx.test.espresso.ViewAssertion;
-import androidx.test.filters.LargeTest;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 import android.view.View;
 
 import org.junit.Ignore;
@@ -13,6 +8,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import androidx.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.ViewAssertion;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 import cz.numsolution.cfdpal.view.SelectionActivity;
 
 import static androidx.test.espresso.Espresso.onView;
