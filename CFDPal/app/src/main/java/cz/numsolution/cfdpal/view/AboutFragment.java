@@ -1,13 +1,11 @@
 package cz.numsolution.cfdpal.view;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
@@ -68,6 +66,12 @@ public class AboutFragment extends AppCompatDialogFragment {
     @OnClick(R.id.tvWeb)
     public void onLinkClick() {
         Utils.openUrl(this.getContext(), getString(R.string.web_url));
+
+    }
+
+    @OnClick(R.id.imGitHub)
+    public void onGitHubClick() {
+        Utils.openUrl(this.getContext(), getString(R.string.git_url));
 
     }
 

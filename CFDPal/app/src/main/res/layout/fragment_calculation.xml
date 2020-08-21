@@ -9,9 +9,7 @@
     android:clipToPadding="false"
     android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,11 +27,11 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:tag="velocity"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:name="Velocity"
-            app:units="(m/s)">
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toTopOf="parent"
+            custom:name="Velocity"
+            custom:units="(m/s)">
 
         </cz.numsolution.cfdpal.view.QuantityInput>
 
@@ -46,11 +44,11 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:tag="density"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/qVelocity"
-            app:name="Density"
-            app:units="(kg/m3)">
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@+id/qVelocity"
+            custom:name="Density"
+            custom:units="(kg/m3)">
 
         </cz.numsolution.cfdpal.view.QuantityInput>
 
@@ -63,11 +61,11 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:tag="viscosity"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/qDensity"
-            app:name="Dynamic viscosity"
-            app:units="(kg/ms)">
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@+id/qDensity"
+            custom:name="Dynamic viscosity"
+            custom:units="(kg/ms)">
 
         </cz.numsolution.cfdpal.view.QuantityInput>
 
@@ -80,11 +78,11 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:tag="length"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/qViscosity"
-            app:name="Characteristic length"
-            app:units="(m)">
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@+id/qViscosity"
+            custom:name="Characteristic length"
+            custom:units="(m)">
 
         </cz.numsolution.cfdpal.view.QuantityInput>
 
@@ -97,11 +95,11 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:tag="yplus"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/qLength"
-            app:name="Desired y+"
-            app:units="">
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@+id/qLength"
+            custom:name="Desired y+"
+            custom:units="">
 
         </cz.numsolution.cfdpal.view.QuantityInput>
 
@@ -114,11 +112,11 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:tag="intensity"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/qYplus"
-            app:name="Turbulence intensity"
-            app:units="(%)">
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@+id/qYplus"
+            custom:name="Turbulence intensity"
+            custom:units="(%)">
         </cz.numsolution.cfdpal.view.QuantityInput>
 
         <cz.numsolution.cfdpal.view.QuantityInput
@@ -130,11 +128,11 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:tag="grid1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/qIntensity"
-            app:name="Grid 1 node count"
-            app:units="">
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@+id/qIntensity"
+            custom:name="Grid 1 node count"
+            custom:units="">
         </cz.numsolution.cfdpal.view.QuantityInput>
 
         <cz.numsolution.cfdpal.view.QuantityInput
@@ -146,11 +144,11 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:tag="quantity1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/qGrid1"
-            app:name="Grid 1 quantity"
-            app:units="">
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@+id/qGrid1"
+            custom:name="Grid 1 quantity"
+            custom:units="">
         </cz.numsolution.cfdpal.view.QuantityInput>
 
         <cz.numsolution.cfdpal.view.QuantityInput
@@ -162,11 +160,11 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:tag="grid2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/qQuantity1"
-            app:name="Grid 2 node count"
-            app:units="">
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@+id/qQuantity1"
+            custom:name="Grid 2 node count"
+            custom:units="">
         </cz.numsolution.cfdpal.view.QuantityInput>
 
         <cz.numsolution.cfdpal.view.QuantityInput
@@ -178,11 +176,11 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:tag="quantity2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/qGrid2"
-            app:name="Grid 2 quantity"
-            app:units="">
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@+id/qGrid2"
+            custom:name="Grid 2 quantity"
+            custom:units="">
         </cz.numsolution.cfdpal.view.QuantityInput>
 
         <cz.numsolution.cfdpal.view.QuantityInput
@@ -194,11 +192,11 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:tag="grid3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/qQuantity2"
-            app:name="Grid 3 node count"
-            app:units="">
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@+id/qQuantity2"
+            custom:name="Grid 3 node count"
+            custom:units="">
         </cz.numsolution.cfdpal.view.QuantityInput>
 
         <cz.numsolution.cfdpal.view.QuantityInput
@@ -210,11 +208,11 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:tag="quantity3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/qGrid3"
-            app:name="Grid 3 quantity"
-            app:units="">
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@+id/qGrid3"
+            custom:name="Grid 3 quantity"
+            custom:units="">
         </cz.numsolution.cfdpal.view.QuantityInput>
 
         <Button
@@ -226,10 +224,10 @@
             android:layout_marginTop="8dp"
             android:text="Calculate"
             android:theme="@style/GreenButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btnReset"
-            app:layout_constraintTop_toBottomOf="@+id/qQuantity3">
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintHorizontal_bias="0.5"
+            custom:layout_constraintStart_toEndOf="@+id/btnReset"
+            custom:layout_constraintTop_toBottomOf="@+id/qQuantity3">
 
             <requestFocus />
         </Button>
@@ -243,11 +241,22 @@
             android:layout_marginTop="8dp"
             android:text="Reset"
             android:theme="@style/RedButton"
-            app:layout_constraintEnd_toStartOf="@+id/btnCalculate"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread"
+            custom:layout_constraintEnd_toStartOf="@+id/btnCalculate"
+            custom:layout_constraintHorizontal_bias="0.5"
+            custom:layout_constraintHorizontal_chainStyle="spread"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@+id/qQuantity3" />
+
+        <TextView
+            android:id="@+id/tvMoreInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="How it works?"
+            android:textColor="@color/blue"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/qQuantity3" />
+            app:layout_constraintTop_toBottomOf="@+id/btnCalculate" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -83,6 +83,25 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
         setDefaultInputValues();
     }
 
+    @Override
+    public void onMoreInfoClick() {
+        String url = null;
+        switch (mCalcType) {
+            case CalculationType.CELL_HEIGHT:
+                url = "https://www.cfd-online.com/Wiki/Y_plus_wall_distance_estimation";
+                break;
+            case CalculationType.TURBULENT_QUANTITIES:
+                url = "https://www.cfd-online.com/Wiki/Turbulence_intensity";
+                break;
+            case CalculationType.GRID_CONVERGENCE:
+                url = "https://www.grc.nasa.gov/www/wind/valid/tutorial/spatconv.html";
+                break;
+            default:
+                throw new AssertionError();
+        }
+        mView.openUrl(url);
+    }
+
     private void setDefaultInputValues() {
         switch (mCalcType) {
             case CalculationType.CELL_HEIGHT: {

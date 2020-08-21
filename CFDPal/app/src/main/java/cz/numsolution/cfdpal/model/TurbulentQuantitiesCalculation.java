@@ -65,10 +65,10 @@ public final class TurbulentQuantitiesCalculation implements Calculation {
         double intensity = mIntensity / 100.0;
         mKineticEnergy = 3.0 * 0.5 * mVelocity * mVelocity * intensity * intensity;
         final double cmu = 0.09;
-        double length = 0.07 * mLength / Math.pow(cmu, 3.0 / 4.0);
-        mDisRate = Math.pow(mKineticEnergy, 3.0 / 2.0) / length;
-        mSpecificDisRate = Math.sqrt(mKineticEnergy) / (cmu * length);
-        mModViscosity = cmu * Math.sqrt(3.0 / 2.0) * mVelocity * intensity * length;
+        double lengthScale = 0.07 * mLength / Math.pow(cmu, 3.0 / 4.0);
+        mDisRate = Math.pow(mKineticEnergy, 3.0 / 2.0) / lengthScale;
+        mSpecificDisRate = Math.sqrt(mKineticEnergy) / (cmu * lengthScale);
+        mModViscosity = cmu * Math.sqrt(3.0 / 2.0) * mVelocity * intensity * lengthScale;
 
     }
 

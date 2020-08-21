@@ -23,7 +23,7 @@ android {
     }
     applicationVariants.all { variant ->
         if (variant.getBuildType().isMinifyEnabled()) {
-            variant.assemble.doLast {
+            variant.assembleProvider.get().doLast {
                 copy {
                     from variant.mappingFile
                     into "${rootDir}/proguardTools"

@@ -6,5 +6,6 @@
     <string name="grid_convergence">Grid convergence</string>
     <string name="menu_about">About</string>
     <string name="web_url">https://www.numsolution.cz</string>
+    <string name="git_url">https://github.com/tantecky/android/tree/master/CFDPal</string>
     <string name="web">www.numsolution.cz</string>
 </resources>

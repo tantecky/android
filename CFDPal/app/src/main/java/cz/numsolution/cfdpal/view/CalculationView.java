@@ -19,6 +19,8 @@ public interface CalculationView {
 
     void onResetClick();
 
+    void onMoreInfoClick();
+
     void showResults(String inputValues, String results);
 
     void setError(String problematicVariable, String message);
@@ -44,5 +46,7 @@ public interface CalculationView {
     String getQuantity1();
     String getQuantity2();
     String getQuantity3();
+
+    void openUrl(String url);
 
 }

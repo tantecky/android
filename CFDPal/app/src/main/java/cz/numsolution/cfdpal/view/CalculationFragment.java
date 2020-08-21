@@ -1,5 +1,6 @@
 package cz.numsolution.cfdpal.view;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,6 @@ import cz.numsolution.cfdpal.R;
 import cz.numsolution.cfdpal.Utils;
 import cz.numsolution.cfdpal.interactor.CalculationInteractorImpl;
 import cz.numsolution.cfdpal.model.CalculationType;
-import cz.numsolution.cfdpal.model.CellHeightCalculation;
 import cz.numsolution.cfdpal.presenter.CalculationPresenter;
 import cz.numsolution.cfdpal.presenter.CalculationPresenterImpl;
 
@@ -73,6 +74,9 @@ public class CalculationFragment extends Fragment implements CalculationView {
     @BindView(R.id.qQuantity3)
     QuantityInput qQuantity3;
 
+    @BindView(R.id.tvMoreInfo)
+    TextView tvLearnMore;
+
     List<QuantityInput> mQuantityInputs;
 
     public CalculationFragment() {
@@ -101,6 +105,8 @@ public class CalculationFragment extends Fragment implements CalculationView {
 
         Utils.logD(TAG, "onCreateView");
         mScrollView.smoothScrollTo(0, 0);
+
+        tvLearnMore.setPaintFlags(tvLearnMore.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         return view;
     }
@@ -158,6 +164,12 @@ public class CalculationFragment extends Fragment implements CalculationView {
     public void onResetClick() {
         mPresenter.onResetClick();
         clearAllErrors();
+    }
+
+    @OnClick(R.id.tvMoreInfo)
+    @Override
+    public void onMoreInfoClick() {
+        mPresenter.onMoreInfoClick();
     }
 
     @Override
@@ -274,6 +286,11 @@ public class CalculationFragment extends Fragment implements CalculationView {
     @Override
     public String getQuantity3() {
         return qQuantity3.getValue();
+    }
+
+    @Override
+    public void openUrl(String url) {
+        Utils.openUrl(this.getContext(), url);
     }
 
     private <T> List<T> findAll(Class<T> type) {

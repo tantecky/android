@@ -8,5 +8,6 @@ public interface CalculationPresenter {
     void onCreateView();
     void onCalculationClick();
     void onResetClick();
+    void onMoreInfoClick();
 }
 
