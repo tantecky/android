@@ -9,3 +9,5 @@
 .externalNativeBuild
 app/release
 /.idea/caches
+keyPass.txt
+key.jks

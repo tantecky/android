@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Parcelable;
+
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,6 +77,12 @@ public class QuantityInput extends ConstraintLayout {
         } else {
             mUnits.setText(units);
         }
+
+        final int inputType = a.getInteger(R.styleable.QuantityInput_android_inputType,
+                InputType.TYPE_CLASS_NUMBER
+                        | InputType.TYPE_NUMBER_FLAG_SIGNED
+                        | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        mValue.setInputType(inputType);
     }
 
     private void init(Context context) {
@@ -95,8 +104,7 @@ public class QuantityInput extends ConstraintLayout {
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
-        if (state instanceof Bundle)
-        {
+        if (state instanceof Bundle) {
             Bundle bundle = (Bundle) state;
             setValue(bundle.getString(EDIT_TEXT_KEY));
             state = bundle.getParcelable("superState");

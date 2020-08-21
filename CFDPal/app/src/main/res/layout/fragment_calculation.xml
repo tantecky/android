@@ -20,6 +20,7 @@
 
         <cz.numsolution.cfdpal.view.QuantityInput
             android:id="@+id/qVelocity"
+            android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -37,6 +38,7 @@
 
         <cz.numsolution.cfdpal.view.QuantityInput
             android:id="@+id/qDensity"
+            android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -54,6 +56,7 @@
 
         <cz.numsolution.cfdpal.view.QuantityInput
             android:id="@+id/qViscosity"
+            android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -71,6 +74,7 @@
 
         <cz.numsolution.cfdpal.view.QuantityInput
             android:id="@+id/qLength"
+            android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -88,6 +92,7 @@
 
         <cz.numsolution.cfdpal.view.QuantityInput
             android:id="@+id/qYplus"
+            android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -105,6 +110,7 @@
 
         <cz.numsolution.cfdpal.view.QuantityInput
             android:id="@+id/qIntensity"
+            android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -121,6 +127,7 @@
 
         <cz.numsolution.cfdpal.view.QuantityInput
             android:id="@+id/qGrid1"
+            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -137,6 +144,7 @@
 
         <cz.numsolution.cfdpal.view.QuantityInput
             android:id="@+id/qQuantity1"
+            android:inputType="numberDecimal|numberSigned"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -153,6 +161,7 @@
 
         <cz.numsolution.cfdpal.view.QuantityInput
             android:id="@+id/qGrid2"
+            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -169,6 +178,7 @@
 
         <cz.numsolution.cfdpal.view.QuantityInput
             android:id="@+id/qQuantity2"
+            android:inputType="numberDecimal|numberSigned"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -185,6 +195,7 @@
 
         <cz.numsolution.cfdpal.view.QuantityInput
             android:id="@+id/qGrid3"
+            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -201,6 +212,7 @@
 
         <cz.numsolution.cfdpal.view.QuantityInput
             android:id="@+id/qQuantity3"
+            android:inputType="numberDecimal|numberSigned"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"

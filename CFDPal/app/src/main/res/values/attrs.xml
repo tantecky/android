@@ -4,5 +4,6 @@
         <attr name="name" format="string" />
         <attr name="units" format="string" />
         <attr name="value" format="string" />
+        <attr name="android:inputType"/>
     </declare-styleable>
 </resources>
