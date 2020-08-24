@@ -75,16 +75,16 @@ public final class TurbulentQuantitiesCalculation implements Calculation {
     @Override
     public String resultsToString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format(Locale.US, "Turbulent kinetic energy: %.4e (m2/s2)",
+        sb.append(String.format(Locale.US, "Turbulent kinetic energy: %.4e\u00A0(m2/s2)",
                 mKineticEnergy));
         sb.append(Utils.LINE_SEPARATOR);
-        sb.append(String.format(Locale.US, "Turbulent dissipation rate: %.4e (m2/s3)",
+        sb.append(String.format(Locale.US, "Turbulent dissipation rate: %.4e\u00A0(m2/s3)",
                 mDisRate));
         sb.append(Utils.LINE_SEPARATOR);
-        sb.append(String.format(Locale.US, "Specific dissipation rate: %.4e (1/s)",
+        sb.append(String.format(Locale.US, "Specific dissipation rate: %.4e\u00A0(1/s)",
                 mSpecificDisRate));
         sb.append(Utils.LINE_SEPARATOR);
-        sb.append(String.format(Locale.US, "Modified turbulent viscosity: %.4e (m2/s)",
+        sb.append(String.format(Locale.US, "Modified turbulent viscosity: %.4e\u00A0(m2/s)",
                 mModViscosity));
         return sb.toString();
     }

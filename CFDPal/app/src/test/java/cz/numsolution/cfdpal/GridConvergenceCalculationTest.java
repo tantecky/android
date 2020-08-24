@@ -13,7 +13,6 @@ import static org.hamcrest.Matchers.is;
 
 public class GridConvergenceCalculationTest {
 
-
     private GridConvergenceCalculation mCalculation;
 
     @Before
@@ -25,7 +24,7 @@ public class GridConvergenceCalculationTest {
     public void calculate() {
         mCalculation.calculate();
 
-        assertThat(mCalculation.getOrder(), is(closeTo(1.78617,
+        assertThat(mCalculation.getOrder(), is(closeTo(5.3585,
                 Utils.EPS)));
         assertThat(mCalculation.getExtrapolated(), is(closeTo(0.97130,
                 Utils.EPS)));

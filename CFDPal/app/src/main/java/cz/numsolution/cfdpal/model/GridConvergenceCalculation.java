@@ -10,6 +10,9 @@ import cz.numsolution.cfdpal.Utils;
  */
 
 public final class GridConvergenceCalculation implements Calculation {
+
+    public static final String TAG = "GridConvergenceCalculation";
+
     private final double mGrid1;
     private final double mQuantity1;
     private final double mGrid2;
@@ -42,9 +45,9 @@ public final class GridConvergenceCalculation implements Calculation {
     }
 
     public GridConvergenceCalculation() {
-        this(400, 0.9705,
-                200, 0.96854,
-                100, 0.96178);
+        this(4000, 0.9705,
+                2000, 0.96854,
+                1000, 0.96178);
     }
 
     public GridConvergenceCalculation(double grid1, double quantity1,
@@ -108,12 +111,12 @@ public final class GridConvergenceCalculation implements Calculation {
 
     @Override
     public void calculate() {
-        double element1Length = 1.0 / mGrid1;
-        double element2Length = 1.0 / mGrid2;
-        double element3Length = 1.0 / mGrid3;
+        double length1 = Math.cbrt(1.0 / mGrid1);
+        double length2 = Math.cbrt(1.0 / mGrid2);
+        double length3 = Math.cbrt(1.0 / mGrid3);
 
-        r21 = element2Length / element1Length;
-        r32 = element3Length / element2Length;
+        r21 = length2 / length1;
+        r32 = length3 / length2;
 
         double f1 = mQuantity1;
         double f2 = mQuantity2;
@@ -129,8 +132,23 @@ public final class GridConvergenceCalculation implements Calculation {
                 ? 1.0
                 : -1.0;
 
-        Function<Double, Double> fce = (Double p) -> p - Math.abs(Math.log(Math.abs(f32 / f21)) +
-                (Math.log((Math.pow(r21, p) - s) / (Math.pow(r32, p) - s)))) / Math.log(r21);
+        Utils.logD(TAG, String.format("r21 %e r32 %e", r21, r32));
+        Utils.logD(TAG, String.format("f21 %e f32 %e", f21, f32));
+        Utils.logD(TAG, String.format("eps21 %e eps32 %e", eps21, eps32));
+        Utils.logD(TAG, String.format("s %e", s));
+
+        Function<Double, Double> fce;
+
+        if (r21 != r32) {
+            fce = (Double p) -> p - Math.abs(
+                    Math.log(Math.abs(f32 / f21))
+                            + (Math.log((Math.pow(r21, p) - s) / (Math.pow(r32, p) - s)))
+            ) / Math.log(r21);
+        } else {
+            fce = (Double p) -> p - Math.abs(
+                    Math.log(Math.abs(f32 / f21))
+            ) / Math.log(r21);
+        }
 
         mOrder = Utils.secant(fce, 2);
         mExtrapolated = (Math.pow(r21, mOrder) * f1 - f2) /
@@ -145,34 +163,41 @@ public final class GridConvergenceCalculation implements Calculation {
 
     @Override
     public String resultsToString() {
+        if (!(mOrder > 0.0)) {
+            return "Unable to find order of convergence";
+        }
+
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format(Locale.US, "Order of convergence: %.4f", mOrder));
-        sb.append(Utils.LINE_SEPARATOR);
         sb.append(String.format(Locale.US, "Extrapolated quantity: %.4e", mExtrapolated));
         sb.append(Utils.LINE_SEPARATOR);
-        sb.append(String.format(Locale.US, "95%% interval: %.3e, %.3e",
+        sb.append(String.format(Locale.US, "95%% interval: %.3e,\u00A0%.3e",
                 mLower, mUpper));
+        sb.append(Utils.LINE_SEPARATOR);
         sb.append(Utils.LINE_SEPARATOR);
         sb.append(String.format(Locale.US, "Grid 3/2 convergence index: %.3f%%",
                 getIndex32()));
         sb.append(Utils.LINE_SEPARATOR);
         sb.append(String.format(Locale.US, "Grid 1/2 convergence index: %.3f%%",
                 getIndex21()));
+        sb.append(Utils.LINE_SEPARATOR);
+        sb.append(String.format(Locale.US, "Order of convergence: %.4f", mOrder));
+
+
         return sb.toString();
     }
 
     @Override
     public String inputValuesToString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format(Locale.US, "Grid 1 node count: %s", getGrid1()));
+        sb.append(String.format(Locale.US, "Grid 1 cell count: %s", getGrid1()));
         sb.append(Utils.LINE_SEPARATOR);
         sb.append(String.format(Locale.US, "Grid 1 quantity: %s", mQuantity1));
         sb.append(Utils.LINE_SEPARATOR);
-        sb.append(String.format(Locale.US, "Grid 2 node count: %s", getGrid2()));
+        sb.append(String.format(Locale.US, "Grid 2 cell count: %s", getGrid2()));
         sb.append(Utils.LINE_SEPARATOR);
         sb.append(String.format(Locale.US, "Grid 2 quantity: %s", mQuantity2));
         sb.append(Utils.LINE_SEPARATOR);
-        sb.append(String.format(Locale.US, "Grid 3 node count: %s", getGrid3()));
+        sb.append(String.format(Locale.US, "Grid 3 cell count: %s", getGrid3()));
         sb.append(Utils.LINE_SEPARATOR);
         sb.append(String.format(Locale.US, "Grid 3 quantity: %s", mQuantity3));
         return sb.toString();

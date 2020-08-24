@@ -14,6 +14,7 @@
         android:layout_marginTop="8dp"
         android:paddingRight="24dp"
         android:text="results"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

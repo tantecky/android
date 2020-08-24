@@ -94,7 +94,7 @@ public final class CalculationPresenterImpl implements CalculationPresenter,
                 url = "https://www.cfd-online.com/Wiki/Turbulence_intensity";
                 break;
             case CalculationType.GRID_CONVERGENCE:
-                url = "https://www.grc.nasa.gov/www/wind/valid/tutorial/spatconv.html";
+                url = "https://asmedigitalcollection.asme.org/fluidsengineering/article/130/7/078001/444689/Procedure-for-Estimation-and-Reporting-of";
                 break;
             default:
                 throw new AssertionError();

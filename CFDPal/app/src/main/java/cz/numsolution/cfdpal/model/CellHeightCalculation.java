@@ -80,7 +80,7 @@ public final class CellHeightCalculation implements Calculation {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format(Locale.US, "Reynolds number: %.1f", mReynoldsNumber));
         sb.append(Utils.LINE_SEPARATOR);
-        sb.append(String.format(Locale.US, "First cell height: %.4e (m)", mCellHeight));
+        sb.append(String.format(Locale.US, "First cell height: %.4e\u00A0(m)", mCellHeight));
         return sb.toString();
 
     }
