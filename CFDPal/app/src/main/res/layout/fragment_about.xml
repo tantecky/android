@@ -7,17 +7,26 @@
     android:padding="0dp"
     tools:context=".view.ResultsFragment">
 
+    <TextView
+        android:id="@+id/tvGpl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Licensed under GNU GPL v3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvWeb" />
+
     <Button
         android:id="@+id/btnOk"
         style="@style/DialogActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:text="Ok"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvWeb" />
+        app:layout_constraintTop_toBottomOf="@+id/tvGpl" />
 
     <TextView
         android:id="@+id/tvWeb"
@@ -45,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:text="Developed by: NUM solution"
+        android:text="Copyright 2020 NUM solution"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvVersion" />
 
@@ -64,14 +73,16 @@
 
     <ImageView
         android:id="@+id/imGitHub"
-        android:layout_width="48dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="4dp"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
+        android:cropToPadding="false"
+        android:scaleType="centerInside"
         android:src="@drawable/github_logo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvWeb" />
+        app:layout_constraintBottom_toBottomOf="@+id/tvGpl"
+        app:layout_constraintEnd_toEndOf="@+id/imLogo"
+        app:layout_constraintStart_toEndOf="@+id/tvGpl" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
