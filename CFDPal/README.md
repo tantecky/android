@@ -1,8 +1,8 @@
 # CFD Pal ![](app/src/main/res/mipmap-mdpi/ic_launcher_round.png)
 Useful app for CFD engineers
 
-<img align="left" width="200" src="graphics/feature.png"/>
-<br/>
+<img align="left" width="700" src="graphics/feature.png"/>
+<br clear="all">
 
 ## Features
 * Estimate first cell height for given target y+ based on flat plane correlation.
@@ -21,8 +21,8 @@ CFD Pal is licensed under GNU GENERAL PUBLIC LICENSE Version 3 (see LICENSE for 
 
 ## Used libraries
 * Material Design icons by Google  
-http://google.github.io/material-design-icons  
-Apache License Version 2.0
+  http://google.github.io/material-design-icons  
+  Apache License Version 2.0
 * Butter Knife  
-https://github.com/JakeWharton/butterknife
-Apache License Version 2.0  
+  https://github.com/JakeWharton/butterknife  
+  Apache License Version 2.0  
