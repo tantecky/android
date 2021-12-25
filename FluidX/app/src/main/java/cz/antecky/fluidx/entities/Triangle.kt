@@ -15,21 +15,9 @@ class Triangle : Entity() {
         1.0f, 0.0f, 0.0f,
     )
 
-    override val vertexBuffer: FloatBuffer = ByteBuffer.allocateDirect(coordsBytes).run {
-        // use the device hardware's native byte order
-        order(ByteOrder.nativeOrder())
+    override val vertexBuffer: FloatBuffer = createFloatBuffer(coords)
 
-        // create a floating point buffer from the ByteBuffer
-        asFloatBuffer().apply {
-            // add the coordinates to the FloatBuffer
-            put(coords)
-            // set the buffer to read the first coordinate
-            position(0)
-        }
-    }
-
-
-    override fun draw() {
+    override fun draw(time: Float) {
         val programId = ShaderManager.use(Shader.FLAT)
         val positionAttrib = glGetAttribLocation(programId, "a_position")
 
@@ -41,6 +29,9 @@ class Triangle : Entity() {
             0,
             vertexBuffer
         )
+
+        val colorUniform = glGetUniformLocation(programId, "u_color")
+        glUniform4f(colorUniform, 1.0f, 0.0f, 0.0f, 1.0f) // RGBA
 
         glEnableVertexAttribArray(positionAttrib)
         glDrawArrays(GL_TRIANGLES, 0, vertexCount)
