@@ -8,6 +8,7 @@ import android.opengl.GLES20.*
 import android.opengl.GLSurfaceView
 import android.util.Log
 import cz.antecky.fluidx.entities.Entity
+import cz.antecky.fluidx.entities.Quad
 import cz.antecky.fluidx.entities.Triangle
 import cz.antecky.fluidx.shaders.ShaderManager
 
@@ -18,7 +19,10 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer {
 
     override fun onSurfaceCreated(unused: GL10, config: EGLConfig) {
         ShaderManager.compileAll(this.context)
-        this.entities = arrayOf(Triangle())
+        this.entities = arrayOf(
+            // Triangle(),
+            Quad(),
+        )
 
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
         startMillis = System.currentTimeMillis()
