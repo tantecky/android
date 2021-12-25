@@ -5,14 +5,14 @@ import android.opengl.GLSurfaceView
 
 class MyGLSurfaceView(context: Context) : GLSurfaceView(context) {
 
-    private val renderer: MyGLRenderer
+    private val renderer: cz.antecky.fluidx.Renderer
 
     init {
 
         // Create an OpenGL ES 2.0 context
         setEGLContextClientVersion(2)
 
-        renderer = MyGLRenderer()
+        renderer = Renderer(context)
 
         // Set the Renderer for drawing on the GLSurfaceView
         setRenderer(renderer)

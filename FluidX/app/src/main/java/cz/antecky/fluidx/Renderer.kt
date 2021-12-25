@@ -1,15 +1,18 @@
 package cz.antecky.fluidx
 
+import android.content.Context
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
 import android.opengl.GLES20
 import android.opengl.GLSurfaceView
 import android.util.Log
+import cz.antecky.fluidx.shaders.ShaderManager
 
-class MyGLRenderer : GLSurfaceView.Renderer {
+class Renderer(private val context: Context) : GLSurfaceView.Renderer {
 
     override fun onSurfaceCreated(unused: GL10, config: EGLConfig) {
+        ShaderManager.compileAll(this.context)
         // Set the background frame color
         GLES20.glClearColor(0.5f, 0.5f, 0.0f, 1.0f)
     }
