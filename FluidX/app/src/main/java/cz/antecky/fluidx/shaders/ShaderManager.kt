@@ -1,6 +1,8 @@
 package cz.antecky.fluidx.shaders
 
 import android.content.Context
+import android.opengl.*
+import android.opengl.GLES20.glUseProgram
 import android.util.Log
 import cz.antecky.fluidx.R
 import kotlin.system.measureTimeMillis
@@ -21,5 +23,11 @@ object ShaderManager {
         }
 
         Log.d(this::class.qualifiedName, "compileAll: took $timeInMillis ms")
+    }
+
+    fun use(shader: Shader): Int {
+        val id = shaders[shader]!!.id
+        glUseProgram(id)
+        return id
     }
 }

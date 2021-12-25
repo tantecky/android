@@ -19,7 +19,7 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer {
         this.entities = arrayOf(Triangle())
 
         // Set the background frame color
-        GLES20.glClearColor(0.5f, 0.5f, 0.0f, 1.0f)
+        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
     }
 
     override fun onDrawFrame(unused: GL10) {
