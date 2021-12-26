@@ -4,6 +4,7 @@ import java.nio.FloatBuffer
 
 import android.opengl.GLES20.*
 import android.util.Log
+import cz.antecky.fluidx.IRenderer
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
@@ -26,7 +27,7 @@ abstract class Entity {
 
     abstract val vertexBuffer: FloatBuffer
 
-    abstract fun draw(time: Float)
+    abstract fun draw(renderer: IRenderer)
 
     fun checkError() {
         val erno = glGetError()

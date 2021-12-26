@@ -1,9 +1,8 @@
 package cz.antecky.fluidx.entities
 
 import android.opengl.GLES20.*
+import cz.antecky.fluidx.IRenderer
 import cz.antecky.fluidx.shaders.Shader
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
 import java.nio.FloatBuffer
 
 import cz.antecky.fluidx.shaders.ShaderManager
@@ -18,8 +17,8 @@ class Quad : Entity() {
 
     override val vertexBuffer: FloatBuffer = createFloatBuffer(coords)
 
-    override fun draw(time: Float) {
-        val programId = ShaderManager.use(Shader.FLAT)
+    override fun draw(renderer: IRenderer) {
+        val programId = ShaderManager.use(Shader.COMPLEX)
         val positionAttrib = glGetAttribLocation(programId, "a_position")
 
         glVertexAttribPointer(
@@ -33,6 +32,15 @@ class Quad : Entity() {
 
         val colorUniform = glGetUniformLocation(programId, "u_color")
         glUniform4f(colorUniform, 1.0f, 0.0f, 0.0f, 1.0f) // RGBA
+
+        val timeUniform = glGetUniformLocation(programId, "u_time")
+        glUniform1f(timeUniform, renderer.time)
+
+        val resolutionUniform = glGetUniformLocation(programId, "u_resolution")
+        glUniform2f(resolutionUniform, renderer.width, renderer.height)
+
+        val mvpUniform = glGetUniformLocation(programId, "u_mvp")
+        glUniformMatrix4fv(mvpUniform, 1, false, renderer.projectionM, 0)
 
         glEnableVertexAttribArray(positionAttrib)
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
