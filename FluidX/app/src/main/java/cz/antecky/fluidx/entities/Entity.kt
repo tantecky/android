@@ -29,11 +29,5 @@ abstract class Entity {
 
     abstract fun draw(renderer: IRenderer)
 
-    fun checkError() {
-        val erno = glGetError()
-        if (erno != GL_NO_ERROR) {
-            Log.e(this::class.qualifiedName, "checkError: glGetError:$erno")
-            throw RuntimeException()
-        }
-    }
+
 }

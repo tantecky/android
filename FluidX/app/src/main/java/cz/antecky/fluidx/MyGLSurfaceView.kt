@@ -5,7 +5,7 @@ import android.opengl.GLSurfaceView
 
 class MyGLSurfaceView(context: Context) : GLSurfaceView(context) {
 
-    private val renderer: cz.antecky.fluidx.Renderer
+    private val renderer: Renderer
 
     init {
 

@@ -3,8 +3,6 @@ package cz.antecky.fluidx.entities
 import android.opengl.GLES20.*
 import cz.antecky.fluidx.IRenderer
 import cz.antecky.fluidx.shaders.Shader
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
 import java.nio.FloatBuffer
 
 import cz.antecky.fluidx.shaders.ShaderManager
@@ -41,6 +39,6 @@ class Triangle : Entity() {
         glDrawArrays(GL_TRIANGLES, 0, vertexCount)
 
         glDisableVertexAttribArray(positionAttrib)
-        checkError()
+        renderer.checkGlError()
     }
 }

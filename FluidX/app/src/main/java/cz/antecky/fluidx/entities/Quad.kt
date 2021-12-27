@@ -46,6 +46,6 @@ open class Quad : Entity() {
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 
         glDisableVertexAttribArray(positionAttrib)
-        checkError()
+        renderer.checkGlError()
     }
 }
