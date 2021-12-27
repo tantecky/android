@@ -34,6 +34,7 @@ interface IRenderer {
 class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer {
     companion object {
         const val GRID_SIZE = 256
+
         /*
         GL_EXT_color_buffer_half_float
         GL_OES_texture_half_float
@@ -48,6 +49,7 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
     private var _height: Float = 0.0f
     private var _projectionM: FloatArray = FloatArray(16)
     private var _textureId: Int = -1
+    private var frameBufferId: Int = -1
 
     override val time: Float get() = (SystemClock.uptimeMillis() - startMillis) / 1000.0f
 
@@ -79,8 +81,37 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
         glBindTexture(GL_TEXTURE_2D, _textureId)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, GRID_SIZE, GRID_SIZE, 0, GL_RGBA,
-            GL_HALF_FLOAT_OES, null);
+        glTexImage2D(
+            GL_TEXTURE_2D, 0, GL_RGBA, GRID_SIZE, GRID_SIZE, 0, GL_RGBA,
+            GL_HALF_FLOAT_OES, null
+        );
+    }
+
+    private fun initFrameBuffer() {
+        val frameBuffers: IntBuffer = IntBuffer.allocate(1)
+
+        glGenFramebuffers(1, frameBuffers)
+
+        frameBufferId = frameBuffers[0]
+
+        if (frameBufferId < 0) {
+            Log.e(this::class.qualifiedName, "glGenFramebuffers: GL_INVALID_VALUE")
+            throw RuntimeException()
+        }
+
+        glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId)
+
+        glFramebufferTexture2D(
+            GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+            GL_TEXTURE_2D, _textureId, 0
+        )
+
+        val status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+
+        if (status != GL_FRAMEBUFFER_COMPLETE) {
+            Log.e(this::class.qualifiedName, "glCheckFramebufferStatus: != GL_FRAMEBUFFER_COMPLETE")
+            throw RuntimeException()
+        }
     }
 
     override fun checkGlError() {
@@ -103,6 +134,9 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
         checkGlError()
 
         initTexture()
+        checkGlError()
+
+        initFrameBuffer()
         checkGlError()
 
         this.entities = arrayOf(
