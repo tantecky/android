@@ -11,6 +11,7 @@ enum class Shader {
     FLAT,
     COMPLEX,
     TEMPERATURE,
+    SCREEN,
 }
 
 object ShaderManager {
@@ -18,6 +19,7 @@ object ShaderManager {
         Shader.FLAT to ShaderProgram(R.raw.flat_vs, R.raw.flat_fs),
         Shader.COMPLEX to ShaderProgram(R.raw.flat_vs, R.raw.complex_fs),
         Shader.TEMPERATURE to ShaderProgram(R.raw.domain_vs, R.raw.temperature_fs),
+        Shader.SCREEN to ShaderProgram(R.raw.domain_vs, R.raw.screen_fs),
     )
 
     fun compileAll(context: Context) {

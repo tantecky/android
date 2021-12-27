@@ -11,6 +11,7 @@ import android.os.SystemClock
 import android.util.Log
 import cz.antecky.fluidx.entities.Domain
 import cz.antecky.fluidx.entities.Entity
+import cz.antecky.fluidx.shaders.Shader
 import cz.antecky.fluidx.shaders.ShaderManager
 import java.nio.IntBuffer
 
@@ -18,11 +19,11 @@ interface IRenderer {
     val time: Float
 
     // screen width in pixels
-    val width: Float
+    val width: Int
     val widthTexel: Float
 
     // screen height in pixels
-    val height: Float
+    val height: Int
     val heightTexel: Float
 
     val projectionM: FloatArray
@@ -33,7 +34,7 @@ interface IRenderer {
 
 class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer {
     companion object {
-        const val GRID_SIZE = 256
+        const val GRID_SIZE = 32
 
         /*
         GL_EXT_color_buffer_half_float
@@ -45,19 +46,19 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
 
     private lateinit var entities: Array<Entity>
     private var startMillis: Long = 0
-    private var _width: Float = 0.0f
-    private var _height: Float = 0.0f
+    private var _width: Int = -1
+    private var _height: Int = -1
     private var _projectionM: FloatArray = FloatArray(16)
     private var _textureId: Int = -1
     private var frameBufferId: Int = -1
 
     override val time: Float get() = (SystemClock.uptimeMillis() - startMillis) / 1000.0f
 
-    override val width: Float get() = _width
-    override val widthTexel: Float get() = _width / GRID_SIZE
+    override val width: Int get() = _width
+    override val widthTexel: Float get() = _width.toFloat() / GRID_SIZE
 
-    override val height: Float get() = _height
-    override val heightTexel: Float get() = _height / GRID_SIZE
+    override val height: Int get() = _height
+    override val heightTexel: Float get() = _height.toFloat()  / GRID_SIZE
 
     override val projectionM: FloatArray get() = _projectionM
     override val textureId: Int get() = _textureId
@@ -98,8 +99,12 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
             Log.e(this::class.qualifiedName, "glGenFramebuffers: GL_INVALID_VALUE")
             throw RuntimeException()
         }
+        else {
+            Log.d(this::class.qualifiedName, "glGenFramebuffers: $frameBufferId")
+        }
 
         glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId)
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
 
         glFramebufferTexture2D(
             GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
@@ -112,6 +117,9 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
             Log.e(this::class.qualifiedName, "glCheckFramebufferStatus: != GL_FRAMEBUFFER_COMPLETE")
             throw RuntimeException()
         }
+
+        glClear(GL_COLOR_BUFFER_BIT);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0)
     }
 
     override fun checkGlError() {
@@ -123,7 +131,7 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
     }
 
     override fun onSurfaceCreated(unused: GL10, config: EGLConfig) {
-        // printGlExtensions()
+        Log.d(this::class.qualifiedName, "onSurfaceCreated")
 
         Matrix.orthoM(
             _projectionM, 0,
@@ -131,12 +139,6 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
         )
 
         ShaderManager.compileAll(this.context)
-        checkGlError()
-
-        initTexture()
-        checkGlError()
-
-        initFrameBuffer()
         checkGlError()
 
         this.entities = arrayOf(
@@ -148,21 +150,30 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
     }
 
     override fun onDrawFrame(unused: GL10) {
-        // Redraw background color
-        glClear(GL_COLOR_BUFFER_BIT)
 
         for (entity in this.entities) {
-            entity.draw(this)
+            glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId)
+            glViewport(0, 0, GRID_SIZE, GRID_SIZE)
+            entity.draw(Shader.TEMPERATURE, this)
+
+            glBindFramebuffer(GL_FRAMEBUFFER, 0)
+            glViewport(0, 0, this._width, this._height)
+            glClear(GL_COLOR_BUFFER_BIT)
+            entity.draw(Shader.SCREEN, this)
         }
 
         // Log.d(this::class.qualifiedName, "onDrawFrame: time:$time")
     }
 
     override fun onSurfaceChanged(unused: GL10, width: Int, height: Int) {
-        this._width = width.toFloat()
-        this._height = height.toFloat()
-
-        glViewport(0, 0, width, height)
         Log.d(this::class.qualifiedName, "onSurfaceChanged: w:$width h:$height")
+        this._width = width
+        this._height = height
+
+        initTexture()
+        checkGlError()
+
+        initFrameBuffer()
+        checkGlError()
     }
 }

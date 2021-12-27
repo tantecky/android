@@ -17,7 +17,7 @@ open class Quad : Entity() {
 
     override val vertexBuffer: FloatBuffer = createFloatBuffer(coords)
 
-    override fun draw(renderer: IRenderer) {
+    override fun draw(shader: Shader, renderer: IRenderer) {
         val programId = ShaderManager.use(Shader.COMPLEX)
         val positionAttrib = glGetAttribLocation(programId, "a_position")
 
@@ -37,7 +37,7 @@ open class Quad : Entity() {
         glUniform1f(timeUniform, renderer.time)
 
         val resolutionUniform = glGetUniformLocation(programId, "u_resolution")
-        glUniform2f(resolutionUniform, renderer.width, renderer.height)
+        glUniform2f(resolutionUniform, renderer.width.toFloat(), renderer.height.toFloat())
 
         val mvpUniform = glGetUniformLocation(programId, "u_mvp")
         glUniformMatrix4fv(mvpUniform, 1, false, renderer.projectionM, 0)
