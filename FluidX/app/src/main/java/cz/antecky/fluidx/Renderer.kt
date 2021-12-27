@@ -7,7 +7,9 @@ import javax.microedition.khronos.opengles.GL10
 import android.opengl.GLES20.*
 import android.opengl.GLSurfaceView
 import android.opengl.Matrix
+import android.os.SystemClock
 import android.util.Log
+import cz.antecky.fluidx.entities.Domain
 import cz.antecky.fluidx.entities.Entity
 import cz.antecky.fluidx.entities.Quad
 import cz.antecky.fluidx.entities.Triangle
@@ -27,7 +29,7 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
     private var _height: Float = 0.0f
     private var _projectionM: FloatArray = FloatArray(16)
 
-    override val time: Float get() = (System.currentTimeMillis() - startMillis) / 1000.0f
+    override val time: Float get() = (SystemClock.uptimeMillis() - startMillis) / 1000.0f
     override val width: Float get() = _width
     override val height: Float get() = _height
     override val projectionM: FloatArray get() = _projectionM
@@ -40,12 +42,11 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
 
         ShaderManager.compileAll(this.context)
         this.entities = arrayOf(
-            Quad(),
-            Triangle(),
+            Domain(),
         )
 
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
-        startMillis = System.currentTimeMillis()
+        startMillis = SystemClock.uptimeMillis()
     }
 
     override fun onDrawFrame(unused: GL10) {

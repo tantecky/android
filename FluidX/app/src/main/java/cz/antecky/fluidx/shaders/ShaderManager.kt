@@ -10,12 +10,14 @@ import kotlin.system.measureTimeMillis
 enum class Shader {
     FLAT,
     COMPLEX,
+    TEMPERATURE,
 }
 
 object ShaderManager {
     private val shaders = mapOf(
         Shader.FLAT to ShaderProgram(R.raw.flat_vs, R.raw.flat_fs),
         Shader.COMPLEX to ShaderProgram(R.raw.flat_vs, R.raw.complex_fs),
+        Shader.TEMPERATURE to ShaderProgram(R.raw.domain_vs, R.raw.temperature_fs),
     )
 
     fun compileAll(context: Context) {

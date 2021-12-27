@@ -7,7 +7,7 @@ import java.nio.FloatBuffer
 
 import cz.antecky.fluidx.shaders.ShaderManager
 
-class Quad : Entity() {
+open class Quad : Entity() {
     override val coords = floatArrayOf(
         0.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f,
