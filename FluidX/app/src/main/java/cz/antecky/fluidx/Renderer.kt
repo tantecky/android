@@ -55,10 +55,10 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
     override val time: Float get() = (SystemClock.uptimeMillis() - startMillis) / 1000.0f
 
     override val width: Int get() = _width
-    override val widthTexel: Float get() = _width.toFloat() / GRID_SIZE
+    override val widthTexel: Float get() = 1.0f / GRID_SIZE
 
     override val height: Int get() = _height
-    override val heightTexel: Float get() = _height.toFloat() / GRID_SIZE
+    override val heightTexel: Float get() = 1.0f / GRID_SIZE
 
     override val projectionM: FloatArray get() = _projectionM
     override val textureId: Int get() = _textureId
@@ -98,7 +98,7 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
 
         glBindTexture(GL_TEXTURE_2D, _textureId)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
 

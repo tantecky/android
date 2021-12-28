@@ -1,6 +1,5 @@
 #ifdef GL_ES
 precision mediump float;
-precision mediump sampler2D;
 #endif
 
 varying vec2 v_texCoord;
