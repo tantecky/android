@@ -25,7 +25,7 @@ void main(){
     float temperature = 0.0;
 
     // is boundary texel
-    if (top.y > 1.0 || bot.y < 0.0 || right.x > 1.0 || left.x < 0.0) {
+    if (any(bvec4(top.y > 1.0, bot.y < 0.0, right.x > 1.0, left.x < 0.0))) {
         temperature = 1.0;
     }
 
