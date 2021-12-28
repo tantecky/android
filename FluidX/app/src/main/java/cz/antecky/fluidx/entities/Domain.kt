@@ -6,7 +6,7 @@ import cz.antecky.fluidx.shaders.Shader
 import cz.antecky.fluidx.shaders.ShaderManager
 
 class Domain : Quad() {
-    override fun draw(shader: Shader, renderer: IRenderer) {
+    override fun draw(frameBufferId: Int, shader: Shader, renderer: IRenderer) {
         val programId = ShaderManager.use(shader)
         val positionAttrib = glGetAttribLocation(programId, "a_position")
 
@@ -34,12 +34,14 @@ class Domain : Quad() {
         val mvpUniform = glGetUniformLocation(programId, "u_mvp")
         glUniformMatrix4fv(mvpUniform, 1, false, renderer.projectionM, 0)
 
-        glActiveTexture(GL_TEXTURE0)
+        glActiveTexture(GL_TEXTURE0 + renderer.textureId)
         glBindTexture(GL_TEXTURE_2D, renderer.textureId)
-        renderer.checkGlError()
 
         val textureUniform = glGetUniformLocation(programId, "u_temperature")
         glUniform1i(textureUniform, renderer.textureId)
+
+        renderer.checkGlError()
+
 
         glEnableVertexAttribArray(positionAttrib)
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)

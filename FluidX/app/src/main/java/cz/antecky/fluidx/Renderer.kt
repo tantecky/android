@@ -34,7 +34,7 @@ interface IRenderer {
 
 class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer {
     companion object {
-        const val GRID_SIZE = 32
+        const val GRID_SIZE = 8
 
         /*
         GL_EXT_color_buffer_half_float
@@ -58,7 +58,7 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
     override val widthTexel: Float get() = _width.toFloat() / GRID_SIZE
 
     override val height: Int get() = _height
-    override val heightTexel: Float get() = _height.toFloat()  / GRID_SIZE
+    override val heightTexel: Float get() = _height.toFloat() / GRID_SIZE
 
     override val projectionM: FloatArray get() = _projectionM
     override val textureId: Int get() = _textureId
@@ -66,6 +66,23 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
     private fun printGlExtensions() {
         val extensions = glGetString(GL_EXTENSIONS)
         Log.d(this::class.qualifiedName, "GL_EXTENSIONS: $extensions")
+    }
+
+    private fun isHalfFloatSupported(): Boolean {
+        val extensions = glGetString(GL_EXTENSIONS)
+
+        for (extension in arrayOf(
+            "GL_EXT_color_buffer_half_float",
+            "GL_OES_texture_half_float",
+            "GL_OES_texture_half_float_linear",
+        )) {
+            if (!extensions.contains(extension)) {
+                return false
+            }
+        }
+
+        return true
+
     }
 
     private fun initTexture() {
@@ -84,10 +101,20 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
+
+        // use GL_UNSIGNED_BYTE if GL_HALF_FLOAT_OES is not supported
+
+        val gotHalfFloat = isHalfFloatSupported()
+
+        val formatType = if (gotHalfFloat) GL_HALF_FLOAT_OES else GL_UNSIGNED_BYTE
+
+        Log.d(this::class.qualifiedName, "isHalfFloatSupported: $gotHalfFloat")
+
         glTexImage2D(
             GL_TEXTURE_2D, 0, GL_RGBA, GRID_SIZE, GRID_SIZE, 0, GL_RGBA,
-            GL_HALF_FLOAT_OES, null
-        );
+            formatType, null
+        )
+        glBindTexture(GL_TEXTURE_2D, 0)
     }
 
     private fun initFrameBuffer() {
@@ -100,8 +127,7 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
         if (frameBufferId < 0) {
             Log.e(this::class.qualifiedName, "glGenFramebuffers: GL_INVALID_VALUE")
             throw RuntimeException()
-        }
-        else {
+        } else {
             Log.d(this::class.qualifiedName, "glGenFramebuffers: $frameBufferId")
         }
 
@@ -156,12 +182,12 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
         for (entity in this.entities) {
             glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId)
             glViewport(0, 0, GRID_SIZE, GRID_SIZE)
-            entity.draw(Shader.TEMPERATURE, this)
+            entity.draw(frameBufferId, Shader.TEMPERATURE, this)
 
             glBindFramebuffer(GL_FRAMEBUFFER, 0)
             glViewport(0, 0, this._width, this._height)
             glClear(GL_COLOR_BUFFER_BIT)
-            entity.draw(Shader.SCREEN, this)
+            entity.draw(0, Shader.SCREEN, this)
         }
 
         // Log.d(this::class.qualifiedName, "onDrawFrame: time:$time")

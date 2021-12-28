@@ -13,7 +13,5 @@ uniform sampler2D u_temperature;
 
 void main(){
     float temperature = texture2D(u_temperature, v_texCoord).x;
-    // float temperature = 1.0;
     gl_FragColor = vec4(temperature, 0.0, 0.0, 1.0);
-   // gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
 }

@@ -17,7 +17,7 @@ open class Quad : Entity() {
 
     override val vertexBuffer: FloatBuffer = createFloatBuffer(coords)
 
-    override fun draw(shader: Shader, renderer: IRenderer) {
+    override fun draw(frameBufferId: Int, shader: Shader, renderer: IRenderer) {
         val programId = ShaderManager.use(Shader.COMPLEX)
         val positionAttrib = glGetAttribLocation(programId, "a_position")
 
