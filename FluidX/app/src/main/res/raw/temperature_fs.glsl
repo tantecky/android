@@ -2,9 +2,9 @@
 precision mediump float;
 #endif
 
-#define DT 0.005
+#define DT 0.0005
 #define T_BC 0.0
-#define NU 0.02
+#define NU 0.05
 
 varying vec2 v_texCoord;
 
