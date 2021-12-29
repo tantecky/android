@@ -24,11 +24,6 @@ void main(){
     vec2 left = vec2(xCenter - u_widthTexel, yCenter);
     vec2 right = vec2(xCenter + u_widthTexel, yCenter);
 
-    float temperature = texture2D(u_temperature, center).x;
-    float temperatureNew;
-
-    // is boundary texel
-
     float temperatureTop = texture2D(u_temperature, top).x;
     float temperatureBot = texture2D(u_temperature, bot).x;
     float temperatureLeft = texture2D(u_temperature, left).x;
@@ -36,7 +31,8 @@ void main(){
     float dx = NU * DT / (u_widthTexel * u_widthTexel);
     float dy = NU * DT / (u_heightTexel * u_heightTexel);
 
-    temperatureNew = temperature + dx * (temperatureRight - 2.0 * temperature + temperatureLeft) + dy * (temperatureTop - 2.0 * temperature + temperatureBot);
+    float temperature = texture2D(u_temperature, center).x;
+    float temperatureNew = temperature + dx * (temperatureRight - 2.0 * temperature + temperatureLeft) + dy * (temperatureTop - 2.0 * temperature + temperatureBot);
     temperatureNew -= 0.001f;
 
     temperatureNew = clamp(temperatureNew, 0.0f, 1.0f);
