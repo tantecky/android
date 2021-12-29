@@ -1,0 +1,17 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "editor.rulers": [79],
+    "files.eol": "\n",
+    "editor.formatOnSave": true,
+    "python.linting.enabled": true,
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": ["--line-length=79"],
+    "[python]": {
+      "editor.defaultFormatter": "ms-python.python"
+    }
+}
