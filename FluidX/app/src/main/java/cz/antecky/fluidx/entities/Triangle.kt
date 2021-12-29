@@ -16,7 +16,7 @@ class Triangle : Entity() {
 
     override val vertexBuffer: FloatBuffer = createFloatBuffer(coords)
 
-    override fun draw(frameBufferId: Int, shader: Shader, renderer: IRenderer) {
+    override fun draw(shader: Shader, renderer: IRenderer) {
         val programId = ShaderManager.use(Shader.FLAT)
         val positionAttrib = glGetAttribLocation(programId, "a_position")
 

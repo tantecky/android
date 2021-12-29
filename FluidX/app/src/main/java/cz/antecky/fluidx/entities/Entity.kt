@@ -28,7 +28,7 @@ abstract class Entity {
 
     abstract val vertexBuffer: FloatBuffer
 
-    abstract fun draw(frameBufferId: Int, shader: Shader, renderer: IRenderer)
+    abstract fun draw(shader: Shader, renderer: IRenderer)
 
 
 }

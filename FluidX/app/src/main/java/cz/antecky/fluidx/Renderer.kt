@@ -26,13 +26,18 @@ interface IRenderer {
     val height: Int
     val heightTexel: Float
 
+    // in texture coordinates [0; 1]
+    val sTouch: Float
+    val tTouch: Float
+
     val projectionM: FloatArray
     val textureId: Int
+
 
     fun checkGlError()
 }
 
-class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer {
+class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer {
     companion object {
         const val GRID_SIZE = 8
 
@@ -48,9 +53,13 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
     private var startMillis: Long = 0
     private var _width: Int = -1
     private var _height: Int = -1
+    private var _sTouch: Float = -1.0f
+    private var _tTouch: Float = -1.0f
     private var _projectionM: FloatArray = FloatArray(16)
     private var _textureId: Int = -1
     private var frameBufferId: Int = -1
+
+    private val gotTouch: Boolean get() = _sTouch >= 0 && _tTouch >= 0
 
     override val time: Float get() = (SystemClock.uptimeMillis() - startMillis) / 1000.0f
 
@@ -59,6 +68,9 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
 
     override val height: Int get() = _height
     override val heightTexel: Float get() = 1.0f / GRID_SIZE
+
+    override val sTouch: Float get() = _sTouch
+    override val tTouch: Float get() = _tTouch
 
     override val projectionM: FloatArray get() = _projectionM
     override val textureId: Int get() = _textureId
@@ -182,12 +194,17 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
         for (entity in this.entities) {
             glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId)
             glViewport(0, 0, GRID_SIZE, GRID_SIZE)
-            entity.draw(frameBufferId, Shader.TEMPERATURE, this)
+
+            entity.draw(Shader.TEMPERATURE, this)
+
+            if (gotTouch) {
+                entity.draw(Shader.TOUCH, this)
+            }
 
             glBindFramebuffer(GL_FRAMEBUFFER, 0)
             glViewport(0, 0, this._width, this._height)
             glClear(GL_COLOR_BUFFER_BIT)
-            entity.draw(0, Shader.SCREEN, this)
+            entity.draw(Shader.SCREEN, this)
         }
 
         // Log.d(this::class.qualifiedName, "onDrawFrame: time:$time")
@@ -203,5 +220,13 @@ class Renderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer
 
         initFrameBuffer()
         checkGlError()
+    }
+
+    fun onTouch(s: Float, t: Float) {
+        this._sTouch = s
+        this._tTouch = t
+
+        // Log.d(this::class.qualifiedName, "onTouch: s:$s t:$t")
+
     }
 }
