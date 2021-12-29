@@ -4,7 +4,7 @@ precision mediump float;
 
 #define DT 0.005
 #define T_BC 0.0
-#define NU 0.01
+#define NU 0.02
 
 varying vec2 v_texCoord;
 
@@ -28,22 +28,16 @@ void main(){
     float temperatureNew;
 
     // is boundary texel
-    if (any(bvec4(top.y > 1.0, bot.y < 0.0, right.x > 1.0, left.x < 0.0))) {
-        temperature = T_BC;
-    }
-    else {
-        float temperatureTop = texture2D(u_temperature, top).x;
-        float temperatureBot = texture2D(u_temperature, bot).x;
-        float temperatureLeft = texture2D(u_temperature, left).x;
-        float temperatureRight = texture2D(u_temperature, right).x;
-        float dx = NU * DT / (u_widthTexel * u_widthTexel);
-        float dy = NU * DT / (u_heightTexel * u_heightTexel);
 
-        temperatureNew = temperature + dx * (temperatureRight - 2.0 * temperature + temperatureLeft) + dy * (temperatureTop - 2.0 * temperature + temperatureBot);
+    float temperatureTop = texture2D(u_temperature, top).x;
+    float temperatureBot = texture2D(u_temperature, bot).x;
+    float temperatureLeft = texture2D(u_temperature, left).x;
+    float temperatureRight = texture2D(u_temperature, right).x;
+    float dx = NU * DT / (u_widthTexel * u_widthTexel);
+    float dy = NU * DT / (u_heightTexel * u_heightTexel);
 
-    }
-
-    //temperature -= 0.02f;
+    temperatureNew = temperature + dx * (temperatureRight - 2.0 * temperature + temperatureLeft) + dy * (temperatureTop - 2.0 * temperature + temperatureBot);
+    temperatureNew -= 0.001f;
 
     temperatureNew = clamp(temperatureNew, 0.0f, 1.0f);
 
