@@ -39,7 +39,7 @@ interface IRenderer {
 
 class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer {
     companion object {
-        const val GRID_SIZE = 8
+        const val GRID_SIZE = 32
 
         /*
         GL_EXT_color_buffer_half_float
@@ -110,7 +110,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
 
         glBindTexture(GL_TEXTURE_2D, _textureId)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
 

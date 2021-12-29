@@ -2,7 +2,7 @@
 precision mediump float;
 #endif
 
-#define DT 0.01
+#define DT 0.005
 #define T_BC 0.0
 #define NU 0.01
 

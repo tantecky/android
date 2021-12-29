@@ -4,7 +4,7 @@ precision mediump float;
 
 // increase SCALE to mark a neighbour texel
 // 0.5 is one texel
-#define SCALE 0.5
+#define SCALE 1.5
 
 varying vec2 v_texCoord;
 
