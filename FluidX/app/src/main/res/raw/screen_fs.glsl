@@ -15,6 +15,7 @@ vec3 hotColor = vec3(1.0, 0.0, 0.0);
 
 void main(){
     float temperature = texture2D(u_temperature, v_texCoord).x;
+    temperature = clamp(temperature, 0.0f, 1.0f);
     vec3 color = mix(coldColor, hotColor, temperature);
     gl_FragColor = vec4(color, 1.0);
 }
