@@ -201,6 +201,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
                 entity.draw(Shader.TOUCH, this)
             }
 
+
             glBindFramebuffer(GL_FRAMEBUFFER, 0)
             glViewport(0, 0, this._width, this._height)
             glClear(GL_COLOR_BUFFER_BIT)
@@ -226,7 +227,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
         this._sTouch = s
         this._tTouch = t
 
-        // Log.d(this::class.qualifiedName, "onTouch: s:$s t:$t")
+        //Log.d(this::class.qualifiedName, "onTouch: s:$s t:$t")
 
     }
 }
