@@ -48,6 +48,10 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
         GL_OES_texture_half_float_linear
          */
         const val GL_HALF_FLOAT_OES = 0x8D61
+        /*
+        GL_NV_half_float
+         */
+        const val GL_HALF_FLOAT_NV = 0x140B
     }
 
     private lateinit var entities: Array<Entity>
@@ -87,6 +91,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
             "GL_EXT_color_buffer_half_float",
             "GL_OES_texture_half_float",
             "GL_OES_texture_half_float_linear",
+            "GL_NV_half_float",
         )) {
             if (!extensions.contains(extension)) {
                 return false
@@ -118,7 +123,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
 
         val gotHalfFloat = isHalfFloatSupported()
 
-        val formatType = if (gotHalfFloat) GL_HALF_FLOAT_OES else GL_UNSIGNED_BYTE
+        val formatType = if (gotHalfFloat) GL_HALF_FLOAT_NV else GL_UNSIGNED_BYTE
 
         Log.d(this::class.qualifiedName, "isHalfFloatSupported: $gotHalfFloat")
 
@@ -172,6 +177,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
 
     override fun onSurfaceCreated(unused: GL10, config: EGLConfig) {
         Log.d(this::class.qualifiedName, "onSurfaceCreated")
+        printGlExtensions()
         Log.d(this::class.qualifiedName, "timestep: $maxTimestep")
 
         Matrix.orthoM(
