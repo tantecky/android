@@ -48,6 +48,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
         GL_OES_texture_half_float_linear
          */
         const val GL_HALF_FLOAT_OES = 0x8D61
+
         /*
         GL_NV_half_float
          */
@@ -84,22 +85,26 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
         Log.d(this::class.qualifiedName, "GL_EXTENSIONS: $extensions")
     }
 
-    private fun isHalfFloatSupported(): Boolean {
+    private fun halfFloatFormat(): Int {
         val extensions = glGetString(GL_EXTENSIONS)
 
-        for (extension in arrayOf(
-            "GL_EXT_color_buffer_half_float",
-            "GL_OES_texture_half_float",
-            "GL_OES_texture_half_float_linear",
-            "GL_NV_half_float",
-        )) {
-            if (!extensions.contains(extension)) {
-                return false
-            }
+        if (arrayOf(
+                "ANDROID_EMU",
+            ).all { extensions.contains(it) }
+        ) {
+            return GL_HALF_FLOAT_NV
         }
 
-        return true
+        if (arrayOf(
+                "GL_EXT_color_buffer_half_float",
+                "GL_OES_texture_half_float",
+                "GL_OES_texture_half_float_linear",
+            ).all { extensions.contains(it) }
+        ) {
+            return GL_HALF_FLOAT_OES
+        }
 
+        return GL_UNSIGNED_BYTE
     }
 
     private fun initTexture() {
@@ -119,17 +124,13 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
 
-        // use GL_UNSIGNED_BYTE if GL_HALF_FLOAT_OES is not supported
+        val halfFloatFormat = halfFloatFormat()
 
-        val gotHalfFloat = isHalfFloatSupported()
-
-        val formatType = if (gotHalfFloat) GL_HALF_FLOAT_NV else GL_UNSIGNED_BYTE
-
-        Log.d(this::class.qualifiedName, "isHalfFloatSupported: $gotHalfFloat")
+        Log.d(this::class.qualifiedName, "halfFloatFormat: $halfFloatFormat")
 
         glTexImage2D(
             GL_TEXTURE_2D, 0, GL_RGBA, GRID_SIZE, GRID_SIZE, 0, GL_RGBA,
-            formatType, null
+            halfFloatFormat, null
         )
         glBindTexture(GL_TEXTURE_2D, 0)
     }

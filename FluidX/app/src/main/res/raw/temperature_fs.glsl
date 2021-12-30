@@ -30,9 +30,9 @@ void main(){
 
     float temperature = texture2D(u_temperature, center).x;
     float temperatureNew = temperature + dx * (temperatureRight - 2.0 * temperature + temperatureLeft) + dy * (temperatureTop - 2.0 * temperature + temperatureBot);
-    temperatureNew -= 0.001f;
+    temperatureNew -= 0.001;
 
-    temperatureNew = max(temperatureNew, 0.0f);
+    temperatureNew = max(temperatureNew, 0.0);
 
     gl_FragColor = vec4(temperatureNew, 0.0, 0.0, 1.0);
 }

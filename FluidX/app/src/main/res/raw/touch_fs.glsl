@@ -21,7 +21,7 @@ void main(){
     splash *= FACTOR;
 
     float temperature = texture2D(u_temperature, v_texCoord).x;
-    temperature = clamp(temperature + splash, 0.0f, 1.1f);
+    temperature = clamp(temperature + splash, 0.0, 1.1);
 
     gl_FragColor = vec4(temperature, 0.0, 0.0, 1.0);
 }
