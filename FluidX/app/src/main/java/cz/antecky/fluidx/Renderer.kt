@@ -47,6 +47,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     }
 
     private lateinit var entities: Array<Entity>
+    private val domain: Domain get() = entities[0] as Domain
     private var startMillis: Long = 0
     private var _width: Int = -1
     private var _height: Int = -1
@@ -182,17 +183,8 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     }
 
     override fun onDrawFrame(unused: GL10) {
-        for (entity in this.entities) {
-            glBindFramebuffer(GL_FRAMEBUFFER, _frameBufferId)
-            glViewport(0, 0, GRID_SIZE, GRID_SIZE)
-
-            entity.draw(Shader.TEMPERATURE, this)
-
-            glBindFramebuffer(GL_FRAMEBUFFER, 0)
-            glViewport(0, 0, this._width, this._height)
-            glClear(GL_COLOR_BUFFER_BIT)
-            entity.draw(Shader.SCREEN, this)
-        }
+        domain.solveTemperature(this)
+        domain.draw(Shader.SCREEN, this)
 
         // Log.d(this::class.qualifiedName, "onDrawFrame: time:$time")
     }
@@ -210,7 +202,6 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     }
 
     fun onTouch(s: Float, t: Float) {
-        val domain = this.entities[0] as Domain
         domain.touch(s, t, this)
 
         //Log.d(this::class.qualifiedName, "onTouch: s:$s t:$t")
