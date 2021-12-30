@@ -32,7 +32,7 @@ void main(){
     float temperatureNew = temperature + dx * (temperatureRight - 2.0 * temperature + temperatureLeft) + dy * (temperatureTop - 2.0 * temperature + temperatureBot);
     temperatureNew -= 0.001f;
 
-    temperatureNew = clamp(temperatureNew, 0.0f, 1.0f);
+    temperatureNew = max(temperatureNew, 0.0f);
 
     gl_FragColor = vec4(temperatureNew, 0.0, 0.0, 1.0);
 }
