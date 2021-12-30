@@ -62,7 +62,7 @@ class Domain : Quad() {
         glUniform1f(glGetUniformLocation(programId, "u_widthTexel"), renderer.widthTexel)
         glUniform1f(glGetUniformLocation(programId, "u_heightTexel"), renderer.heightTexel)
 
-        glUniform1f(glGetUniformLocation(programId, "u_timestamp"), MyRenderer.TIMESTAMP)
+        glUniform1f(glGetUniformLocation(programId, "u_timestamp"), renderer.maxTimestep)
         glUniform1f(
             glGetUniformLocation(programId, "u_conductivity"),
             MyRenderer.CONDUCTIVITY
