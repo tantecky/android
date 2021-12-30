@@ -7,11 +7,7 @@ precision mediump float;
 
 varying vec2 v_texCoord;
 
-uniform vec2 u_resolution;
 uniform vec2 u_touch;
-uniform float u_widthTexel;
-uniform float u_heightTexel;
-uniform float u_time;
 uniform sampler2D u_temperature;
 
 void main(){
@@ -26,7 +22,6 @@ void main(){
 
     float temperature = texture2D(u_temperature, v_texCoord).x;
     temperature = clamp(temperature + splash, 0.0f, 1.0f);
-
 
     gl_FragColor = vec4(temperature, 0.0, 0.0, 1.0);
 }

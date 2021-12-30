@@ -47,6 +47,5 @@ vec4 colormap(float x) {
 
 void main(){
     float temperature = texture2D(u_temperature, v_texCoord).x;
-    temperature = clamp(temperature, 0.0f, 1.0f);
     gl_FragColor = colormap(temperature);
 }
