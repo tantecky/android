@@ -107,18 +107,18 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
         return GL_UNSIGNED_BYTE
     }
 
-    private fun initTexture() {
+    private fun createTexture(): Int {
         glActiveTexture(GL_TEXTURE0)
         val textures: IntBuffer = IntBuffer.allocate(1)
         glGenTextures(1, textures)
-        _textureId = textures[0]
+        val textureId = textures[0]
 
-        if (_textureId < 0) {
+        if (textureId < 0) {
             Log.e(this::class.qualifiedName, "glGenTextures: GL_INVALID_VALUE")
             throw RuntimeException()
         }
 
-        glBindTexture(GL_TEXTURE_2D, _textureId)
+        glBindTexture(GL_TEXTURE_2D, textureId)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
@@ -132,29 +132,32 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
             GL_TEXTURE_2D, 0, GL_RGBA, GRID_SIZE, GRID_SIZE, 0, GL_RGBA,
             halfFloatFormat, null
         )
+        checkGlError()
         glBindTexture(GL_TEXTURE_2D, 0)
+
+        return textureId
     }
 
-    private fun initFrameBuffer() {
+    private fun createFrameBuffer(textureToAttach: Int): Int {
         val frameBuffers: IntBuffer = IntBuffer.allocate(1)
 
         glGenFramebuffers(1, frameBuffers)
 
-        _frameBufferId = frameBuffers[0]
+        val frameBufferId = frameBuffers[0]
 
-        if (_frameBufferId < 0) {
+        if (frameBufferId < 0) {
             Log.e(this::class.qualifiedName, "glGenFramebuffers: GL_INVALID_VALUE")
             throw RuntimeException()
         } else {
-            Log.d(this::class.qualifiedName, "glGenFramebuffers: $_frameBufferId")
+            Log.d(this::class.qualifiedName, "glGenFramebuffers: $frameBufferId")
         }
 
-        glBindFramebuffer(GL_FRAMEBUFFER, _frameBufferId)
+        glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId)
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
 
         glFramebufferTexture2D(
             GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
-            GL_TEXTURE_2D, _textureId, 0
+            GL_TEXTURE_2D, textureToAttach, 0
         )
 
         val status = glCheckFramebufferStatus(GL_FRAMEBUFFER)
@@ -163,9 +166,11 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
             Log.e(this::class.qualifiedName, "glCheckFramebufferStatus: != GL_FRAMEBUFFER_COMPLETE")
             throw RuntimeException()
         }
+        checkGlError()
 
         glClear(GL_COLOR_BUFFER_BIT)
         glBindFramebuffer(GL_FRAMEBUFFER, 0)
+        return frameBufferId
     }
 
     override fun checkGlError() {
@@ -209,11 +214,8 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
         this._width = width
         this._height = height
 
-        initTexture()
-        checkGlError()
-
-        initFrameBuffer()
-        checkGlError()
+        _textureId = createTexture()
+        _frameBufferId = createFrameBuffer(_textureId)
     }
 
     fun onTouch(s: Float, t: Float) {
