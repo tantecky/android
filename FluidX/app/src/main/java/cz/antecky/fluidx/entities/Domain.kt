@@ -8,7 +8,7 @@ import cz.antecky.fluidx.shaders.ShaderManager
 
 class Domain : Quad() {
     fun touch(s: Float, t: Float, renderer: IRenderer) {
-        glBindFramebuffer(GL_FRAMEBUFFER, renderer.frameBufferId)
+        glBindFramebuffer(GL_FRAMEBUFFER, renderer.fboDst)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
 
         val programId = ShaderManager.use(Shader.TOUCH)
@@ -28,12 +28,12 @@ class Domain : Quad() {
             renderer.projectionM, 0
         )
 
-        glActiveTexture(GL_TEXTURE0 + renderer.textureId)
-        glBindTexture(GL_TEXTURE_2D, renderer.textureId)
+        glActiveTexture(GL_TEXTURE0 + renderer.textureSrc)
+        glBindTexture(GL_TEXTURE_2D, renderer.textureSrc)
 
         glUniform2f(glGetUniformLocation(programId, "u_touch"), s, t)
 
-        glUniform1i(glGetUniformLocation(programId, "u_temperature"), renderer.textureId)
+        glUniform1i(glGetUniformLocation(programId, "u_temperature"), renderer.textureSrc)
 
         glEnableVertexAttribArray(positionAttrib)
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
@@ -44,7 +44,7 @@ class Domain : Quad() {
     }
 
     fun solveTemperature(renderer: IRenderer) {
-        glBindFramebuffer(GL_FRAMEBUFFER, renderer.frameBufferId)
+        glBindFramebuffer(GL_FRAMEBUFFER, renderer.fboDst)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
 
         val programId = ShaderManager.use(Shader.TEMPERATURE)
@@ -73,10 +73,10 @@ class Domain : Quad() {
             renderer.projectionM, 0
         )
 
-        glActiveTexture(GL_TEXTURE0 + renderer.textureId)
-        glBindTexture(GL_TEXTURE_2D, renderer.textureId)
+        glActiveTexture(GL_TEXTURE0 + renderer.textureSrc)
+        glBindTexture(GL_TEXTURE_2D, renderer.textureSrc)
 
-        glUniform1i(glGetUniformLocation(programId, "u_temperature"), renderer.textureId)
+        glUniform1i(glGetUniformLocation(programId, "u_temperature"), renderer.textureSrc)
 
         glEnableVertexAttribArray(positionAttrib)
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
@@ -119,10 +119,10 @@ class Domain : Quad() {
             renderer.projectionM, 0
         )
 
-        glActiveTexture(GL_TEXTURE0 + renderer.textureId)
-        glBindTexture(GL_TEXTURE_2D, renderer.textureId)
+        glActiveTexture(GL_TEXTURE0 + renderer.textureSrc)
+        glBindTexture(GL_TEXTURE_2D, renderer.textureSrc)
 
-        glUniform1i(glGetUniformLocation(programId, "u_temperature"), renderer.textureId)
+        glUniform1i(glGetUniformLocation(programId, "u_temperature"), renderer.textureSrc)
 
         glEnableVertexAttribArray(positionAttrib)
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)

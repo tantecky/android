@@ -27,8 +27,11 @@ interface IRenderer {
     val heightTexel: Float
 
     val projectionM: FloatArray
-    val textureId: Int
-    val frameBufferId: Int
+
+    val textureSrc: Int
+    val fboSrc: Int
+    val textureDst: Int
+    val fboDst: Int
 
     val maxTimestep: Float
 
@@ -38,7 +41,7 @@ interface IRenderer {
 class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer {
     companion object {
         // keep Courant number below 0.5
-        const val GRID_SIZE = 64
+        const val GRID_SIZE = 128
         const val CONDUCTIVITY = 0.05f
         const val COURANT_NUMBER = 0.45f
 
@@ -62,8 +65,10 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     private var _height: Int = -1
 
     private var _projectionM: FloatArray = FloatArray(16)
-    private var _textureId: Int = -1
-    private var _frameBufferId: Int = -1
+    private var _textureSrc: Int = -1
+    private var _textureDst: Int = -1
+    private var _fboSrc: Int = -1
+    private var _fboDst: Int = -1
 
     override val time: Float get() = (SystemClock.uptimeMillis() - startMillis) / 1000.0f
     override val maxTimestep: Float
@@ -76,8 +81,10 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     override val heightTexel: Float get() = 1.0f / GRID_SIZE
 
     override val projectionM: FloatArray get() = _projectionM
-    override val textureId: Int get() = _textureId
-    override val frameBufferId: Int get() = _frameBufferId
+    override val textureSrc: Int get() = _textureSrc
+    override val fboSrc: Int get() = _fboSrc
+    override val textureDst: Int get() = _textureDst
+    override val fboDst: Int get() = _fboDst
 
 
     private fun printGlExtensions() {
@@ -173,6 +180,11 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
         return frameBufferId
     }
 
+    private fun swap() {
+        _textureSrc = _textureDst.also { _textureDst = _textureSrc }
+        _fboSrc = _fboDst.also { _fboDst = _fboSrc }
+    }
+
     override fun checkGlError() {
         val erno = glGetError()
         if (erno != GL_NO_ERROR) {
@@ -204,6 +216,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
 
     override fun onDrawFrame(unused: GL10) {
         domain.solveTemperature(this)
+        swap()
         domain.draw(Shader.SCREEN, this)
 
         // Log.d(this::class.qualifiedName, "onDrawFrame: time:$time")
@@ -214,12 +227,15 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
         this._width = width
         this._height = height
 
-        _textureId = createTexture()
-        _frameBufferId = createFrameBuffer(_textureId)
+        _textureSrc = createTexture()
+        _fboSrc = createFrameBuffer(_textureSrc)
+        _textureDst = createTexture()
+        _fboDst = createFrameBuffer(_textureDst)
     }
 
     fun onTouch(s: Float, t: Float) {
         domain.touch(s, t, this)
+        swap()
 
         //Log.d(this::class.qualifiedName, "onTouch: s:$s t:$t")
     }
