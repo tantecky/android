@@ -23,17 +23,17 @@ class Domain : Quad() {
             vertexBuffer
         )
 
-        val mvpUniform = glGetUniformLocation(programId, "u_mvp")
-        glUniformMatrix4fv(mvpUniform, 1, false, renderer.projectionM, 0)
+        glUniformMatrix4fv(
+            glGetUniformLocation(programId, "u_mvp"), 1, false,
+            renderer.projectionM, 0
+        )
 
         glActiveTexture(GL_TEXTURE0 + renderer.textureId)
         glBindTexture(GL_TEXTURE_2D, renderer.textureId)
 
-        val touchUniform = glGetUniformLocation(programId, "u_touch")
-        glUniform2f(touchUniform, s, t)
+        glUniform2f(glGetUniformLocation(programId, "u_touch"), s, t)
 
-        val textureUniform = glGetUniformLocation(programId, "u_temperature")
-        glUniform1i(textureUniform, renderer.textureId)
+        glUniform1i(glGetUniformLocation(programId, "u_temperature"), renderer.textureId)
 
         glEnableVertexAttribArray(positionAttrib)
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
@@ -59,20 +59,24 @@ class Domain : Quad() {
             vertexBuffer
         )
 
-        val widthTexelUniform = glGetUniformLocation(programId, "u_widthTexel")
-        glUniform1f(widthTexelUniform, renderer.widthTexel)
+        glUniform1f(glGetUniformLocation(programId, "u_widthTexel"), renderer.widthTexel)
+        glUniform1f(glGetUniformLocation(programId, "u_heightTexel"), renderer.heightTexel)
 
-        val heightTexelUniform = glGetUniformLocation(programId, "u_heightTexel")
-        glUniform1f(heightTexelUniform, renderer.heightTexel)
+        glUniform1f(glGetUniformLocation(programId, "u_timestamp"), MyRenderer.TIMESTAMP)
+        glUniform1f(
+            glGetUniformLocation(programId, "u_conductivity"),
+            MyRenderer.CONDUCTIVITY
+        )
 
-        val mvpUniform = glGetUniformLocation(programId, "u_mvp")
-        glUniformMatrix4fv(mvpUniform, 1, false, renderer.projectionM, 0)
+        glUniformMatrix4fv(
+            glGetUniformLocation(programId, "u_mvp"), 1, false,
+            renderer.projectionM, 0
+        )
 
         glActiveTexture(GL_TEXTURE0 + renderer.textureId)
         glBindTexture(GL_TEXTURE_2D, renderer.textureId)
 
-        val textureUniform = glGetUniformLocation(programId, "u_temperature")
-        glUniform1i(textureUniform, renderer.textureId)
+        glUniform1i(glGetUniformLocation(programId, "u_temperature"), renderer.textureId)
 
         glEnableVertexAttribArray(positionAttrib)
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
@@ -99,26 +103,26 @@ class Domain : Quad() {
             vertexBuffer
         )
 
-        val timeUniform = glGetUniformLocation(programId, "u_time")
-        glUniform1f(timeUniform, renderer.time)
+        glUniform1f(glGetUniformLocation(programId, "u_time"), renderer.time)
 
-        val resolutionUniform = glGetUniformLocation(programId, "u_resolution")
-        glUniform2f(resolutionUniform, renderer.width.toFloat(), renderer.height.toFloat())
+        glUniform2f(
+            glGetUniformLocation(programId, "u_resolution"), renderer.width.toFloat(),
+            renderer.height.toFloat()
+        )
 
-        val widthTexelUniform = glGetUniformLocation(programId, "u_widthTexel")
-        glUniform1f(widthTexelUniform, renderer.widthTexel)
+        glUniform1f(glGetUniformLocation(programId, "u_widthTexel"), renderer.widthTexel)
 
-        val heightTexelUniform = glGetUniformLocation(programId, "u_heightTexel")
-        glUniform1f(heightTexelUniform, renderer.heightTexel)
+        glUniform1f(glGetUniformLocation(programId, "u_heightTexel"), renderer.heightTexel)
 
-        val mvpUniform = glGetUniformLocation(programId, "u_mvp")
-        glUniformMatrix4fv(mvpUniform, 1, false, renderer.projectionM, 0)
+        glUniformMatrix4fv(
+            glGetUniformLocation(programId, "u_mvp"), 1, false,
+            renderer.projectionM, 0
+        )
 
         glActiveTexture(GL_TEXTURE0 + renderer.textureId)
         glBindTexture(GL_TEXTURE_2D, renderer.textureId)
 
-        val textureUniform = glGetUniformLocation(programId, "u_temperature")
-        glUniform1i(textureUniform, renderer.textureId)
+        glUniform1i(glGetUniformLocation(programId, "u_temperature"), renderer.textureId)
 
         glEnableVertexAttribArray(positionAttrib)
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)

@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 GRID_SIZE = 8
 CELL_WIDTH = 1.0 / GRID_SIZE
 CELL_HEIGHT = 1.0 / GRID_SIZE
-DT = 0.01
+DT = 0.1
 T_BC = 0.0
 DIFFUSIVITY = 0.01
 
@@ -36,7 +36,7 @@ def main():
     grid = np.zeros((GRID_SIZE, GRID_SIZE))
     grid[GRID_SIZE // 2, GRID_SIZE // 2] = 1
 
-    cfl = DIFFUSIVITY * DT / CELL_WIDTH / CELL_HEIGHT
+    cfl = DIFFUSIVITY * DT * (1.0 / CELL_WIDTH ** 2 + 1.0 / CELL_HEIGHT ** 2)
     print(f"CFL: {cfl}")
 
     plt.figure()

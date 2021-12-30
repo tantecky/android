@@ -37,6 +37,8 @@ interface IRenderer {
 class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer {
     companion object {
         const val GRID_SIZE = 64
+        const val CONDUCTIVITY = 0.05f
+        const val TIMESTAMP = 0.0005f
 
         /*
         GL_EXT_color_buffer_half_float
@@ -67,6 +69,8 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     override val projectionM: FloatArray get() = _projectionM
     override val textureId: Int get() = _textureId
     override val frameBufferId: Int get() = _frameBufferId
+
+    private val courantNumber: Float get() = CONDUCTIVITY * TIMESTAMP * (1.0f / (widthTexel * widthTexel) + 1.0f / (heightTexel * heightTexel))
 
     private fun printGlExtensions() {
         val extensions = glGetString(GL_EXTENSIONS)
@@ -165,6 +169,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
 
     override fun onSurfaceCreated(unused: GL10, config: EGLConfig) {
         Log.d(this::class.qualifiedName, "onSurfaceCreated")
+        Log.d(this::class.qualifiedName, "CFL: $courantNumber")
 
         Matrix.orthoM(
             _projectionM, 0,

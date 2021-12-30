@@ -2,12 +2,11 @@
 precision mediump float;
 #endif
 
-#define DT 0.0005
-#define T_BC 0.0
-#define NU 0.05
 
 varying vec2 v_texCoord;
 
+uniform float u_timestamp;
+uniform float u_conductivity;
 uniform float u_widthTexel;
 uniform float u_heightTexel;
 uniform sampler2D u_temperature;
@@ -26,8 +25,8 @@ void main(){
     float temperatureBot = texture2D(u_temperature, bot).x;
     float temperatureLeft = texture2D(u_temperature, left).x;
     float temperatureRight = texture2D(u_temperature, right).x;
-    float dx = NU * DT / (u_widthTexel * u_widthTexel);
-    float dy = NU * DT / (u_heightTexel * u_heightTexel);
+    float dx = u_conductivity * u_timestamp / (u_widthTexel * u_widthTexel);
+    float dy = u_conductivity * u_timestamp / (u_heightTexel * u_heightTexel);
 
     float temperature = texture2D(u_temperature, center).x;
     float temperatureNew = temperature + dx * (temperatureRight - 2.0 * temperature + temperatureLeft) + dy * (temperatureTop - 2.0 * temperature + temperatureBot);
