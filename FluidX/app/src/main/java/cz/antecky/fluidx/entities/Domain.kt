@@ -51,7 +51,7 @@ class Domain : Quad() {
 
     }
 
-    fun solveTemperature(renderer: IRenderer) {
+    fun solveTemperature(isLastIter: Boolean, renderer: IRenderer) {
         glBindFramebuffer(GL_FRAMEBUFFER, renderer.fboDst)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
 
@@ -71,6 +71,10 @@ class Domain : Quad() {
             glGetUniformLocation(programId, "u_dy"),
             factor / (renderer.heightTexel * renderer.heightTexel)
         )
+
+        val sink = if (isLastIter) 0.001f else 0.0f
+        glUniform1f(glGetUniformLocation(programId, "u_sink"), sink)
+
 
         glActiveTexture(GL_TEXTURE0 + renderer.textureSrc)
         glBindTexture(GL_TEXTURE_2D, renderer.textureSrc)

@@ -44,6 +44,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
         const val GRID_SIZE = 128
         const val CONDUCTIVITY = 0.05f
         const val COURANT_NUMBER = 0.45f
+        const val JACOBI_ITERS = 10
 
         /*
         GL_EXT_color_buffer_half_float
@@ -215,8 +216,11 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     }
 
     override fun onDrawFrame(unused: GL10) {
-        domain.solveTemperature(this)
-        swap()
+        for (i in 1..JACOBI_ITERS) {
+            domain.solveTemperature(i == JACOBI_ITERS, this)
+            swap()
+        }
+
         domain.draw(Shader.SCREEN, this)
 
         // Log.d(this::class.qualifiedName, "onDrawFrame: time:$time")
