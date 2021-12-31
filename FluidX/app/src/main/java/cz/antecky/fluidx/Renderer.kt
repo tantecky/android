@@ -33,18 +33,17 @@ interface IRenderer {
     val textureDst: Int
     val fboDst: Int
 
-    val maxTimestep: Float
-
     fun checkGlError()
 }
 
 class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer {
     companion object {
-        // keep Courant number below 0.5
         const val GRID_SIZE = 128
-        const val CONDUCTIVITY = 0.05f
-        const val COURANT_NUMBER = 0.45f
         const val JACOBI_ITERS = 10
+
+        // keep Courant number below 0.5 for an explicit method
+        const val TIMESTEP = 0.00006f
+        const val CONDUCTIVITY = 0.1f
 
         /*
         GL_EXT_color_buffer_half_float
@@ -72,8 +71,6 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     private var _fboDst: Int = -1
 
     override val time: Float get() = (SystemClock.uptimeMillis() - startMillis) / 1000.0f
-    override val maxTimestep: Float
-        get() = COURANT_NUMBER / CONDUCTIVITY / (1.0f / (widthTexel * widthTexel) + 1.0f / (heightTexel * heightTexel))
 
     override val width: Int get() = _width
     override val widthTexel: Float get() = 1.0f / GRID_SIZE
@@ -87,6 +84,8 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     override val textureDst: Int get() = _textureDst
     override val fboDst: Int get() = _fboDst
 
+    private val courantNumber: Float
+        get() = TIMESTEP * CONDUCTIVITY * (1.0f / (widthTexel * widthTexel) + 1.0f / (heightTexel * heightTexel))
 
     private fun printGlExtensions() {
         val extensions = glGetString(GL_EXTENSIONS)
@@ -197,7 +196,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     override fun onSurfaceCreated(unused: GL10, config: EGLConfig) {
         Log.d(this::class.qualifiedName, "onSurfaceCreated")
         printGlExtensions()
-        Log.d(this::class.qualifiedName, "timestep: $maxTimestep")
+        Log.d(this::class.qualifiedName, "Courant: $courantNumber")
 
         Matrix.orthoM(
             _projectionM, 0,
