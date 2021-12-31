@@ -46,7 +46,7 @@ class Domain : Quad() {
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 
-         glDisableVertexAttribArray(positionAttrib)
+        glDisableVertexAttribArray(positionAttrib)
         renderer.checkGlError()
 
     }
@@ -59,14 +59,17 @@ class Domain : Quad() {
         prepareVertexShader(renderer)
 
         glUniform1f(glGetUniformLocation(programId, "u_widthTexel"), renderer.widthTexel)
-        glUniform1f(glGetUniformLocation(programId, "u_dx2"), 1.0f / (renderer.widthTexel * renderer.widthTexel))
         glUniform1f(glGetUniformLocation(programId, "u_heightTexel"), renderer.heightTexel)
-        glUniform1f(glGetUniformLocation(programId, "u_dy2"), 1.0f / (renderer.heightTexel * renderer.heightTexel))
 
-        glUniform1f(glGetUniformLocation(programId, "u_timestamp"), renderer.maxTimestep)
+        val factor = renderer.maxTimestep * MyRenderer.CONDUCTIVITY
+
         glUniform1f(
-            glGetUniformLocation(programId, "u_conductivity"),
-            MyRenderer.CONDUCTIVITY
+            glGetUniformLocation(programId, "u_dx"),
+            factor / (renderer.widthTexel * renderer.widthTexel)
+        )
+        glUniform1f(
+            glGetUniformLocation(programId, "u_dy"),
+            factor / (renderer.heightTexel * renderer.heightTexel)
         )
 
         glActiveTexture(GL_TEXTURE0 + renderer.textureSrc)

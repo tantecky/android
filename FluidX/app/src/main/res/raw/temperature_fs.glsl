@@ -4,12 +4,10 @@ precision mediump float;
 
 varying vec2 v_texCoord;
 
-uniform float u_timestamp;
-uniform float u_conductivity;
 uniform float u_widthTexel;
 uniform float u_heightTexel;
-uniform float u_dx2;
-uniform float u_dy2;
+uniform float u_dx;
+uniform float u_dy;
 uniform sampler2D u_temperature;
 
 void main(){
@@ -22,12 +20,9 @@ void main(){
     float xB = texture2D(u_temperature, bot).x;
     float xL = texture2D(u_temperature, left).x;
     float xR = texture2D(u_temperature, right).x;
-    
-    float dx = u_conductivity * u_timestamp * u_dx2;
-    float dy = u_conductivity * u_timestamp * u_dy2;
 
     float xC = texture2D(u_temperature, v_texCoord).x;
-    float xNew = xC + dx * (xR - 2.0 * xC + xL) + dy * (xT - 2.0 * xC + xB);
+    float xNew = xC + u_dx * (xR - 2.0 * xC + xL) + u_dy * (xT - 2.0 * xC + xB);
     xNew -= 0.001;
     xNew = max(xNew, 0.0);
 
