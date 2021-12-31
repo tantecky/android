@@ -22,23 +22,31 @@ class MyGLSurfaceView(context: Context) : GLSurfaceView(context) {
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event?.let {
-            val x = it.x
-            val y = it.y
-
             when (it.action) {
                 MotionEvent.ACTION_DOWN -> {
                     // Log.d(this::class.qualifiedName, "onTouchEvent: ACTION_DOWN x:$x y:$y")
                     return true
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    val s = x / this.width
-                    val t = (this.height - y) / this.height
-                    /* Log.d(
-                         this::class.qualifiedName,
-                         "onTouchEvent: ACTION_MOVE x:$x y:$y s:$s t:$t"
-                     )*/
-                    this.queueEvent { renderer.onTouch(s, t) }
+                    val pointerCount = event.pointerCount
 
+                    for (i in 0 until pointerCount) {
+                        val x = event.getX(i)
+                        val y = event.getY(i)
+
+                        val s = x / this.width
+                        val t = (this.height - y) / this.height
+
+//                        Log.d(
+//                            this::class.qualifiedName,
+//                            "onTouchEvent: ACTION_MOVE x:$x y:$y s:$s t:$t pointerCount:$pointerCount"
+//                        )
+
+                        this.queueEvent { renderer.onTouch(s, t) }
+                    }
+                }
+                MotionEvent.ACTION_POINTER_DOWN -> {
+                    Log.d(this::class.qualifiedName, "onTouchEvent: ACTION_POINTER_DOWN x:$x y:$y")
                 }
                 MotionEvent.ACTION_UP -> {
                     //Log.d(this::class.qualifiedName, "onTouchEvent: ACTION_UP x:$x y:$y")
