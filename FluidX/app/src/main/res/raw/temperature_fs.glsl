@@ -20,18 +20,17 @@ void main(){
     vec2 left = vec2(xCenter - u_widthTexel, yCenter);
     vec2 right = vec2(xCenter + u_widthTexel, yCenter);
 
-    float temperatureTop = texture2D(u_temperature, top).x;
-    float temperatureBot = texture2D(u_temperature, bot).x;
-    float temperatureLeft = texture2D(u_temperature, left).x;
-    float temperatureRight = texture2D(u_temperature, right).x;
+    float xT = texture2D(u_temperature, top).x;
+    float xB = texture2D(u_temperature, bot).x;
+    float xL = texture2D(u_temperature, left).x;
+    float xR = texture2D(u_temperature, right).x;
     float dx = u_conductivity * u_timestamp / (u_widthTexel * u_widthTexel);
     float dy = u_conductivity * u_timestamp / (u_heightTexel * u_heightTexel);
 
-    float temperature = texture2D(u_temperature, center).x;
-    float temperatureNew = temperature + dx * (temperatureRight - 2.0 * temperature + temperatureLeft) + dy * (temperatureTop - 2.0 * temperature + temperatureBot);
-    temperatureNew -= 0.001;
+    float xC = texture2D(u_temperature, center).x;
+    float xNew = xC + dx * (xR - 2.0 * xC + xL) + dy * (xT - 2.0 * xC + xB);
+    xNew -= 0.001;
+    xNew = max(xNew, 0.0);
 
-    temperatureNew = max(temperatureNew, 0.0);
-
-    gl_FragColor = vec4(temperatureNew, 0.0, 0.0, 1.0);
+    gl_FragColor = vec4(xNew, 0.0, 0.0, 1.0);
 }
