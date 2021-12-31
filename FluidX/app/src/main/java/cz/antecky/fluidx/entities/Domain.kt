@@ -59,7 +59,9 @@ class Domain : Quad() {
         prepareVertexShader(renderer)
 
         glUniform1f(glGetUniformLocation(programId, "u_widthTexel"), renderer.widthTexel)
+        glUniform1f(glGetUniformLocation(programId, "u_dx2"), 1.0f / (renderer.widthTexel * renderer.widthTexel))
         glUniform1f(glGetUniformLocation(programId, "u_heightTexel"), renderer.heightTexel)
+        glUniform1f(glGetUniformLocation(programId, "u_dy2"), 1.0f / (renderer.heightTexel * renderer.heightTexel))
 
         glUniform1f(glGetUniformLocation(programId, "u_timestamp"), renderer.maxTimestep)
         glUniform1f(
