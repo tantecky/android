@@ -7,12 +7,11 @@ import cz.antecky.fluidx.shaders.Shader
 import cz.antecky.fluidx.shaders.ShaderManager
 
 class Domain : Quad() {
-    fun touch(s: Float, t: Float, renderer: IRenderer) {
-        glBindFramebuffer(GL_FRAMEBUFFER, renderer.fboDst)
-        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
+    private var programId: Int = -1
+    private var positionAttrib: Int = -1
 
-        val programId = ShaderManager.use(Shader.TOUCH)
-        val positionAttrib = glGetAttribLocation(programId, "a_position")
+    private fun prepareVertexShader(renderer: IRenderer) {
+        positionAttrib = glGetAttribLocation(programId, "a_position")
 
         glVertexAttribPointer(
             positionAttrib,
@@ -28,6 +27,16 @@ class Domain : Quad() {
             renderer.projectionM, 0
         )
 
+        glEnableVertexAttribArray(positionAttrib)
+    }
+
+    fun touch(s: Float, t: Float, renderer: IRenderer) {
+        glBindFramebuffer(GL_FRAMEBUFFER, renderer.fboDst)
+        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
+
+        programId = ShaderManager.use(Shader.TOUCH)
+        prepareVertexShader(renderer)
+
         glActiveTexture(GL_TEXTURE0 + renderer.textureSrc)
         glBindTexture(GL_TEXTURE_2D, renderer.textureSrc)
 
@@ -35,10 +44,9 @@ class Domain : Quad() {
 
         glUniform1i(glGetUniformLocation(programId, "u_temperature"), renderer.textureSrc)
 
-        glEnableVertexAttribArray(positionAttrib)
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 
-        glDisableVertexAttribArray(positionAttrib)
+         glDisableVertexAttribArray(positionAttrib)
         renderer.checkGlError()
 
     }
@@ -47,17 +55,8 @@ class Domain : Quad() {
         glBindFramebuffer(GL_FRAMEBUFFER, renderer.fboDst)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
 
-        val programId = ShaderManager.use(Shader.TEMPERATURE)
-        val positionAttrib = glGetAttribLocation(programId, "a_position")
-
-        glVertexAttribPointer(
-            positionAttrib,
-            COORDS_PER_VERTEX,
-            GL_FLOAT,
-            false,
-            0,
-            vertexBuffer
-        )
+        programId = ShaderManager.use(Shader.TEMPERATURE)
+        prepareVertexShader(renderer)
 
         glUniform1f(glGetUniformLocation(programId, "u_widthTexel"), renderer.widthTexel)
         glUniform1f(glGetUniformLocation(programId, "u_heightTexel"), renderer.heightTexel)
@@ -68,17 +67,11 @@ class Domain : Quad() {
             MyRenderer.CONDUCTIVITY
         )
 
-        glUniformMatrix4fv(
-            glGetUniformLocation(programId, "u_mvp"), 1, false,
-            renderer.projectionM, 0
-        )
-
         glActiveTexture(GL_TEXTURE0 + renderer.textureSrc)
         glBindTexture(GL_TEXTURE_2D, renderer.textureSrc)
 
         glUniform1i(glGetUniformLocation(programId, "u_temperature"), renderer.textureSrc)
 
-        glEnableVertexAttribArray(positionAttrib)
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 
         glDisableVertexAttribArray(positionAttrib)
@@ -91,17 +84,8 @@ class Domain : Quad() {
         glViewport(0, 0, renderer.width, renderer.height)
         glClear(GL_COLOR_BUFFER_BIT)
 
-        val programId = ShaderManager.use(shader)
-        val positionAttrib = glGetAttribLocation(programId, "a_position")
-
-        glVertexAttribPointer(
-            positionAttrib,
-            COORDS_PER_VERTEX,
-            GL_FLOAT,
-            false,
-            0,
-            vertexBuffer
-        )
+        programId = ShaderManager.use(shader)
+        prepareVertexShader(renderer)
 
         glUniform1f(glGetUniformLocation(programId, "u_time"), renderer.time)
 
@@ -114,17 +98,11 @@ class Domain : Quad() {
 
         glUniform1f(glGetUniformLocation(programId, "u_heightTexel"), renderer.heightTexel)
 
-        glUniformMatrix4fv(
-            glGetUniformLocation(programId, "u_mvp"), 1, false,
-            renderer.projectionM, 0
-        )
-
         glActiveTexture(GL_TEXTURE0 + renderer.textureSrc)
         glBindTexture(GL_TEXTURE_2D, renderer.textureSrc)
 
         glUniform1i(glGetUniformLocation(programId, "u_temperature"), renderer.textureSrc)
 
-        glEnableVertexAttribArray(positionAttrib)
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 
         glDisableVertexAttribArray(positionAttrib)
