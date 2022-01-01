@@ -32,18 +32,20 @@ class Domain : Quad() {
     }
 
     fun touch(s: Float, t: Float, renderer: IRenderer) {
-        glBindFramebuffer(GL_FRAMEBUFFER, renderer.fboDst)
+        glBindFramebuffer(GL_FRAMEBUFFER, renderer.temperature.framebuffer)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
 
         programId = ShaderManager.use(Shader.TOUCH)
         prepareVertexShader(renderer)
 
-        glActiveTexture(GL_TEXTURE0 + renderer.textureSrc)
-        glBindTexture(GL_TEXTURE_2D, renderer.textureSrc)
+        val texture = renderer.temperature.texture
+
+        glActiveTexture(GL_TEXTURE0 + texture)
+        glBindTexture(GL_TEXTURE_2D, texture)
 
         glUniform2f(glGetUniformLocation(programId, "u_touch"), s, t)
 
-        glUniform1i(glGetUniformLocation(programId, "u_temperature"), renderer.textureSrc)
+        glUniform1i(glGetUniformLocation(programId, "u_temperature"), texture)
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 
@@ -53,7 +55,7 @@ class Domain : Quad() {
     }
 
     fun solveTemperature(isLastIter: Boolean, renderer: IRenderer) {
-        glBindFramebuffer(GL_FRAMEBUFFER, renderer.fboDst)
+        glBindFramebuffer(GL_FRAMEBUFFER, renderer.temperature.framebuffer)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
 
         programId = ShaderManager.use(Shader.TEMPERATURE)
@@ -76,11 +78,12 @@ class Domain : Quad() {
         val sink = if (isLastIter) 0.001f else 0.0f
         glUniform1f(glGetUniformLocation(programId, "u_sink"), sink)
 
+        val texture = renderer.temperature.texture
 
-        glActiveTexture(GL_TEXTURE0 + renderer.textureSrc)
-        glBindTexture(GL_TEXTURE_2D, renderer.textureSrc)
+        glActiveTexture(GL_TEXTURE0 + texture)
+        glBindTexture(GL_TEXTURE_2D, texture)
 
-        glUniform1i(glGetUniformLocation(programId, "u_temperature"), renderer.textureSrc)
+        glUniform1i(glGetUniformLocation(programId, "u_temperature"), texture)
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 
@@ -108,10 +111,12 @@ class Domain : Quad() {
 
         glUniform1f(glGetUniformLocation(programId, "u_heightTexel"), renderer.heightTexel)
 
-        glActiveTexture(GL_TEXTURE0 + renderer.textureSrc)
-        glBindTexture(GL_TEXTURE_2D, renderer.textureSrc)
+        val texture = renderer.temperature.texture
 
-        glUniform1i(glGetUniformLocation(programId, "u_temperature"), renderer.textureSrc)
+        glActiveTexture(GL_TEXTURE0 + texture)
+        glBindTexture(GL_TEXTURE_2D, texture)
+
+        glUniform1i(glGetUniformLocation(programId, "u_temperature"), texture)
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 
