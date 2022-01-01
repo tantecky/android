@@ -68,11 +68,11 @@ class Domain : Quad() {
         val factor = MyRenderer.TIMESTEP * MyRenderer.CONDUCTIVITY
 
         glUniform1f(
-            glGetUniformLocation(programId, "u_dx"),
+            glGetUniformLocation(programId, "u_fx"),
             factor / (renderer.widthTexel * renderer.widthTexel)
         )
         glUniform1f(
-            glGetUniformLocation(programId, "u_dy"),
+            glGetUniformLocation(programId, "u_fy"),
             factor / (renderer.heightTexel * renderer.heightTexel)
         )
 

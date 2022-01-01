@@ -8,10 +8,8 @@ varying vec2 v_bot;
 varying vec2 v_left;
 varying vec2 v_right;
 
-uniform float u_widthTexel;
-uniform float u_heightTexel;
-uniform float u_dx;
-uniform float u_dy;
+uniform float u_fx;
+uniform float u_fy;
 uniform float u_sink;
 uniform sampler2D u_temperature;
 
@@ -22,11 +20,11 @@ void main(){
     float xL = texture2D(u_temperature, v_left).x;
     float xR = texture2D(u_temperature, v_right).x;
     // explicit formulation
-    // float xNew = xC + u_dx * (xR - 2.0 * xC + xL) + u_dy * (xT - 2.0 * xC + xB);
+    // float xNew = xC + u_fx * (xR - 2.0 * xC + xL) + u_fy * (xT - 2.0 * xC + xB);
     // implicit jacobi method
-    float xNew = (xC + u_dx * (xR + xL) + u_dy * (xT + xB)) / (1.0 + 2.0 * u_dx + 2.0 * u_dy);
+    float xNew = (xC + u_fx * (xR + xL) + u_fy * (xT + xB)) / (1.0 + 2.0 * u_fx + 2.0 * u_fy);
     xNew -= u_sink;
     xNew = max(xNew, 0.0);
 
-    gl_FragColor = vec4(xNew, 0.0, 0.0, 1.0);
+    gl_FragColor = vec4(xNew, 0.0, 0.0, 0.0);
 }

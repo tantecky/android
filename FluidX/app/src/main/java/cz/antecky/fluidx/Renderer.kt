@@ -31,6 +31,8 @@ interface IRenderer {
     val projectionM: FloatArray
 
     val temperature: Field
+    val velocity: Field
+    val pressure: Field
 }
 
 class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer {
@@ -75,6 +77,14 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
 
     override val temperature: Field by lazy {
        Field(halfFloatFormat)
+    }
+
+    override val velocity: Field by lazy {
+        Field(halfFloatFormat)
+    }
+
+    override val pressure: Field by lazy {
+        Field(halfFloatFormat)
     }
 
     override fun onSurfaceCreated(unused: GL10, config: EGLConfig) {
