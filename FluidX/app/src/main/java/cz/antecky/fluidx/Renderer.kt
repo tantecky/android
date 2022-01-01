@@ -9,6 +9,10 @@ import android.opengl.GLSurfaceView
 import android.opengl.Matrix
 import android.os.SystemClock
 import android.util.Log
+import cz.antecky.fluidx.Utils.Companion.checkFramebuffer
+import cz.antecky.fluidx.Utils.Companion.checkGlError
+import cz.antecky.fluidx.Utils.Companion.halfFloatFormat
+import cz.antecky.fluidx.Utils.Companion.printGlExtensions
 import cz.antecky.fluidx.entities.Domain
 import cz.antecky.fluidx.entities.Entity
 import cz.antecky.fluidx.shaders.Shader
@@ -32,8 +36,6 @@ interface IRenderer {
     val fboSrc: Int
     val textureDst: Int
     val fboDst: Int
-
-    fun checkGlError()
 }
 
 class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer {
@@ -44,22 +46,15 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
         // keep Courant number below 0.5 for an explicit method
         const val TIMESTEP = 0.00006f
         const val CONDUCTIVITY = 0.1f
-
-        /*
-        GL_EXT_color_buffer_half_float
-        GL_OES_texture_half_float
-        GL_OES_texture_half_float_linear
-         */
-        const val GL_HALF_FLOAT_OES = 0x8D61
-
-        /*
-        GL_NV_half_float
-         */
-        const val GL_HALF_FLOAT_NV = 0x140B
     }
 
-    private lateinit var entities: Array<Entity>
+    private val entities: Array<Entity> by lazy {
+        arrayOf(
+            Domain(),
+        )
+    }
     private val domain: Domain get() = entities[0] as Domain
+
     private var startMillis: Long = 0
     private var _width: Int = -1
     private var _height: Int = -1
@@ -69,6 +64,10 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     private var _textureDst: Int = -1
     private var _fboSrc: Int = -1
     private var _fboDst: Int = -1
+
+    private val halfFloatFormat: Int by lazy {
+        halfFloatFormat()
+    }
 
     override val time: Float get() = (SystemClock.uptimeMillis() - startMillis) / 1000.0f
 
@@ -87,33 +86,6 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     private val courantNumber: Float
         get() = TIMESTEP * CONDUCTIVITY * (1.0f / (widthTexel * widthTexel) + 1.0f / (heightTexel * heightTexel))
 
-    private fun printGlExtensions() {
-        val extensions = glGetString(GL_EXTENSIONS)
-        Log.d(this::class.qualifiedName, "GL_EXTENSIONS: $extensions")
-    }
-
-    private fun halfFloatFormat(): Int {
-        val extensions = glGetString(GL_EXTENSIONS)
-
-        if (arrayOf(
-                "ANDROID_EMU",
-            ).all { extensions.contains(it) }
-        ) {
-            return GL_HALF_FLOAT_NV
-        }
-
-        if (arrayOf(
-                "GL_EXT_color_buffer_half_float",
-                "GL_OES_texture_half_float",
-                "GL_OES_texture_half_float_linear",
-            ).all { extensions.contains(it) }
-        ) {
-            return GL_HALF_FLOAT_OES
-        }
-
-        return GL_UNSIGNED_BYTE
-    }
-
     private fun createTexture(): Int {
         glActiveTexture(GL_TEXTURE0)
         val textures: IntBuffer = IntBuffer.allocate(1)
@@ -130,8 +102,6 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
-
-        val halfFloatFormat = halfFloatFormat()
 
         Log.d(this::class.qualifiedName, "halfFloatFormat: $halfFloatFormat")
 
@@ -167,12 +137,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
             GL_TEXTURE_2D, textureToAttach, 0
         )
 
-        val status = glCheckFramebufferStatus(GL_FRAMEBUFFER)
-
-        if (status != GL_FRAMEBUFFER_COMPLETE) {
-            Log.e(this::class.qualifiedName, "glCheckFramebufferStatus: != GL_FRAMEBUFFER_COMPLETE")
-            throw RuntimeException()
-        }
+        checkFramebuffer()
         checkGlError()
 
         glClear(GL_COLOR_BUFFER_BIT)
@@ -183,14 +148,6 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     private fun swap() {
         _textureSrc = _textureDst.also { _textureDst = _textureSrc }
         _fboSrc = _fboDst.also { _fboDst = _fboSrc }
-    }
-
-    override fun checkGlError() {
-        val erno = glGetError()
-        if (erno != GL_NO_ERROR) {
-            Log.e(this::class.qualifiedName, "checkError: glGetError:$erno")
-            throw RuntimeException()
-        }
     }
 
     override fun onSurfaceCreated(unused: GL10, config: EGLConfig) {
@@ -205,10 +162,6 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
 
         ShaderManager.compileAll(this.context)
         checkGlError()
-
-        this.entities = arrayOf(
-            Domain(),
-        )
 
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
         startMillis = SystemClock.uptimeMillis()
