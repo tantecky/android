@@ -28,6 +28,9 @@ class Domain : Quad() {
             renderer.projectionM, 0
         )
 
+        glUniform1f(glGetUniformLocation(programId, "u_widthTexel"), renderer.widthTexel)
+        glUniform1f(glGetUniformLocation(programId, "u_heightTexel"), renderer.heightTexel)
+
         glEnableVertexAttribArray(positionAttrib)
     }
 
@@ -61,8 +64,6 @@ class Domain : Quad() {
         programId = ShaderManager.use(Shader.TEMPERATURE)
         prepareVertexShader(renderer)
 
-        glUniform1f(glGetUniformLocation(programId, "u_widthTexel"), renderer.widthTexel)
-        glUniform1f(glGetUniformLocation(programId, "u_heightTexel"), renderer.heightTexel)
 
         val factor = MyRenderer.TIMESTEP * MyRenderer.CONDUCTIVITY
 
@@ -99,17 +100,6 @@ class Domain : Quad() {
 
         programId = ShaderManager.use(shader)
         prepareVertexShader(renderer)
-
-        glUniform1f(glGetUniformLocation(programId, "u_time"), renderer.time)
-
-        glUniform2f(
-            glGetUniformLocation(programId, "u_resolution"), renderer.width.toFloat(),
-            renderer.height.toFloat()
-        )
-
-        glUniform1f(glGetUniformLocation(programId, "u_widthTexel"), renderer.widthTexel)
-
-        glUniform1f(glGetUniformLocation(programId, "u_heightTexel"), renderer.heightTexel)
 
         val texture = renderer.temperature.texture
 

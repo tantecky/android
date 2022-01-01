@@ -2,14 +2,9 @@
 precision mediump float;
 #endif
 
-varying vec2 v_texCoord;
+varying vec2 v_center;
 
-uniform vec2 u_resolution;
-uniform float u_widthTexel;
-uniform float u_heightTexel;
-uniform float u_time;
 uniform sampler2D u_temperature;
-
 
 // author: https://github.com/kbinani/colormap-shaders
 
@@ -46,6 +41,6 @@ vec4 colormap(float x) {
 
 
 void main(){
-    float temperature = texture2D(u_temperature, v_texCoord).x;
+    float temperature = texture2D(u_temperature, v_center).x;
     gl_FragColor = colormap(temperature);
 }
