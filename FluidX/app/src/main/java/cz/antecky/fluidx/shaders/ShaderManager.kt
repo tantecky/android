@@ -11,6 +11,7 @@ enum class Shader {
     FLAT,
     COMPLEX,
     TEMPERATURE,
+    VELOCITY_NONFREE,
     SCREEN,
     TOUCH,
 }
@@ -20,6 +21,7 @@ object ShaderManager {
         Shader.FLAT to ShaderProgram(R.raw.flat_vs, R.raw.flat_fs),
         Shader.COMPLEX to ShaderProgram(R.raw.flat_vs, R.raw.complex_fs),
         Shader.TEMPERATURE to ShaderProgram(R.raw.domain_vs, R.raw.temperature_fs),
+        Shader.VELOCITY_NONFREE to ShaderProgram(R.raw.domain_vs, R.raw.velocity_nonfree_fs),
         Shader.SCREEN to ShaderProgram(R.raw.domain_vs, R.raw.screen_fs),
         Shader.TOUCH to ShaderProgram(R.raw.domain_vs, R.raw.touch_fs),
     )

@@ -93,6 +93,31 @@ class Domain : Quad() {
 
     }
 
+    fun solveVelocityNonFree(renderer: IRenderer) {
+        glBindFramebuffer(GL_FRAMEBUFFER, renderer.temperature.framebuffer)
+        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
+
+        programId = ShaderManager.use(Shader.TEMPERATURE)
+        prepareVertexShader(renderer)
+
+        glUniform1f(glGetUniformLocation(programId, "u_dx"), renderer.widthTexel)
+        glUniform1f(glGetUniformLocation(programId, "u_dy"), renderer.heightTexel)
+        glUniform1f(glGetUniformLocation(programId, "u_viscosity"), MyRenderer.VISCOSITY)
+
+        val texture = renderer.temperature.texture
+
+        glActiveTexture(GL_TEXTURE0 + texture)
+        glBindTexture(GL_TEXTURE_2D, texture)
+
+        glUniform1i(glGetUniformLocation(programId, "u_velocity"), texture)
+
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
+
+        glDisableVertexAttribArray(positionAttrib)
+        checkGlError()
+
+    }
+
     override fun draw(shader: Shader, renderer: IRenderer) {
         glBindFramebuffer(GL_FRAMEBUFFER, 0)
         glViewport(0, 0, renderer.width, renderer.height)

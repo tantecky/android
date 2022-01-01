@@ -43,6 +43,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
         // keep Courant number below 0.5 for an explicit method
         const val TIMESTEP = 0.00006f
         const val CONDUCTIVITY = 0.1f
+        const val VISCOSITY = 0.1f
     }
 
     private val entities: Array<Entity> by lazy {
@@ -106,6 +107,9 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     }
 
     override fun onDrawFrame(unused: GL10) {
+        domain.solveVelocityNonFree(this)
+        velocity.update()
+
         for (i in 1..JACOBI_ITERS) {
             domain.solveTemperature(i == JACOBI_ITERS, this)
             temperature.update()
