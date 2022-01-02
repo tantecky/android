@@ -34,6 +34,7 @@ object ShaderManager {
         Shader.SCREEN_TEMPERATURE to ShaderProgram(R.raw.domain_vs, R.raw.screen_temperature_fs),
         Shader.SCREEN_VELOCITY to ShaderProgram(R.raw.domain_vs, R.raw.screen_velocity_fs),
         Shader.TOUCH_TEMPERATURE to ShaderProgram(R.raw.domain_vs, R.raw.touch_temperature_fs),
+        Shader.TOUCH_FORCE to ShaderProgram(R.raw.domain_vs, R.raw.touch_force_fs),
     )
 
     fun compileAll(context: Context) {

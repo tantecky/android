@@ -85,7 +85,6 @@ class Domain : Quad() {
         val temperature = renderer.temperature.texture
         glActiveTexture(GL_TEXTURE0 + temperature)
         glBindTexture(GL_TEXTURE_2D, temperature)
-
         glUniform1i(glGetUniformLocation(programId, "u_temperature"), temperature)
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
@@ -117,8 +116,12 @@ class Domain : Quad() {
         val velocity = renderer.velocity.texture
         glActiveTexture(GL_TEXTURE0 + velocity)
         glBindTexture(GL_TEXTURE_2D, velocity)
-
         glUniform1i(glGetUniformLocation(programId, "u_velocity"), velocity)
+
+        val force = renderer.velocity.texture
+        glActiveTexture(GL_TEXTURE0 + force)
+        glBindTexture(GL_TEXTURE_2D, force)
+        glUniform1i(glGetUniformLocation(programId, "u_force"), force)
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 
@@ -231,7 +234,7 @@ class Domain : Quad() {
     }
 
     override fun draw(shader: Shader, renderer: IRenderer) {
-
+        throw NotImplementedError()
     }
 
     fun display(shader: Shader, field: Field, textureUniform: String, renderer: IRenderer) {
@@ -246,7 +249,6 @@ class Domain : Quad() {
 
         glActiveTexture(GL_TEXTURE0 + texture)
         glBindTexture(GL_TEXTURE_2D, texture)
-
         glUniform1i(glGetUniformLocation(programId, textureUniform), texture)
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)

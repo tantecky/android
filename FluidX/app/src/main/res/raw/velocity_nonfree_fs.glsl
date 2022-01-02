@@ -15,13 +15,14 @@ uniform float u_dy2;
 uniform float u_viscosity;
 
 uniform sampler2D u_velocity;
+uniform sampler2D u_force;
 
 float gradx(float left, float right) {
-    return 0.5 * (right - left) / u_dx ;
+    return 0.5 * (right - left) / u_dx;
 }
 
 float grady(float top, float bot) {
-    return 0.5 * (top - bot) / u_dy ;
+    return 0.5 * (top - bot) / u_dy;
 }
 
 float div(float left, float right, float top, float bot) {
@@ -49,8 +50,11 @@ void main(){
     float uyL = texture2D(u_velocity, v_left).g;
     float uyR = texture2D(u_velocity, v_right).g;
 
-    float wx = u_viscosity * lap(ux, uxL, uxR, uxT, uxB);
-    float wy = u_viscosity * lap(uy, uyL, uyR, uyT, uyB);
+    float fx = texture2D(u_force, v_center).r;
+    float fy = texture2D(u_force, v_center).g;
+
+    float wx = u_viscosity * lap(ux, uxL, uxR, uxT, uxB) + fx;
+    float wy = u_viscosity * lap(uy, uyL, uyR, uyT, uyB) + fy;
 
     wx += -(ux * gradx(uxL, uxR) + uy * grady(uxT, uxB));
     wy += -(ux * gradx(uyL, uyR) + uy * grady(uyT, uyB));

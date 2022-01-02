@@ -33,6 +33,7 @@ interface IRenderer {
     val temperature: Field
     val velocity: Field
     val pressure: Field
+    val force: Field
 }
 
 class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer {
@@ -85,6 +86,10 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     }
 
     override val pressure: Field by lazy {
+        Field(halfFloatFormat)
+    }
+
+    override val force: Field by lazy {
         Field(halfFloatFormat)
     }
 
