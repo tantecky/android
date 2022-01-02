@@ -23,7 +23,7 @@ void main(){
     float fx = texture2D(u_force, v_center).r;
     fx = clamp(fx + splash, 0.0, 1.1);
     float fy = texture2D(u_force, v_center).g;
-    fx = clamp(fy + splash, 0.0, 1.1);
+    fy = clamp(fy + splash, 0.0, 1.1);
 
     gl_FragColor = vec4(fx, fy, 0.0, 0.0);
 }

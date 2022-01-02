@@ -1,5 +1,5 @@
 #ifdef GL_ES
-precision mediump float;
+precision highp float;
 #endif
 
 varying vec2 v_center;
@@ -37,9 +37,11 @@ void main(){
     // u = velocity
     // w = divergence non-free velocity
 
+//    float wx = texture2D(u_velocity, v_center).b;
     float wxL = texture2D(u_velocity, v_left).b;
     float wxR = texture2D(u_velocity, v_right).b;
 
+//    float wy = texture2D(u_velocity, v_center).a;
     float wyT = texture2D(u_velocity, v_top).a;
     float wyB = texture2D(u_velocity, v_bot).a;
 
