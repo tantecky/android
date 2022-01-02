@@ -1,6 +1,7 @@
 package cz.antecky.fluidx.entities
 
 import android.opengl.GLES20.*
+import cz.antecky.fluidx.Field
 import cz.antecky.fluidx.IRenderer
 import cz.antecky.fluidx.MyRenderer
 import cz.antecky.fluidx.Utils.Companion.checkGlError
@@ -227,6 +228,10 @@ class Domain : Quad() {
     }
 
     override fun draw(shader: Shader, renderer: IRenderer) {
+
+    }
+
+    fun display(shader: Shader, field:Field, textureUniform:String, renderer: IRenderer) {
         glBindFramebuffer(GL_FRAMEBUFFER, 0)
         glViewport(0, 0, renderer.width, renderer.height)
         glClear(GL_COLOR_BUFFER_BIT)
@@ -234,16 +239,17 @@ class Domain : Quad() {
         programId = ShaderManager.use(shader)
         prepareVertexShader(renderer)
 
-        val texture = renderer.temperature.texture
+        val texture = field.texture
 
         glActiveTexture(GL_TEXTURE0 + texture)
         glBindTexture(GL_TEXTURE_2D, texture)
 
-        glUniform1i(glGetUniformLocation(programId, "u_temperature"), texture)
+        glUniform1i(glGetUniformLocation(programId, textureUniform), texture)
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 
         glDisableVertexAttribArray(positionAttrib)
         checkGlError()
+
     }
 }

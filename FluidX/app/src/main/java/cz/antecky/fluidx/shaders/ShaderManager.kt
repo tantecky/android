@@ -16,6 +16,7 @@ enum class Shader {
     PRESSURE,
     PRESSURE_GRAD,
     SCREEN_TEMPERATURE,
+    SCREEN_VELOCITY,
     TOUCH,
 }
 
@@ -30,6 +31,7 @@ object ShaderManager {
         Shader.PRESSURE to ShaderProgram(R.raw.domain_vs, R.raw.pressure_fs),
         Shader.PRESSURE_GRAD to ShaderProgram(R.raw.domain_vs, R.raw.pressure_grad_fs),
         Shader.SCREEN_TEMPERATURE to ShaderProgram(R.raw.domain_vs, R.raw.screen_temperature_fs),
+        Shader.SCREEN_VELOCITY to ShaderProgram(R.raw.domain_vs, R.raw.screen_velocity_fs),
         Shader.TOUCH to ShaderProgram(R.raw.domain_vs, R.raw.touch_fs),
     )
 

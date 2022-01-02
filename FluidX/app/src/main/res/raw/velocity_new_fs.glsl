@@ -3,10 +3,6 @@ precision mediump float;
 #endif
 
 varying vec2 v_center;
-varying vec2 v_top;
-varying vec2 v_bot;
-varying vec2 v_left;
-varying vec2 v_right;
 
 uniform sampler2D u_velocity;
 

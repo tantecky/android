@@ -131,7 +131,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
             temperature.update()
         }
 
-        domain.draw(Shader.SCREEN_TEMPERATURE, this)
+        domain.display(Shader.SCREEN_TEMPERATURE, temperature, "u_temperature",this)
 
         // Log.d(this::class.qualifiedName, "onDrawFrame: time:$time")
     }
