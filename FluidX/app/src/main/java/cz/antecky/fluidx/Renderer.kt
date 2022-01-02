@@ -122,11 +122,16 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
         velocity.update()
 
         for (i in 1..JACOBI_ITERS) {
+            domain.solveVelocityNew(this)
+            velocity.update()
+        }
+
+        for (i in 1..JACOBI_ITERS) {
             domain.solveTemperature(i == JACOBI_ITERS, this)
             temperature.update()
         }
 
-        domain.draw(Shader.SCREEN, this)
+        domain.draw(Shader.SCREEN_TEMPERATURE, this)
 
         // Log.d(this::class.qualifiedName, "onDrawFrame: time:$time")
     }

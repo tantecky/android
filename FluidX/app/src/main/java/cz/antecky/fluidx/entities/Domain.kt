@@ -158,6 +158,29 @@ class Domain : Quad() {
 
     }
 
+    fun solvePressureGrad(renderer: IRenderer) {
+        glBindFramebuffer(GL_FRAMEBUFFER, renderer.pressure.framebuffer)
+        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
+
+        programId = ShaderManager.use(Shader.PRESSURE)
+        prepareVertexShader(renderer)
+
+        glUniform1f(glGetUniformLocation(programId, "u_dx"), renderer.widthTexel)
+        glUniform1f(glGetUniformLocation(programId, "u_dy"), renderer.heightTexel)
+
+        val pressure = renderer.pressure.texture
+
+        glActiveTexture(GL_TEXTURE0 + pressure)
+        glBindTexture(GL_TEXTURE_2D, pressure)
+        glUniform1i(glGetUniformLocation(programId, "u_pressure"), pressure)
+
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
+
+        glDisableVertexAttribArray(positionAttrib)
+        checkGlError()
+
+    }
+
     fun solveVelocity(renderer: IRenderer) {
         glBindFramebuffer(GL_FRAMEBUFFER, renderer.velocity.framebuffer)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
@@ -182,21 +205,19 @@ class Domain : Quad() {
 
     }
 
-    fun solvePressureGrad(renderer: IRenderer) {
-        glBindFramebuffer(GL_FRAMEBUFFER, renderer.pressure.framebuffer)
+    fun solveVelocityNew(renderer: IRenderer) {
+        glBindFramebuffer(GL_FRAMEBUFFER, renderer.velocity.framebuffer)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
 
-        programId = ShaderManager.use(Shader.PRESSURE)
+        programId = ShaderManager.use(Shader.VELOCITY_NEW)
         prepareVertexShader(renderer)
 
-        glUniform1f(glGetUniformLocation(programId, "u_dx"), renderer.widthTexel)
-        glUniform1f(glGetUniformLocation(programId, "u_dy"), renderer.heightTexel)
+        val velocity = renderer.velocity.texture
+        glActiveTexture(GL_TEXTURE0 + velocity)
+        glBindTexture(GL_TEXTURE_2D, velocity)
+        glUniform1i(glGetUniformLocation(programId, "u_velocity"), velocity)
 
-        val pressure = renderer.pressure.texture
-
-        glActiveTexture(GL_TEXTURE0 + pressure)
-        glBindTexture(GL_TEXTURE_2D, pressure)
-        glUniform1i(glGetUniformLocation(programId, "u_pressure"), pressure)
+        glUniform1f(glGetUniformLocation(programId, "u_dt"), MyRenderer.TIMESTEP)
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 

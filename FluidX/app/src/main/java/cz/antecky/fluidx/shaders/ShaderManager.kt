@@ -1,7 +1,6 @@
 package cz.antecky.fluidx.shaders
 
 import android.content.Context
-import android.opengl.*
 import android.opengl.GLES20.glUseProgram
 import android.util.Log
 import cz.antecky.fluidx.R
@@ -13,9 +12,10 @@ enum class Shader {
     TEMPERATURE,
     VELOCITY_NONFREE,
     VELOCITY,
+    VELOCITY_NEW,
     PRESSURE,
     PRESSURE_GRAD,
-    SCREEN,
+    SCREEN_TEMPERATURE,
     TOUCH,
 }
 
@@ -26,9 +26,10 @@ object ShaderManager {
         Shader.TEMPERATURE to ShaderProgram(R.raw.domain_vs, R.raw.temperature_fs),
         Shader.VELOCITY_NONFREE to ShaderProgram(R.raw.domain_vs, R.raw.velocity_nonfree_fs),
         Shader.VELOCITY to ShaderProgram(R.raw.domain_vs, R.raw.velocity_fs),
+        Shader.VELOCITY_NEW to ShaderProgram(R.raw.domain_vs, R.raw.velocity_new_fs),
         Shader.PRESSURE to ShaderProgram(R.raw.domain_vs, R.raw.pressure_fs),
         Shader.PRESSURE_GRAD to ShaderProgram(R.raw.domain_vs, R.raw.pressure_grad_fs),
-        Shader.SCREEN to ShaderProgram(R.raw.domain_vs, R.raw.screen_fs),
+        Shader.SCREEN_TEMPERATURE to ShaderProgram(R.raw.domain_vs, R.raw.screen_temperature_fs),
         Shader.TOUCH to ShaderProgram(R.raw.domain_vs, R.raw.touch_fs),
     )
 
