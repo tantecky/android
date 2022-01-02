@@ -29,5 +29,16 @@ void main(){
     float pL = texture2D(u_pressure, v_left).r;
     float pR = texture2D(u_pressure, v_right).r;
 
-    gl_FragColor = vec4(p, gradx(pL, pR), grady(pT, pB), 0.0);
+    float dpx = gradx(pL, pR);
+    float dpy = grady(pT, pB);
+
+    if (v_right.x > 1.0 || v_left.x < 0.0) {
+        dpx = 0.0;
+    }
+
+    if (v_top.x > 1.0 || v_bot.x < 0.0) {
+        dpy = 0.0;
+    }
+
+    gl_FragColor = vec4(p, dpx, dpy, 0.0);
 }

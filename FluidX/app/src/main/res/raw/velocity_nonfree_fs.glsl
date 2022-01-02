@@ -50,6 +50,26 @@ void main(){
     float uyL = texture2D(u_velocity, v_left).g;
     float uyR = texture2D(u_velocity, v_right).g;
 
+    if (v_right.x > 1.0) {
+        uxR = 0.0;
+        uyR = 0.0;
+    }
+
+    if (v_left.x < 0.0) {
+        uxL = 0.0;
+        uyL = 0.0;
+    }
+
+    if (v_top.x > 1.0) {
+        uxT = 0.0;
+        uyT = 0.0;
+    }
+
+    if (v_bot.x < 0.0) {
+        uxB = 0.0;
+        uyB = 0.0;
+    }
+
     float fx = texture2D(u_force, v_center).r;
     float fy = texture2D(u_force, v_center).g;
 

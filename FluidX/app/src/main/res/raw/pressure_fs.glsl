@@ -37,13 +37,28 @@ void main(){
     // u = velocity
     // w = divergence non-free velocity
 
-//    float wx = texture2D(u_velocity, v_center).b;
+    float wx = texture2D(u_velocity, v_center).b;
     float wxL = texture2D(u_velocity, v_left).b;
     float wxR = texture2D(u_velocity, v_right).b;
-
-//    float wy = texture2D(u_velocity, v_center).a;
+    float wy = texture2D(u_velocity, v_center).a;
     float wyT = texture2D(u_velocity, v_top).a;
     float wyB = texture2D(u_velocity, v_bot).a;
+
+//    if(v_right.x > 1.0) {
+//        wxR = -wx;
+//    }
+//
+//    if(v_left.x < 0.0) {
+//        wxL = -wx;
+//    }
+//
+//    if(v_top.x > 1.0) {
+//        wyT = -wy;
+//    }
+//
+//    if(v_bot.x < 0.0) {
+//        wyB = -wy;
+//    }
 
     // r = pressure, g = gradx pressure, b = gray pressure
     float p = texture2D(u_pressure, v_center).r;

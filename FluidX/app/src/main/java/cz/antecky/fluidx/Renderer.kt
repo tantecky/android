@@ -46,7 +46,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
 //        const val TIMESTEP = 0.00006f
         const val TIMESTEP = 0.006f
         const val CONDUCTIVITY = 0.1f
-        const val VISCOSITY = 0.1f
+        const val VISCOSITY = 0.01f
     }
 
     private val entities: Array<Entity> by lazy {
