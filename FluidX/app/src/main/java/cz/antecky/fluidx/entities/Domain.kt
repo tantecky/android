@@ -37,7 +37,7 @@ class Domain : Quad() {
 
     fun touch(
         s: Float, t: Float, shader: Shader, field: Field,
-        textureUniform: String, renderer: IRenderer
+        renderer: IRenderer
     ) {
         glBindFramebuffer(GL_FRAMEBUFFER, field.framebuffer)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
@@ -51,7 +51,7 @@ class Domain : Quad() {
 
         glUniform2f(glGetUniformLocation(programId, "u_touch"), s, t)
 
-        glUniform1i(glGetUniformLocation(programId, textureUniform), texture)
+        glUniform1i(glGetUniformLocation(programId, field.uniformName), texture)
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 
@@ -118,7 +118,7 @@ class Domain : Quad() {
         glBindTexture(GL_TEXTURE_2D, velocity)
         glUniform1i(glGetUniformLocation(programId, "u_velocity"), velocity)
 
-        val force = renderer.velocity.texture
+        val force = renderer.force.texture
         glActiveTexture(GL_TEXTURE0 + force)
         glBindTexture(GL_TEXTURE_2D, force)
         glUniform1i(glGetUniformLocation(programId, "u_force"), force)
@@ -237,7 +237,7 @@ class Domain : Quad() {
         throw NotImplementedError()
     }
 
-    fun display(shader: Shader, field: Field, textureUniform: String, renderer: IRenderer) {
+    fun display(shader: Shader, field: Field, renderer: IRenderer) {
         glBindFramebuffer(GL_FRAMEBUFFER, 0)
         glViewport(0, 0, renderer.width, renderer.height)
         glClear(GL_COLOR_BUFFER_BIT)
@@ -249,7 +249,7 @@ class Domain : Quad() {
 
         glActiveTexture(GL_TEXTURE0 + texture)
         glBindTexture(GL_TEXTURE_2D, texture)
-        glUniform1i(glGetUniformLocation(programId, textureUniform), texture)
+        glUniform1i(glGetUniformLocation(programId, field.uniformName), texture)
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 

@@ -4,7 +4,7 @@ import android.opengl.GLES20.*
 import android.util.Log
 import java.nio.IntBuffer
 
-class Field(private val halfFloatFormat: Int) {
+class Field(private val halfFloatFormat: Int, val uniformName: String) {
     private var textureSrc: Int = -1
     private var fboSrc: Int = -1
     private var textureDst: Int = -1

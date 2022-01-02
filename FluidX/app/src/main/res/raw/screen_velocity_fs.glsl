@@ -43,5 +43,6 @@ vec4 colormap(float x) {
 void main(){
     float ux = texture2D(u_velocity, v_center).r;
     float uy = texture2D(u_velocity, v_center).g;
+
     gl_FragColor = colormap(clamp(abs(ux) + abs(uy), 0.0, 1.1));
 }

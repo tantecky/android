@@ -78,19 +78,19 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     override val projectionM: FloatArray get() = _projectionM
 
     override val temperature: Field by lazy {
-        Field(halfFloatFormat)
+        Field(halfFloatFormat, "u_temperature")
     }
 
     override val velocity: Field by lazy {
-        Field(halfFloatFormat)
+        Field(halfFloatFormat, "u_velocity")
     }
 
     override val pressure: Field by lazy {
-        Field(halfFloatFormat)
+        Field(halfFloatFormat, "u_pressure")
     }
 
     override val force: Field by lazy {
-        Field(halfFloatFormat)
+        Field(halfFloatFormat, "u_force")
     }
 
     override fun onSurfaceCreated(unused: GL10, config: EGLConfig) {
@@ -119,24 +119,25 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
             domain.solvePressure(this)
             pressure.update()
         }
+//
+//        domain.solvePressureGrad(this)
+//        pressure.update()
+//
+//        domain.solveVelocity(this)
+//        velocity.update()
 
-        domain.solvePressureGrad(this)
-        pressure.update()
-
-        domain.solveVelocity(this)
-        velocity.update()
-
-        for (i in 1..JACOBI_ITERS) {
-            domain.solveVelocityNew(this)
-            velocity.update()
-        }
+//        for (i in 1..JACOBI_ITERS) {
+//            domain.solveVelocityNew(this)
+//            velocity.update()
+//        }
 
         for (i in 1..JACOBI_ITERS) {
             domain.solveTemperature(i == JACOBI_ITERS, this)
             temperature.update()
         }
 
-        domain.display(Shader.SCREEN_TEMPERATURE, temperature, "u_temperature", this)
+        domain.display(Shader.SCREEN_TEMPERATURE, temperature, this)
+        //domain.display(Shader.SCREEN_VELOCITY, velocity, this)
 
         // Log.d(this::class.qualifiedName, "onDrawFrame: time:$time")
     }
@@ -149,8 +150,12 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
 
     fun onTouch(s: Float, t: Float) {
         domain.touch(
-            s, t, Shader.TOUCH_TEMPERATURE, temperature, "" +
-                    "u_temperature", this
+            s, t, Shader.TOUCH_TEMPERATURE, temperature,
+            this
+        )
+        domain.touch(
+            s, t, Shader.TOUCH_FORCE, force,
+            this
         )
         //Log.d(this::class.qualifiedName, "onTouch: s:$s t:$t")
     }
