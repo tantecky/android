@@ -131,7 +131,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
             temperature.update()
         }
 
-        domain.display(Shader.SCREEN_TEMPERATURE, temperature, "u_temperature",this)
+        domain.display(Shader.SCREEN_TEMPERATURE, temperature, "u_temperature", this)
 
         // Log.d(this::class.qualifiedName, "onDrawFrame: time:$time")
     }
@@ -143,9 +143,10 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     }
 
     fun onTouch(s: Float, t: Float) {
-        domain.touch(s, t, this)
-        temperature.update()
-
+        domain.touch(
+            s, t, Shader.TOUCH_TEMPERATURE, temperature, "" +
+                    "u_temperature", this
+        )
         //Log.d(this::class.qualifiedName, "onTouch: s:$s t:$t")
     }
 }

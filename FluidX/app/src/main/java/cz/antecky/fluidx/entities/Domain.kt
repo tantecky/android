@@ -35,26 +35,29 @@ class Domain : Quad() {
         glEnableVertexAttribArray(positionAttrib)
     }
 
-    fun touch(s: Float, t: Float, renderer: IRenderer) {
-        glBindFramebuffer(GL_FRAMEBUFFER, renderer.temperature.framebuffer)
+    fun touch(
+        s: Float, t: Float, shader: Shader, field: Field,
+        textureUniform: String, renderer: IRenderer
+    ) {
+        glBindFramebuffer(GL_FRAMEBUFFER, field.framebuffer)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
 
-        programId = ShaderManager.use(Shader.TOUCH)
+        programId = ShaderManager.use(shader)
         prepareVertexShader(renderer)
 
-        val temperature = renderer.temperature.texture
-        glActiveTexture(GL_TEXTURE0 + temperature)
-        glBindTexture(GL_TEXTURE_2D, temperature)
+        val texture = field.texture
+        glActiveTexture(GL_TEXTURE0 + texture)
+        glBindTexture(GL_TEXTURE_2D, texture)
 
         glUniform2f(glGetUniformLocation(programId, "u_touch"), s, t)
 
-        glUniform1i(glGetUniformLocation(programId, "u_temperature"), temperature)
+        glUniform1i(glGetUniformLocation(programId, textureUniform), texture)
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 
         glDisableVertexAttribArray(positionAttrib)
         checkGlError()
-
+        field.update()
     }
 
     fun solveTemperature(isLastIter: Boolean, renderer: IRenderer) {
@@ -231,7 +234,7 @@ class Domain : Quad() {
 
     }
 
-    fun display(shader: Shader, field:Field, textureUniform:String, renderer: IRenderer) {
+    fun display(shader: Shader, field: Field, textureUniform: String, renderer: IRenderer) {
         glBindFramebuffer(GL_FRAMEBUFFER, 0)
         glViewport(0, 0, renderer.width, renderer.height)
         glClear(GL_COLOR_BUFFER_BIT)
