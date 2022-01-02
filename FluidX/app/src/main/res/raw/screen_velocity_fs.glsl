@@ -1,5 +1,5 @@
 #ifdef GL_ES
-precision mediump float;
+precision highp float;
 #endif
 
 varying vec2 v_center;
@@ -44,5 +44,5 @@ void main(){
     float ux = texture2D(u_velocity, v_center).r;
     float uy = texture2D(u_velocity, v_center).g;
 
-    gl_FragColor = colormap(clamp(abs(ux) + abs(uy), 0.0, 1.1));
+    gl_FragColor = colormap(abs(ux) + abs(uy));
 }

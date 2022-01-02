@@ -169,7 +169,7 @@ class Domain : Quad() {
         glBindFramebuffer(GL_FRAMEBUFFER, renderer.pressure.framebuffer)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
 
-        programId = ShaderManager.use(Shader.PRESSURE)
+        programId = ShaderManager.use(Shader.PRESSURE_GRAD)
         prepareVertexShader(renderer)
 
         glUniform1f(glGetUniformLocation(programId, "u_dx"), renderer.widthTexel)
@@ -204,6 +204,8 @@ class Domain : Quad() {
         glActiveTexture(GL_TEXTURE0 + pressure)
         glBindTexture(GL_TEXTURE_2D, pressure)
         glUniform1i(glGetUniformLocation(programId, "u_pressure"), pressure)
+
+        glUniform1f(glGetUniformLocation(programId, "u_dt"), MyRenderer.TIMESTEP)
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 

@@ -38,11 +38,13 @@ interface IRenderer {
 
 class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer {
     companion object {
-        const val GRID_SIZE = 128
+//        const val GRID_SIZE = 128
+        const val GRID_SIZE = 16
         const val JACOBI_ITERS = 10
 
         // keep Courant number below 0.5 for an explicit method
-        const val TIMESTEP = 0.00006f
+//        const val TIMESTEP = 0.00006f
+        const val TIMESTEP = 0.006f
         const val CONDUCTIVITY = 0.1f
         const val VISCOSITY = 0.1f
     }
@@ -119,26 +121,26 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
             domain.solvePressure(this)
             pressure.update()
         }
-//
-//        domain.solvePressureGrad(this)
-//        pressure.update()
-//
-//        domain.solveVelocity(this)
-//        velocity.update()
+
+        domain.solvePressureGrad(this)
+        pressure.update()
+
+        domain.solveVelocity(this)
+        velocity.update()
 
 //        for (i in 1..JACOBI_ITERS) {
 //            domain.solveVelocityNew(this)
 //            velocity.update()
 //        }
 
-        for (i in 1..JACOBI_ITERS) {
-            domain.solveTemperature(i == JACOBI_ITERS, this)
-            temperature.update()
-        }
+//        for (i in 1..JACOBI_ITERS) {
+//            domain.solveTemperature(i == JACOBI_ITERS, this)
+//            temperature.update()
+//        }
 
 //        domain.display(Shader.SCREEN_TEMPERATURE, temperature, this)
-        //domain.display(Shader.SCREEN_VELOCITY, velocity, this)
-        domain.display(Shader.SCREEN_PRESSURE, pressure, this)
+        domain.display(Shader.SCREEN_VELOCITY, velocity, this)
+       // domain.display(Shader.SCREEN_PRESSURE, pressure, this)
 
         // Log.d(this::class.qualifiedName, "onDrawFrame: time:$time")
     }

@@ -1,5 +1,5 @@
 #ifdef GL_ES
-precision mediump float;
+precision highp float;
 #endif
 
 varying vec2 v_center;
@@ -41,6 +41,7 @@ vec4 colormap(float x) {
 
 
 void main(){
+    // r = pressure, g = gradx pressure, b = gray pressure
     float pressure = texture2D(u_pressure, v_center).r;
     gl_FragColor = colormap(pressure);
 }
