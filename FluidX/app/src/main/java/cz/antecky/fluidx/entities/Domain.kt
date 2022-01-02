@@ -41,14 +41,13 @@ class Domain : Quad() {
         programId = ShaderManager.use(Shader.TOUCH)
         prepareVertexShader(renderer)
 
-        val texture = renderer.temperature.texture
-
-        glActiveTexture(GL_TEXTURE0 + texture)
-        glBindTexture(GL_TEXTURE_2D, texture)
+        val temperature = renderer.temperature.texture
+        glActiveTexture(GL_TEXTURE0 + temperature)
+        glBindTexture(GL_TEXTURE_2D, temperature)
 
         glUniform2f(glGetUniformLocation(programId, "u_touch"), s, t)
 
-        glUniform1i(glGetUniformLocation(programId, "u_temperature"), texture)
+        glUniform1i(glGetUniformLocation(programId, "u_temperature"), temperature)
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 
@@ -79,12 +78,11 @@ class Domain : Quad() {
         val sink = if (isLastIter) 0.001f else 0.0f
         glUniform1f(glGetUniformLocation(programId, "u_sink"), sink)
 
-        val texture = renderer.temperature.texture
+        val temperature = renderer.temperature.texture
+        glActiveTexture(GL_TEXTURE0 + temperature)
+        glBindTexture(GL_TEXTURE_2D, temperature)
 
-        glActiveTexture(GL_TEXTURE0 + texture)
-        glBindTexture(GL_TEXTURE_2D, texture)
-
-        glUniform1i(glGetUniformLocation(programId, "u_temperature"), texture)
+        glUniform1i(glGetUniformLocation(programId, "u_temperature"), temperature)
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 
@@ -94,10 +92,10 @@ class Domain : Quad() {
     }
 
     fun solveVelocityNonFree(renderer: IRenderer) {
-        glBindFramebuffer(GL_FRAMEBUFFER, renderer.temperature.framebuffer)
+        glBindFramebuffer(GL_FRAMEBUFFER, renderer.velocity.framebuffer)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
 
-        programId = ShaderManager.use(Shader.TEMPERATURE)
+        programId = ShaderManager.use(Shader.VELOCITY_NONFREE)
         prepareVertexShader(renderer)
 
         glUniform1f(glGetUniformLocation(programId, "u_dx"), renderer.widthTexel)
@@ -112,12 +110,11 @@ class Domain : Quad() {
         )
         glUniform1f(glGetUniformLocation(programId, "u_viscosity"), MyRenderer.VISCOSITY)
 
-        val texture = renderer.temperature.texture
+        val velocity = renderer.velocity.texture
+        glActiveTexture(GL_TEXTURE0 + velocity)
+        glBindTexture(GL_TEXTURE_2D, velocity)
 
-        glActiveTexture(GL_TEXTURE0 + texture)
-        glBindTexture(GL_TEXTURE_2D, texture)
-
-        glUniform1i(glGetUniformLocation(programId, "u_velocity"), texture)
+        glUniform1i(glGetUniformLocation(programId, "u_velocity"), velocity)
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 
@@ -145,16 +142,61 @@ class Domain : Quad() {
         )
 
         val pressure = renderer.pressure.texture
-
         glActiveTexture(GL_TEXTURE0 + pressure)
         glBindTexture(GL_TEXTURE_2D, pressure)
         glUniform1i(glGetUniformLocation(programId, "u_pressure"), pressure)
 
         val velocity = renderer.velocity.texture
-
         glActiveTexture(GL_TEXTURE0 + velocity)
         glBindTexture(GL_TEXTURE_2D, velocity)
         glUniform1i(glGetUniformLocation(programId, "u_velocity"), velocity)
+
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
+
+        glDisableVertexAttribArray(positionAttrib)
+        checkGlError()
+
+    }
+
+    fun solveVelocity(renderer: IRenderer) {
+        glBindFramebuffer(GL_FRAMEBUFFER, renderer.velocity.framebuffer)
+        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
+
+        programId = ShaderManager.use(Shader.VELOCITY)
+        prepareVertexShader(renderer)
+
+        val velocity = renderer.velocity.texture
+        glActiveTexture(GL_TEXTURE0 + velocity)
+        glBindTexture(GL_TEXTURE_2D, velocity)
+        glUniform1i(glGetUniformLocation(programId, "u_velocity"), velocity)
+
+        val pressure = renderer.pressure.texture
+        glActiveTexture(GL_TEXTURE0 + pressure)
+        glBindTexture(GL_TEXTURE_2D, pressure)
+        glUniform1i(glGetUniformLocation(programId, "u_pressure"), pressure)
+
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
+
+        glDisableVertexAttribArray(positionAttrib)
+        checkGlError()
+
+    }
+
+    fun solvePressureGrad(renderer: IRenderer) {
+        glBindFramebuffer(GL_FRAMEBUFFER, renderer.pressure.framebuffer)
+        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
+
+        programId = ShaderManager.use(Shader.PRESSURE)
+        prepareVertexShader(renderer)
+
+        glUniform1f(glGetUniformLocation(programId, "u_dx"), renderer.widthTexel)
+        glUniform1f(glGetUniformLocation(programId, "u_dy"), renderer.heightTexel)
+
+        val pressure = renderer.pressure.texture
+
+        glActiveTexture(GL_TEXTURE0 + pressure)
+        glBindTexture(GL_TEXTURE_2D, pressure)
+        glUniform1i(glGetUniformLocation(programId, "u_pressure"), pressure)
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 

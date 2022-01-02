@@ -12,7 +12,9 @@ enum class Shader {
     COMPLEX,
     TEMPERATURE,
     VELOCITY_NONFREE,
+    VELOCITY,
     PRESSURE,
+    PRESSURE_GRAD,
     SCREEN,
     TOUCH,
 }
@@ -23,7 +25,9 @@ object ShaderManager {
         Shader.COMPLEX to ShaderProgram(R.raw.flat_vs, R.raw.complex_fs),
         Shader.TEMPERATURE to ShaderProgram(R.raw.domain_vs, R.raw.temperature_fs),
         Shader.VELOCITY_NONFREE to ShaderProgram(R.raw.domain_vs, R.raw.velocity_nonfree_fs),
+        Shader.VELOCITY to ShaderProgram(R.raw.domain_vs, R.raw.velocity_fs),
         Shader.PRESSURE to ShaderProgram(R.raw.domain_vs, R.raw.pressure_fs),
+        Shader.PRESSURE_GRAD to ShaderProgram(R.raw.domain_vs, R.raw.pressure_grad_fs),
         Shader.SCREEN to ShaderProgram(R.raw.domain_vs, R.raw.screen_fs),
         Shader.TOUCH to ShaderProgram(R.raw.domain_vs, R.raw.touch_fs),
     )

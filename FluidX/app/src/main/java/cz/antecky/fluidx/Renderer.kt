@@ -115,6 +115,12 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
             pressure.update()
         }
 
+        domain.solvePressureGrad(this)
+        pressure.update()
+
+        domain.solveVelocity(this)
+        velocity.update()
+
         for (i in 1..JACOBI_ITERS) {
             domain.solveTemperature(i == JACOBI_ITERS, this)
             temperature.update()
