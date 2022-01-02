@@ -10,7 +10,10 @@ varying vec2 v_right;
 
 uniform float u_dx;
 uniform float u_dy;
+uniform float u_dx2;
+uniform float u_dy2;
 uniform float u_viscosity;
+
 uniform sampler2D u_velocity;
 
 float gradx(float left, float right) {
@@ -26,7 +29,7 @@ float div(float left, float right, float top, float bot) {
 }
 
 float lap(float center, float left, float right, float top, float bot) {
-    return (right - 2.0 * center + left) / (u_dx * u_dx) + (top - 2.0 * center + bot) / (u_dy * u_dy);
+    return (right - 2.0 * center + left) / u_dx2 + (top - 2.0 * center + bot) / u_dy2;
 }
 
 void main(){

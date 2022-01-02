@@ -102,6 +102,14 @@ class Domain : Quad() {
 
         glUniform1f(glGetUniformLocation(programId, "u_dx"), renderer.widthTexel)
         glUniform1f(glGetUniformLocation(programId, "u_dy"), renderer.heightTexel)
+        glUniform1f(
+            glGetUniformLocation(programId, "u_dx2"),
+            renderer.widthTexel * renderer.widthTexel
+        )
+        glUniform1f(
+            glGetUniformLocation(programId, "u_dy2"),
+            renderer.heightTexel * renderer.heightTexel
+        )
         glUniform1f(glGetUniformLocation(programId, "u_viscosity"), MyRenderer.VISCOSITY)
 
         val texture = renderer.temperature.texture
@@ -110,6 +118,43 @@ class Domain : Quad() {
         glBindTexture(GL_TEXTURE_2D, texture)
 
         glUniform1i(glGetUniformLocation(programId, "u_velocity"), texture)
+
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
+
+        glDisableVertexAttribArray(positionAttrib)
+        checkGlError()
+
+    }
+
+    fun solvePressure(renderer: IRenderer) {
+        glBindFramebuffer(GL_FRAMEBUFFER, renderer.pressure.framebuffer)
+        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
+
+        programId = ShaderManager.use(Shader.PRESSURE)
+        prepareVertexShader(renderer)
+
+        glUniform1f(glGetUniformLocation(programId, "u_dx"), renderer.widthTexel)
+        glUniform1f(glGetUniformLocation(programId, "u_dy"), renderer.heightTexel)
+        glUniform1f(
+            glGetUniformLocation(programId, "u_dx2"),
+            renderer.widthTexel * renderer.widthTexel
+        )
+        glUniform1f(
+            glGetUniformLocation(programId, "u_dy2"),
+            renderer.heightTexel * renderer.heightTexel
+        )
+
+        val pressure = renderer.pressure.texture
+
+        glActiveTexture(GL_TEXTURE0 + pressure)
+        glBindTexture(GL_TEXTURE_2D, pressure)
+        glUniform1i(glGetUniformLocation(programId, "u_pressure"), pressure)
+
+        val velocity = renderer.velocity.texture
+
+        glActiveTexture(GL_TEXTURE0 + velocity)
+        glBindTexture(GL_TEXTURE_2D, velocity)
+        glUniform1i(glGetUniformLocation(programId, "u_velocity"), velocity)
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 

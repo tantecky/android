@@ -77,7 +77,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     override val projectionM: FloatArray get() = _projectionM
 
     override val temperature: Field by lazy {
-       Field(halfFloatFormat)
+        Field(halfFloatFormat)
     }
 
     override val velocity: Field by lazy {
@@ -109,6 +109,11 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     override fun onDrawFrame(unused: GL10) {
         domain.solveVelocityNonFree(this)
         velocity.update()
+
+        for (i in 1..JACOBI_ITERS) {
+            domain.solvePressure(this)
+            pressure.update()
+        }
 
         for (i in 1..JACOBI_ITERS) {
             domain.solveTemperature(i == JACOBI_ITERS, this)
