@@ -2,7 +2,7 @@
 precision highp float;
 #endif
 
-#define FACTOR 3.0
+#define FACTOR 10.0
 #define RADIUS 0.1
 
 varying vec2 v_center;
@@ -21,9 +21,9 @@ void main(){
     splash *= FACTOR;
 
     float fx = texture2D(u_force, v_center).r;
-    fx = clamp(fx + splash, 0.0, 1.1);
+    fx = clamp(fx + splash, 0.0, 2.0);
     float fy = texture2D(u_force, v_center).g;
-    fy = clamp(fy + splash, 0.0, 1.1);
+    fy = clamp(fy + splash, 0.0, 2.0);
 
     gl_FragColor = vec4(fx, fy, 0.0, 0.0);
 }

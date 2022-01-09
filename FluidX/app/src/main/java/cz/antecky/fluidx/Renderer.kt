@@ -45,7 +45,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
 //        const val TIMESTEP = 0.00006f
         const val TIMESTEP = 0.006f
         const val CONDUCTIVITY = 0.1f
-        const val VISCOSITY = 0.01f
+        const val VISCOSITY = 0.05f
     }
 
     private val entities: Array<Entity> by lazy {
@@ -141,7 +141,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
 
 //        domain.display(Shader.SCREEN_TEMPERATURE, temperature, this)
         domain.display(Shader.SCREEN_VELOCITY, velocity, this)
-        // domain.display(Shader.SCREEN_FORCE, force, this)
+//         domain.display(Shader.SCREEN_FORCE, force, this)
        // domain.display(Shader.SCREEN_PRESSURE, pressure, this)
 
         // Log.d(this::class.qualifiedName, "onDrawFrame: time:$time")
