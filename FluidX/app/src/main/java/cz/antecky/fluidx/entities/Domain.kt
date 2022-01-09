@@ -60,6 +60,29 @@ class Domain : Quad() {
         field.update()
     }
 
+    fun decay(
+        shader: Shader, field: Field,
+        renderer: IRenderer
+    ) {
+        glBindFramebuffer(GL_FRAMEBUFFER, field.framebuffer)
+        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
+
+        programId = ShaderManager.use(shader)
+        prepareVertexShader(renderer)
+
+        val texture = field.texture
+        glActiveTexture(GL_TEXTURE0 + texture)
+        glBindTexture(GL_TEXTURE_2D, texture)
+
+        glUniform1i(glGetUniformLocation(programId, field.uniformName), texture)
+
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
+
+        glDisableVertexAttribArray(positionAttrib)
+        checkGlError()
+        field.update()
+    }
+
     fun solveTemperature(isLastIter: Boolean, renderer: IRenderer) {
         glBindFramebuffer(GL_FRAMEBUFFER, renderer.temperature.framebuffer)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
@@ -257,6 +280,5 @@ class Domain : Quad() {
 
         glDisableVertexAttribArray(positionAttrib)
         checkGlError()
-
     }
 }

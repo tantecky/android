@@ -18,8 +18,10 @@ enum class Shader {
     SCREEN_TEMPERATURE,
     SCREEN_VELOCITY,
     SCREEN_PRESSURE,
+    SCREEN_FORCE,
     TOUCH_TEMPERATURE,
     TOUCH_FORCE,
+    FORCE_DECAY,
 }
 
 object ShaderManager {
@@ -35,9 +37,11 @@ object ShaderManager {
         Shader.SCREEN_TEMPERATURE to ShaderProgram(R.raw.domain_vs, R.raw.screen_temperature_fs),
         Shader.SCREEN_VELOCITY to ShaderProgram(R.raw.domain_vs, R.raw.screen_velocity_fs),
         Shader.SCREEN_PRESSURE to ShaderProgram(R.raw.domain_vs, R.raw.screen_pressure_fs),
+        Shader.SCREEN_FORCE to ShaderProgram(R.raw.domain_vs, R.raw.screen_force_fs),
         Shader.TOUCH_TEMPERATURE to ShaderProgram(R.raw.domain_vs, R.raw.touch_temperature_fs),
         Shader.TOUCH_FORCE to ShaderProgram(R.raw.domain_vs, R.raw.touch_force_fs),
-    )
+        Shader.FORCE_DECAY to ShaderProgram(R.raw.domain_vs, R.raw.force_decay_fs),
+        )
 
     fun compileAll(context: Context) {
 

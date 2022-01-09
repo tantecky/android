@@ -1,10 +1,7 @@
 package cz.antecky.fluidx
 
 import android.content.Context
-import javax.microedition.khronos.egl.EGLConfig
-import javax.microedition.khronos.opengles.GL10
-
-import android.opengl.GLES20.*
+import android.opengl.GLES20.glClearColor
 import android.opengl.GLSurfaceView
 import android.opengl.Matrix
 import android.os.SystemClock
@@ -16,6 +13,8 @@ import cz.antecky.fluidx.entities.Domain
 import cz.antecky.fluidx.entities.Entity
 import cz.antecky.fluidx.shaders.Shader
 import cz.antecky.fluidx.shaders.ShaderManager
+import javax.microedition.khronos.egl.EGLConfig
+import javax.microedition.khronos.opengles.GL10
 
 interface IRenderer {
     val time: Float
@@ -117,6 +116,8 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
         domain.solveVelocityNonFree(this)
         velocity.update()
 
+        domain.decay(Shader.FORCE_DECAY, force, this)
+
         for (i in 1..JACOBI_ITERS) {
             domain.solvePressure(this)
             pressure.update()
@@ -140,6 +141,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
 
 //        domain.display(Shader.SCREEN_TEMPERATURE, temperature, this)
         domain.display(Shader.SCREEN_VELOCITY, velocity, this)
+        // domain.display(Shader.SCREEN_FORCE, force, this)
        // domain.display(Shader.SCREEN_PRESSURE, pressure, this)
 
         // Log.d(this::class.qualifiedName, "onDrawFrame: time:$time")
