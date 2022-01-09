@@ -237,26 +237,6 @@ class Domain : Quad() {
 
     }
 
-    fun solveVelocityNew(renderer: IRenderer) {
-        glBindFramebuffer(GL_FRAMEBUFFER, renderer.velocity.framebuffer)
-        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
-
-        programId = ShaderManager.use(Shader.VELOCITY_NEW)
-        prepareVertexShader(renderer)
-
-        val velocity = renderer.velocity.texture
-        glActiveTexture(GL_TEXTURE0 + velocity)
-        glBindTexture(GL_TEXTURE_2D, velocity)
-        glUniform1i(glGetUniformLocation(programId, "u_velocity"), velocity)
-
-        glUniform1f(glGetUniformLocation(programId, "u_dt"), MyRenderer.TIMESTEP)
-
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
-
-        glDisableVertexAttribArray(positionAttrib)
-        checkGlError()
-
-    }
 
     override fun draw(shader: Shader, renderer: IRenderer) {
         throw NotImplementedError()
