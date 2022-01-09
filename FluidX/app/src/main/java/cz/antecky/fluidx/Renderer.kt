@@ -38,12 +38,12 @@ interface IRenderer {
 class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer {
     companion object {
 //        const val GRID_SIZE = 128
-        const val GRID_SIZE = 16
+        const val GRID_SIZE = 32
         const val JACOBI_ITERS = 10
 
         // keep Courant number below 0.5 for an explicit method
 //        const val TIMESTEP = 0.00006f
-        const val TIMESTEP = 0.006f
+        const val TIMESTEP = 0.004f
         const val CONDUCTIVITY = 0.1f
         const val VISCOSITY = 0.05f
     }
@@ -66,7 +66,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     }
 
     private val courantNumber: Float
-        get() = TIMESTEP * CONDUCTIVITY * (1.0f / (widthTexel * widthTexel) + 1.0f / (heightTexel * heightTexel))
+        get() = TIMESTEP * VISCOSITY * (1.0f / (widthTexel * widthTexel) + 1.0f / (heightTexel * heightTexel))
 
     override val time: Float get() = (SystemClock.uptimeMillis() - startMillis) / 1000.0f
 
