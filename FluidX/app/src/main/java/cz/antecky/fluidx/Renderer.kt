@@ -173,10 +173,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
 //                s, t, Shader.TOUCH_TEMPERATURE, temperature,
 //                this
 //            )
-//            domain.touch(
-//                s, t, Shader.TOUCH_FORCE, force,
-//                this
-//            )
+
         //Log.d(this::class.qualifiedName, "onTouch: s:$s t:$t")
     }
 }
