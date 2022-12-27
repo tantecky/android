@@ -237,7 +237,7 @@ class Domain : Quad() {
 
     }
 
-    fun applyAdvection(quantity: Field, renderer: IRenderer) {
+    fun advection(quantity: Field, renderer: IRenderer) {
         glBindFramebuffer(GL_FRAMEBUFFER, quantity.framebuffer)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
 
@@ -264,7 +264,7 @@ class Domain : Quad() {
         checkGlError()
     }
 
-    fun applyDiffusion(renderer: IRenderer) {
+    fun diffusion(renderer: IRenderer) {
         glBindFramebuffer(GL_FRAMEBUFFER, renderer.velocity.framebuffer)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
 
@@ -288,7 +288,7 @@ class Domain : Quad() {
         checkGlError()
     }
 
-    fun applySplash(
+    fun splash(
         s: Float, t: Float, field: Field,
         renderer: IRenderer
     ) {
@@ -311,6 +311,27 @@ class Domain : Quad() {
         glDisableVertexAttribArray(positionAttrib)
         checkGlError()
         field.update()
+    }
+
+    fun divergence(renderer: IRenderer) {
+        glBindFramebuffer(GL_FRAMEBUFFER, renderer.divergence.framebuffer)
+        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
+
+        programId = ShaderManager.use(Shader.DIVERGENCE)
+        prepareVertexShader(renderer)
+
+        val velocity = renderer.velocity.texture
+        glActiveTexture(GL_TEXTURE0 + velocity)
+        glBindTexture(GL_TEXTURE_2D, velocity)
+        glUniform1i(glGetUniformLocation(programId, "u_velocity"), velocity)
+
+        glUniform1f(glGetUniformLocation(programId, "u_dx"), renderer.widthTexel)
+        glUniform1f(glGetUniformLocation(programId, "u_dy"), renderer.heightTexel)
+
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
+
+        glDisableVertexAttribArray(positionAttrib)
+        checkGlError()
     }
 
     override fun draw(shader: Shader, renderer: IRenderer) {

@@ -19,12 +19,14 @@ enum class Shader {
     SCREEN_PRESSURE,
     SCREEN_FORCE,
     SCREEN_DYE,
+    SCREEN_DIVERGENCE,
     TOUCH_TEMPERATURE,
     TOUCH_FORCE,
     FORCE_DECAY,
     ADVECTION,
     DIFFUSION,
     SPLASH,
+    DIVERGENCE,
 }
 
 object ShaderManager {
@@ -41,12 +43,14 @@ object ShaderManager {
         Shader.SCREEN_PRESSURE to ShaderProgram(R.raw.domain_vs, R.raw.screen_pressure_fs),
         Shader.SCREEN_FORCE to ShaderProgram(R.raw.domain_vs, R.raw.screen_force_fs),
         Shader.SCREEN_DYE to ShaderProgram(R.raw.domain_vs, R.raw.screen_dye_fs),
+        Shader.SCREEN_DIVERGENCE to ShaderProgram(R.raw.domain_vs, R.raw.screen_divergence_fs),
         Shader.TOUCH_TEMPERATURE to ShaderProgram(R.raw.domain_vs, R.raw.touch_temperature_fs),
         Shader.TOUCH_FORCE to ShaderProgram(R.raw.domain_vs, R.raw.touch_force_fs),
         Shader.FORCE_DECAY to ShaderProgram(R.raw.domain_vs, R.raw.force_decay_fs),
         Shader.ADVECTION to ShaderProgram(R.raw.domain_vs, R.raw.advection_fs),
         Shader.DIFFUSION to ShaderProgram(R.raw.domain_vs, R.raw.diffusion_fs),
         Shader.SPLASH to ShaderProgram(R.raw.domain_vs, R.raw.splash_fs),
+        Shader.DIVERGENCE to ShaderProgram(R.raw.domain_vs, R.raw.divergence_fs),
 
         )
 

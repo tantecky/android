@@ -34,6 +34,7 @@ interface IRenderer {
     val pressure: Field
     val force: Field
     val dye: Field
+    val divergence: Field
 }
 
 class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer {
@@ -99,6 +100,10 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
         Field(halfFloatFormat, "u_dye")
     }
 
+    override val divergence: Field by lazy {
+        Field(halfFloatFormat, "u_divergence")
+    }
+
     override fun onSurfaceCreated(unused: GL10, config: EGLConfig) {
         Log.d(this::class.qualifiedName, "onSurfaceCreated")
         printGlExtensions()
@@ -118,16 +123,19 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     }
 
     override fun onDrawFrame(unused: GL10) {
-        domain.applyAdvection(velocity, this)
+        domain.advection(velocity, this)
         velocity.update()
 
-        domain.applyAdvection(dye, this)
+        domain.advection(dye, this)
         dye.update()
 
-        for (i in 1..JACOBI_ITERS) {
-            domain.applyDiffusion(this)
+        repeat(JACOBI_ITERS) {
+            domain.diffusion(this)
             velocity.update()
         }
+
+        domain.divergence(this)
+        divergence.update()
 
 
 //        for (i in 1..JACOBI_ITERS) {
@@ -136,10 +144,9 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
 //        }
 
 //        domain.display(Shader.SCREEN_VELOCITY, velocity, this)
-        domain.display(Shader.SCREEN_DYE, dye, this)
-
+        domain.display(Shader.SCREEN_DIVERGENCE, divergence, this)
+//        domain.display(Shader.SCREEN_DYE, dye, this)
 //        domain.display(Shader.SCREEN_TEMPERATURE, temperature, this)
-//         domain.display(Shader.SCREEN_FORCE, force, this)
         // domain.display(Shader.SCREEN_PRESSURE, pressure, this)
 
         // Log.d(this::class.qualifiedName, "onDrawFrame: time:$time")
@@ -152,11 +159,11 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     }
 
     fun onTouch(s: Float, t: Float) {
-        domain.applySplash(
+        domain.splash(
             s, t, velocity,
             this
         )
-        domain.applySplash(
+        domain.splash(
             s, t, dye,
             this
         )
