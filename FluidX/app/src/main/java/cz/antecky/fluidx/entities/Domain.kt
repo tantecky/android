@@ -237,6 +237,81 @@ class Domain : Quad() {
 
     }
 
+    fun applyAdvection(quantity: Field, renderer: IRenderer) {
+        glBindFramebuffer(GL_FRAMEBUFFER, quantity.framebuffer)
+        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
+
+        programId = ShaderManager.use(Shader.ADVECTION)
+        prepareVertexShader(renderer)
+
+        val velocity = renderer.velocity.texture
+        glActiveTexture(GL_TEXTURE0 + velocity)
+        glBindTexture(GL_TEXTURE_2D, velocity)
+        glUniform1i(glGetUniformLocation(programId, "u_velocity"), velocity)
+
+        val quantityId = quantity.texture
+        glActiveTexture(GL_TEXTURE0 + quantityId)
+        glBindTexture(GL_TEXTURE_2D, quantityId)
+        glUniform1i(glGetUniformLocation(programId, "u_quantity"), quantityId)
+
+        glUniform1f(glGetUniformLocation(programId, "u_dt"), MyRenderer.TIMESTEP)
+        glUniform1f(glGetUniformLocation(programId, "u_dx"), renderer.widthTexel)
+        glUniform1f(glGetUniformLocation(programId, "u_dy"), renderer.heightTexel)
+
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
+
+        glDisableVertexAttribArray(positionAttrib)
+        checkGlError()
+    }
+
+    fun applyDiffusion(renderer: IRenderer) {
+        glBindFramebuffer(GL_FRAMEBUFFER, renderer.velocity.framebuffer)
+        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
+
+        programId = ShaderManager.use(Shader.DIFFUSION)
+        prepareVertexShader(renderer)
+
+        val velocity = renderer.velocity.texture
+        glActiveTexture(GL_TEXTURE0 + velocity)
+        glBindTexture(GL_TEXTURE_2D, velocity)
+        glUniform1i(glGetUniformLocation(programId, "u_velocity"), velocity)
+
+        val alpha =
+            renderer.widthTexel * renderer.heightTexel / (MyRenderer.VISCOSITY * MyRenderer.TIMESTEP);
+
+        glUniform1f(glGetUniformLocation(programId, "alpha"), alpha)
+        glUniform1f(glGetUniformLocation(programId, "beta"), 4.0f + alpha)
+
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
+
+        glDisableVertexAttribArray(positionAttrib)
+        checkGlError()
+    }
+
+    fun applySplash(
+        s: Float, t: Float, field: Field,
+        renderer: IRenderer
+    ) {
+        glBindFramebuffer(GL_FRAMEBUFFER, field.framebuffer)
+        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
+
+        programId = ShaderManager.use(Shader.SPLASH)
+        prepareVertexShader(renderer)
+
+        val texture = field.texture
+        glActiveTexture(GL_TEXTURE0 + texture)
+        glBindTexture(GL_TEXTURE_2D, texture)
+
+        glUniform2f(glGetUniformLocation(programId, "u_touch"), s, t)
+
+        glUniform1i(glGetUniformLocation(programId, "u_quantity"), texture)
+
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
+
+        glDisableVertexAttribArray(positionAttrib)
+        checkGlError()
+        field.update()
+    }
 
     override fun draw(shader: Shader, renderer: IRenderer) {
         throw NotImplementedError()
