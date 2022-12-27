@@ -61,7 +61,6 @@ class Domain : Quad() {
     }
 
 
-
     fun solveTemperature(isLastIter: Boolean, renderer: IRenderer) {
         glBindFramebuffer(GL_FRAMEBUFFER, renderer.temperature.framebuffer)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
@@ -96,125 +95,6 @@ class Domain : Quad() {
 
     }
 
-    fun solveVelocityNonFree(renderer: IRenderer) {
-        glBindFramebuffer(GL_FRAMEBUFFER, renderer.velocity.framebuffer)
-        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
-
-        programId = ShaderManager.use(Shader.VELOCITY_NONFREE)
-        prepareVertexShader(renderer)
-
-        glUniform1f(glGetUniformLocation(programId, "u_dx"), renderer.widthTexel)
-        glUniform1f(glGetUniformLocation(programId, "u_dy"), renderer.heightTexel)
-        glUniform1f(
-            glGetUniformLocation(programId, "u_dx2"),
-            renderer.widthTexel * renderer.widthTexel
-        )
-        glUniform1f(
-            glGetUniformLocation(programId, "u_dy2"),
-            renderer.heightTexel * renderer.heightTexel
-        )
-        glUniform1f(glGetUniformLocation(programId, "u_viscosity"), MyRenderer.VISCOSITY)
-
-        val velocity = renderer.velocity.texture
-        glActiveTexture(GL_TEXTURE0 + velocity)
-        glBindTexture(GL_TEXTURE_2D, velocity)
-        glUniform1i(glGetUniformLocation(programId, "u_velocity"), velocity)
-
-        val force = renderer.force.texture
-        glActiveTexture(GL_TEXTURE0 + force)
-        glBindTexture(GL_TEXTURE_2D, force)
-        glUniform1i(glGetUniformLocation(programId, "u_force"), force)
-
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
-
-        glDisableVertexAttribArray(positionAttrib)
-        checkGlError()
-
-    }
-
-    fun solvePressure(renderer: IRenderer) {
-        glBindFramebuffer(GL_FRAMEBUFFER, renderer.pressure.framebuffer)
-        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
-
-        programId = ShaderManager.use(Shader.PRESSURE)
-        prepareVertexShader(renderer)
-
-        glUniform1f(glGetUniformLocation(programId, "u_dx"), renderer.widthTexel)
-        glUniform1f(glGetUniformLocation(programId, "u_dy"), renderer.heightTexel)
-        glUniform1f(
-            glGetUniformLocation(programId, "u_dx2"),
-            renderer.widthTexel * renderer.widthTexel
-        )
-        glUniform1f(
-            glGetUniformLocation(programId, "u_dy2"),
-            renderer.heightTexel * renderer.heightTexel
-        )
-
-        val pressure = renderer.pressure.texture
-        glActiveTexture(GL_TEXTURE0 + pressure)
-        glBindTexture(GL_TEXTURE_2D, pressure)
-        glUniform1i(glGetUniformLocation(programId, "u_pressure"), pressure)
-
-        val velocity = renderer.velocity.texture
-        glActiveTexture(GL_TEXTURE0 + velocity)
-        glBindTexture(GL_TEXTURE_2D, velocity)
-        glUniform1i(glGetUniformLocation(programId, "u_velocity"), velocity)
-
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
-
-        glDisableVertexAttribArray(positionAttrib)
-        checkGlError()
-
-    }
-
-    fun solvePressureGrad(renderer: IRenderer) {
-        glBindFramebuffer(GL_FRAMEBUFFER, renderer.pressure.framebuffer)
-        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
-
-        programId = ShaderManager.use(Shader.PRESSURE_GRAD)
-        prepareVertexShader(renderer)
-
-        glUniform1f(glGetUniformLocation(programId, "u_dx"), renderer.widthTexel)
-        glUniform1f(glGetUniformLocation(programId, "u_dy"), renderer.heightTexel)
-
-        val pressure = renderer.pressure.texture
-
-        glActiveTexture(GL_TEXTURE0 + pressure)
-        glBindTexture(GL_TEXTURE_2D, pressure)
-        glUniform1i(glGetUniformLocation(programId, "u_pressure"), pressure)
-
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
-
-        glDisableVertexAttribArray(positionAttrib)
-        checkGlError()
-
-    }
-
-    fun solveVelocity(renderer: IRenderer) {
-        glBindFramebuffer(GL_FRAMEBUFFER, renderer.velocity.framebuffer)
-        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
-
-        programId = ShaderManager.use(Shader.VELOCITY)
-        prepareVertexShader(renderer)
-
-        val velocity = renderer.velocity.texture
-        glActiveTexture(GL_TEXTURE0 + velocity)
-        glBindTexture(GL_TEXTURE_2D, velocity)
-        glUniform1i(glGetUniformLocation(programId, "u_velocity"), velocity)
-
-        val pressure = renderer.pressure.texture
-        glActiveTexture(GL_TEXTURE0 + pressure)
-        glBindTexture(GL_TEXTURE_2D, pressure)
-        glUniform1i(glGetUniformLocation(programId, "u_pressure"), pressure)
-
-        glUniform1f(glGetUniformLocation(programId, "u_dt"), MyRenderer.TIMESTEP)
-
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
-
-        glDisableVertexAttribArray(positionAttrib)
-        checkGlError()
-
-    }
 
     fun advection(quantity: Field, renderer: IRenderer) {
         glBindFramebuffer(GL_FRAMEBUFFER, quantity.framebuffer)
@@ -298,6 +178,67 @@ class Domain : Quad() {
 
         programId = ShaderManager.use(Shader.DIVERGENCE)
         prepareVertexShader(renderer)
+
+        val velocity = renderer.velocity.texture
+        glActiveTexture(GL_TEXTURE0 + velocity)
+        glBindTexture(GL_TEXTURE_2D, velocity)
+        glUniform1i(glGetUniformLocation(programId, "u_velocity"), velocity)
+
+        glUniform1f(glGetUniformLocation(programId, "u_dx"), renderer.widthTexel)
+        glUniform1f(glGetUniformLocation(programId, "u_dy"), renderer.heightTexel)
+
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
+
+        glDisableVertexAttribArray(positionAttrib)
+        checkGlError()
+    }
+
+    fun clearField(field: Field, renderer: IRenderer) {
+        glBindFramebuffer(GL_FRAMEBUFFER, field.framebuffer)
+        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
+        glClear(GL_COLOR_BUFFER_BIT)
+        checkGlError()
+    }
+
+    fun pressure(renderer: IRenderer) {
+        glBindFramebuffer(GL_FRAMEBUFFER, renderer.pressure.framebuffer)
+        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
+
+        programId = ShaderManager.use(Shader.PRESSURE)
+        prepareVertexShader(renderer)
+
+        val pressure = renderer.pressure.texture
+        glActiveTexture(GL_TEXTURE0 + pressure)
+        glBindTexture(GL_TEXTURE_2D, pressure)
+        glUniform1i(glGetUniformLocation(programId, "u_pressure"), pressure)
+
+        val divergence = renderer.divergence.texture
+        glActiveTexture(GL_TEXTURE0 + divergence)
+        glBindTexture(GL_TEXTURE_2D, divergence)
+        glUniform1i(glGetUniformLocation(programId, "u_divergence"), divergence)
+
+        val alpha = -renderer.widthTexel * renderer.heightTexel;
+
+        glUniform1f(glGetUniformLocation(programId, "alpha"), alpha)
+        glUniform1f(glGetUniformLocation(programId, "beta"), 4.0f)
+
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
+
+        glDisableVertexAttribArray(positionAttrib)
+        checkGlError()
+    }
+
+    fun subtractPressure(renderer: IRenderer) {
+        glBindFramebuffer(GL_FRAMEBUFFER, renderer.velocity.framebuffer)
+        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
+
+        programId = ShaderManager.use(Shader.SUBTRACT_PRESSURE)
+        prepareVertexShader(renderer)
+
+        val pressure = renderer.pressure.texture
+        glActiveTexture(GL_TEXTURE0 + pressure)
+        glBindTexture(GL_TEXTURE_2D, pressure)
+        glUniform1i(glGetUniformLocation(programId, "u_pressure"), pressure)
 
         val velocity = renderer.velocity.texture
         glActiveTexture(GL_TEXTURE0 + velocity)

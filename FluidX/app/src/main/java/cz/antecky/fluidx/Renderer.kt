@@ -41,7 +41,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     companion object {
         //        const val GRID_SIZE = 128
         const val GRID_SIZE = 32
-        const val JACOBI_ITERS = 10
+        const val JACOBI_ITERS = 20
 
         // keep Courant number below 0.5 for an explicit method
 //        const val TIMESTEP = 0.00006f
@@ -137,6 +137,16 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
         domain.divergence(this)
         divergence.update()
 
+        domain.clearField(pressure, this)
+
+        repeat(JACOBI_ITERS) {
+            domain.pressure(this)
+            pressure.update()
+        }
+
+        domain.subtractPressure(this)
+        velocity.update()
+
 
 //        for (i in 1..JACOBI_ITERS) {
 //            domain.solveTemperature(i == JACOBI_ITERS, this)
@@ -144,10 +154,10 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
 //        }
 
 //        domain.display(Shader.SCREEN_VELOCITY, velocity, this)
-        domain.display(Shader.SCREEN_DIVERGENCE, divergence, this)
-//        domain.display(Shader.SCREEN_DYE, dye, this)
+//        domain.display(Shader.SCREEN_DIVERGENCE, divergence, this)
+        domain.display(Shader.SCREEN_DYE, dye, this)
 //        domain.display(Shader.SCREEN_TEMPERATURE, temperature, this)
-        // domain.display(Shader.SCREEN_PRESSURE, pressure, this)
+//         domain.display(Shader.SCREEN_PRESSURE, pressure, this)
 
         // Log.d(this::class.qualifiedName, "onDrawFrame: time:$time")
     }

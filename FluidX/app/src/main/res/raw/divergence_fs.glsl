@@ -27,25 +27,25 @@ void main(){
     float uyB = texture2D(u_velocity, v_bot).g;
 
     // no slip BC, may be try bounce
-    if (v_right.x > 1.0) {
-        uxR = 0.0;
-//        uxR = -uC.r;
-    }
+    //    if (v_right.x > 1.0) {
+    //        uxR = 0.0;
+    ////        uxR = -uC.r;
+    //    }
 
-    if (v_left.x < 0.0) {
-        uxL = 0.0;
-//        uxL = -uC.r;
-    }
+    //    if (v_left.x < 0.0) {
+    //        uxL = 0.0;
+    ////        uxL = -uC.r;
+    //    }
 
-    if (v_top.y > 1.0) {
-        uyT = 0.0;
-//        uyT = -uC.g;
-    }
+    //    if (v_top.y > 1.0) {
+    //        uyT = 0.0;
+    ////        uyT = -uC.g;
+    //    }
 
-    if (v_bot.y < 0.0) {
-        uyB = 0.0;
-//        uyB = -uC.g;
-    }
+    //    if (v_bot.y < 0.0) {
+    //        uyB = 0.0;
+    ////        uyB = -uC.g;
+    //    }
 
     gl_FragColor = vec4(div(uxL, uxR, uyT, uyB), 0.0, 0.0, 1.0);
 }

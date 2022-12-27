@@ -41,7 +41,6 @@ vec4 colormap(float x) {
 
 
 void main(){
-    // r = pressure, g = gradx pressure, b = gray pressure
     float pressure = texture2D(u_pressure, v_center).r;
     gl_FragColor = colormap(pressure);
 }
