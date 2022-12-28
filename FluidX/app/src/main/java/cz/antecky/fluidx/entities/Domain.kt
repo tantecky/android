@@ -93,6 +93,25 @@ class Domain : Quad() {
     }
 
 
+    fun temperatureDecay(renderer: IRenderer) {
+        glBindFramebuffer(GL_FRAMEBUFFER, renderer.temperature.framebuffer)
+        glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
+
+        programId = ShaderManager.use(Shader.TEMPERATURE_DECAY)
+        prepareVertexShader(renderer)
+
+        val temperature = renderer.temperature.texture
+        glActiveTexture(GL_TEXTURE0 + temperature)
+        glBindTexture(GL_TEXTURE_2D, temperature)
+        glUniform1i(glGetUniformLocation(programId, "u_temperature"), temperature)
+
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
+
+        glDisableVertexAttribArray(positionAttrib)
+        checkGlError()
+
+    }
+
     fun advection(quantity: Field, decay: Float, renderer: IRenderer) {
         glBindFramebuffer(GL_FRAMEBUFFER, quantity.framebuffer)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)

@@ -149,6 +149,9 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
             temperature.update()
         }
 
+        domain.temperatureDecay(this)
+        temperature.update()
+
 //        domain.display(Shader.SCREEN_VELOCITY, velocity, this)
 //        domain.display(Shader.SCREEN_DIVERGENCE, divergence, this)
 //        domain.display(Shader.SCREEN_DYE, dye, this)
