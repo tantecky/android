@@ -96,7 +96,7 @@ class Domain : Quad() {
     }
 
 
-    fun advection(quantity: Field, renderer: IRenderer) {
+    fun advection(quantity: Field, decay: Float, renderer: IRenderer) {
         glBindFramebuffer(GL_FRAMEBUFFER, quantity.framebuffer)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
 
@@ -116,6 +116,7 @@ class Domain : Quad() {
         glUniform1f(glGetUniformLocation(programId, "u_dt"), MyRenderer.TIMESTEP)
         glUniform1f(glGetUniformLocation(programId, "u_dx"), renderer.widthTexel)
         glUniform1f(glGetUniformLocation(programId, "u_dy"), renderer.heightTexel)
+        glUniform1f(glGetUniformLocation(programId, "u_decay"), decay)
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexCount)
 
@@ -136,7 +137,7 @@ class Domain : Quad() {
         glUniform1i(glGetUniformLocation(programId, "u_velocity"), velocity)
 
         val alpha =
-            renderer.widthTexel * renderer.heightTexel / (MyRenderer.VISCOSITY * MyRenderer.TIMESTEP);
+            renderer.widthTexel * renderer.heightTexel / (MyRenderer.VISCOSITY * MyRenderer.TIMESTEP)
 
         glUniform1f(glGetUniformLocation(programId, "alpha"), alpha)
         glUniform1f(glGetUniformLocation(programId, "beta"), 4.0f + alpha)
@@ -149,12 +150,13 @@ class Domain : Quad() {
 
     fun splash(
         s: Float, t: Float, field: Field,
+        shader: Shader,
         renderer: IRenderer
     ) {
         glBindFramebuffer(GL_FRAMEBUFFER, field.framebuffer)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
 
-        programId = ShaderManager.use(Shader.SPLASH)
+        programId = ShaderManager.use(shader)
         prepareVertexShader(renderer)
 
         val texture = field.texture
@@ -193,7 +195,7 @@ class Domain : Quad() {
         checkGlError()
     }
 
-    fun clearField(field: Field, renderer: IRenderer) {
+    fun clearField(field: Field) {
         glBindFramebuffer(GL_FRAMEBUFFER, field.framebuffer)
         glViewport(0, 0, MyRenderer.GRID_SIZE, MyRenderer.GRID_SIZE)
         glClear(GL_COLOR_BUFFER_BIT)
@@ -217,7 +219,7 @@ class Domain : Quad() {
         glBindTexture(GL_TEXTURE_2D, divergence)
         glUniform1i(glGetUniformLocation(programId, "u_divergence"), divergence)
 
-        val alpha = -renderer.widthTexel * renderer.heightTexel;
+        val alpha = -renderer.widthTexel * renderer.heightTexel
 
         glUniform1f(glGetUniformLocation(programId, "alpha"), alpha)
         glUniform1f(glGetUniformLocation(programId, "beta"), 4.0f)

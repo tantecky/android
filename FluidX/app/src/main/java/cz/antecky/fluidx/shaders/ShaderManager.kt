@@ -20,7 +20,8 @@ enum class Shader {
     TOUCH_TEMPERATURE,
     ADVECTION,
     DIFFUSION,
-    SPLASH,
+    SPLASH_VELOCITY,
+    SPLASH_DYE,
     DIVERGENCE,
 }
 
@@ -39,7 +40,8 @@ object ShaderManager {
         Shader.TOUCH_TEMPERATURE to ShaderProgram(R.raw.domain_vs, R.raw.touch_temperature_fs),
         Shader.ADVECTION to ShaderProgram(R.raw.domain_vs, R.raw.advection_fs),
         Shader.DIFFUSION to ShaderProgram(R.raw.domain_vs, R.raw.diffusion_fs),
-        Shader.SPLASH to ShaderProgram(R.raw.domain_vs, R.raw.splash_fs),
+        Shader.SPLASH_VELOCITY to ShaderProgram(R.raw.domain_vs, R.raw.splash_velocity_fs),
+        Shader.SPLASH_DYE to ShaderProgram(R.raw.domain_vs, R.raw.splash_dye_fs),
         Shader.DIVERGENCE to ShaderProgram(R.raw.domain_vs, R.raw.divergence_fs),
 
         )

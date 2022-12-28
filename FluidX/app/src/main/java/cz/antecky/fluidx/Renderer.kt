@@ -39,13 +39,9 @@ interface IRenderer {
 
 class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer {
     companion object {
-        //        const val GRID_SIZE = 128
-        const val GRID_SIZE = 32
+        const val GRID_SIZE = 128
         const val JACOBI_ITERS = 20
-
-        // keep Courant number below 0.5 for an explicit method
-//        const val TIMESTEP = 0.00006f
-        const val TIMESTEP = 0.004f
+        const val TIMESTEP = 0.005f
         const val CONDUCTIVITY = 0.1f
         const val VISCOSITY = 0.05f
     }
@@ -123,10 +119,10 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     }
 
     override fun onDrawFrame(unused: GL10) {
-        domain.advection(velocity, this)
+        domain.advection(velocity, 1.001f, this)
         velocity.update()
 
-        domain.advection(dye, this)
+        domain.advection(dye, 1.01f, this)
         dye.update()
 
         repeat(JACOBI_ITERS) {
@@ -137,7 +133,7 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
         domain.divergence(this)
         divergence.update()
 
-        domain.clearField(pressure, this)
+        domain.clearField(pressure)
 
         repeat(JACOBI_ITERS) {
             domain.pressure(this)
@@ -171,10 +167,12 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     fun onTouch(s: Float, t: Float) {
         domain.splash(
             s, t, velocity,
+            Shader.SPLASH_VELOCITY,
             this
         )
         domain.splash(
             s, t, dye,
+            Shader.SPLASH_DYE,
             this
         )
 
