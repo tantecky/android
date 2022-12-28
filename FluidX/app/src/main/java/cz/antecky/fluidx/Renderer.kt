@@ -40,8 +40,8 @@ interface IRenderer {
 class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRenderer {
     companion object {
         const val GRID_SIZE = 128
-        const val JACOBI_ITERS = 20
-        const val TIMESTEP = 0.005f
+        const val JACOBI_ITERS = 5
+        const val TIMESTEP = 0.002f
         const val CONDUCTIVITY = 0.1f
         const val VISCOSITY = 0.05f
     }
@@ -119,40 +119,40 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     }
 
     override fun onDrawFrame(unused: GL10) {
-        domain.advection(velocity, 1.001f, this)
-        velocity.update()
-
-        domain.advection(dye, 1.01f, this)
-        dye.update()
-
-        repeat(JACOBI_ITERS) {
-            domain.diffusion(this)
-            velocity.update()
-        }
-
-        domain.divergence(this)
-        divergence.update()
-
-        domain.clearField(pressure)
-
-        repeat(JACOBI_ITERS) {
-            domain.pressure(this)
-            pressure.update()
-        }
-
-        domain.subtractPressure(this)
-        velocity.update()
-
-
-//        for (i in 1..JACOBI_ITERS) {
-//            domain.solveTemperature(i == JACOBI_ITERS, this)
-//            temperature.update()
+//        domain.advection(velocity, 1.001f, this)
+//        velocity.update()
+//
+//        domain.advection(dye, 1.01f, this)
+//        dye.update()
+//
+//        repeat(JACOBI_ITERS) {
+//            domain.diffusion(this)
+//            velocity.update()
 //        }
+//
+//        domain.divergence(this)
+//        divergence.update()
+//
+//        domain.clearField(pressure)
+//
+//        repeat(JACOBI_ITERS) {
+//            domain.pressure(this)
+//            pressure.update()
+//        }
+//
+//        domain.subtractPressure(this)
+//        velocity.update()
+
+
+        repeat(JACOBI_ITERS) {
+            domain.solveTemperature(this)
+            temperature.update()
+        }
 
 //        domain.display(Shader.SCREEN_VELOCITY, velocity, this)
 //        domain.display(Shader.SCREEN_DIVERGENCE, divergence, this)
-        domain.display(Shader.SCREEN_DYE, dye, this)
-//        domain.display(Shader.SCREEN_TEMPERATURE, temperature, this)
+//        domain.display(Shader.SCREEN_DYE, dye, this)
+        domain.display(Shader.SCREEN_TEMPERATURE, temperature, this)
 //         domain.display(Shader.SCREEN_PRESSURE, pressure, this)
 
         // Log.d(this::class.qualifiedName, "onDrawFrame: time:$time")
@@ -165,22 +165,22 @@ class MyRenderer(private val context: Context) : GLSurfaceView.Renderer, IRender
     }
 
     fun onTouch(s: Float, t: Float) {
-        domain.splash(
-            s, t, velocity,
-            Shader.SPLASH_VELOCITY,
-            this
-        )
-        domain.splash(
-            s, t, dye,
-            Shader.SPLASH_DYE,
-            this
-        )
+//        domain.splash(
+//            s, t, velocity,
+//            Shader.SPLASH_VELOCITY,
+//            this
+//        )
+//        domain.splash(
+//            s, t, dye,
+//            Shader.SPLASH_DYE,
+//            this
+//        )
 
 
-//            domain.touch(
-//                s, t, Shader.TOUCH_TEMPERATURE, temperature,
-//                this
-//            )
+        domain.touch(
+            s, t, Shader.TOUCH_TEMPERATURE, temperature,
+            this
+        )
 
         //Log.d(this::class.qualifiedName, "onTouch: s:$s t:$t")
     }
